@@ -4,7 +4,6 @@
  - maybe in the futre, for optimization purposes, i can use a static image as backgroun (white picture like the aquarios background
  - maybe I dont need to do frame differencing
  
- 
  - i'm testing doing the cv with a smaller image and drawing the image from VideGrabber
  - It works not so good and I'm not sure if it computationally less demanding (cpu 74%, memory 98%).
  */
@@ -16,9 +15,9 @@
 void ofApp::setup(){
     
     
-    camWidth 		= 1280;	// try to grab at this size.
-    //	camHeight 		= 720;
-    camHeight 		= 320;
+    camWidth = 1280;	// try to grab at this size.
+	camHeight = 720;
+//    camHeight = 400;
     
     
 #ifdef _USE_LIVE_VIDEO
@@ -35,16 +34,17 @@ void ofApp::setup(){
 	}
 	vidGrabber.setDeviceID(1);
     
-    //  vidGrabber.setVerbose(true);  // check what this is!
+    //vidGrabber.setVerbose(true);  // check what this is!
     vidGrabber.initGrabber(camWidth,camHeight);
 #else
     vidPlayer.loadMovie("test_animation.mov");
     vidPlayer.play();
 #endif
     
-    
-    colorImg.allocate(1280, 720); // one color image
-    colorImgSmall.allocate(1280, 720); // second color image
+    grayImageTest.allocate(camWidth, camHeight);
+
+    colorImg.allocate(camWidth, camHeight); // one color image
+    colorImgSmall.allocate(camWidth, camHeight); // second color image
     
     // This is used for analysing a smaller image
     grayImage.allocate(320, 180); // one gray image
@@ -67,7 +67,7 @@ void ofApp::setup(){
 	threshold = 80;
     
     
-    
+
     // ************ LINE DECLARATION **************
     firstLine.setCamSize(camWidth, camHeight);
     secondLine.setCamSize(camWidth, camHeight);
@@ -83,7 +83,6 @@ void ofApp::setup(){
     ofSetFrameRate(15);
 }
 
-/// testing commiting GIT HUB
 
 //--------------------------------------------------------------
 void ofApp::update(){
@@ -104,13 +103,13 @@ void ofApp::update(){
     // Assigns a frame from the video/camera to a color image
 	if (bNewFrame){
 #ifdef _USE_LIVE_VIDEO
-        colorImg.setFromPixels(vidGrabber.getPixels(), 1280, 720);
+        colorImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight/2);
 #else
-        colorImg.setFromPixels(vidPlayer.getPixels(), 1280, 720);
+        colorImg.setFromPixels(vidPlayer.getPixels(), camWidth, camHeight);
+        
 #endif
         
-        
-        colorImgSmall.resize(1280, 720);
+        colorImgSmall.resize(camWidth, camHeight);
         colorImgSmall = colorImg;
         colorImgSmall.resize(320, 180);
         grayImage = colorImgSmall;
@@ -120,7 +119,13 @@ void ofApp::update(){
 			grayBg = grayImage;		// the = sign copys the pixels from grayImage into grayBg (operator overloading)
 			bLearnBakground = false;
 		}
-        
+
+        if (bLoadPictureBakground == true){
+            loader.loadImage("backgd_1.jpg");
+            loader.setImageType(OF_IMAGE_GRAYSCALE);
+            grayBg.setFromPixels(loader.getPixels(),loader.getWidth(), loader.getHeight());
+			bLoadPictureBakground = false;
+		}
         
 		// take the abs value of the difference between background and incoming and then threshold:
 		grayDiff.absDiff(grayBg, grayImage);
@@ -147,11 +152,12 @@ void ofApp::draw(){
     
     
 	colorImg.draw(0,0);
+    //grayImageTest.draw(0, 0);
     
-    grayImage.draw(320, 0);
-	grayBg.draw(320*2,0);
+  //  grayImage.draw(320, 0);
+	//grayBg.draw(320*2,0);
     
-    grayDiff.draw(320*3,0);
+ //   grayDiff.draw(320*3,0);
     
 	// then draw the contours:
     
@@ -183,7 +189,6 @@ void ofApp::draw(){
         contourFinder.blobs[0].draw(0, 0);
         ofSetColor(255, 0, 0);
         ofCircle(contourFinder.blobs[0].centroid.x*4, contourFinder.blobs[0].centroid.y*4, 10);
-        
     }
     
     
@@ -226,45 +231,11 @@ void ofApp::keyPressed(int key){
 	}
 }
 
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-    
-}
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
     
     firstLine.setVelocity(x / 100);
     secondLine.setVelocity(y / 100);
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
     
 }
