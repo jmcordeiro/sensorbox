@@ -49,6 +49,8 @@ void ofApp::setup(){
     
     colorImg.allocate(camWidth, camHeight);
     grayTempImage.allocate(camWidth, camHeight);
+    grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
+
     
 //    grayImage.allocate(camWidth, camHeight);
 //    grayBg.allocate(camWidth/scaleRatio, camHeight/scaleRatio);
@@ -94,6 +96,7 @@ void ofApp::setup(){
 }
 
 
+
 //--------------------------------------------------------------
 void ofApp::update(){
 
@@ -110,7 +113,6 @@ void ofApp::update(){
 #endif
     
     
-    
     // Assigns a frame from the video/camera to a color image
 	if (bNewFrame){
 #ifdef _USE_LIVE_VIDEO
@@ -120,27 +122,41 @@ void ofApp::update(){
         colorImg.setFromPixels(vidPlayer.getPixels(), camWidth, camHeight);
 #endif
     
-      
+        grayTempImage.clear();
         grayTempImage.allocate(camWidth, camHeight);
         grayTempImage = colorImg;
         grayTempImage.setROI(ROI);
         cout << "COLOR IMG: " << colorImg.width << " x " << colorImg.height << endl;
         cout << "GRAY TEMP: " << grayTempImage.width << " x " << grayTempImage.height << endl;
-        cout << "ROI TEMP: " << grayTempImage.getROI().height << " x " << grayTempImage.getROI().width << endl;
+        cout << "ROI TEMP: " << grayTempImage.getROI().width << " x " << grayTempImage.getROI().height << endl;
         
         grayImage.clear();
         grayImage.allocate(ROI.width, ROI.height);
         grayImage.setFromPixels(grayTempImage.getRoiPixels(), ROI.width, ROI.height);
-        grayImage.resize(camWidth/scaleRatio, camHeight/scaleRatio);
+  //      grayImage.resize(camWidth/scaleRatio, camHeight/scaleRatio);
+        grayImage.resize(ROI.width/scaleRatio, ROI.height/scaleRatio);
       
-        grayTempImage.clear();
+        cout << "COLOR IMG: " << colorImg.width << " x " << colorImg.height << endl;
+        cout << "GRAY TEMP: " << grayTempImage.width << " x " << grayTempImage.height << endl;
+        cout << "ROI TEMP: " << grayTempImage.getROI().width << " x " << grayTempImage.getROI().height << endl;
+
+        
 
         
         //******** LEARN BACKGROUND (space bar) *******************
         if (bLearnBakground == true){
+            grayBg.clear();
+            grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
+            grayImage.scaleIntoMe(grayBg);
 			grayBg = grayImage;
             bLearnBakground = false;
+            
+            cout <<"***************" << endl << endl;
+            cout << "GRAY BG: " << grayBg.width << " x " << grayBg.height << endl;
+            cout << "GRAY IMG: " << grayImage.width << " x " << grayImage.height << endl;
+
 		}
+ 
         
         //******** LOAD BACKGROUND PICTURE ('p' key) *******************
         if (bLoadPictureBakground == true){
@@ -151,9 +167,11 @@ void ofApp::update(){
 			bLoadPictureBakground = false;
 		}
         
-     //   cout << "GRAY BG: " << grayBg.width << " x " << grayBg.height << endl;
-     //   cout << "GRAY Image: " << grayImage.width << " x " << grayImage.height << endl;
+
+        
 		// take the abs value of the difference between background and incoming and then threshold:
+        grayDiff.clear();
+        grayDiff.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
 		grayDiff.absDiff(grayBg, grayImage);
         grayDiff.threshold(threshold);
         
@@ -161,13 +179,10 @@ void ofApp::update(){
 		// also, find holes is set to true so we will get interior contours as well....
         
         
-		contourFinder.findContours(grayDiff, 1, (320*180), 1, false);	// find holes (it is computationally expensive!!)
+		contourFinder.findContours(grayDiff, 1, (ROI.width/scaleRatio*ROI.height/scaleRatio/4), 1, false);	// find holes (it is computationally expensive!!)
         //addjust the value of the maximum blob size!
 
-      
          }
-         
-    
 }
 
 //--------------------------------------------------------------
@@ -179,7 +194,9 @@ void ofApp::draw(){
     
 	//vidGrabber.draw(0, 0);
     
-	colorImg.draw(0, 0);
+ //   colorImg.draw(0, 0);
+	colorImg.draw(((camWidth-ROI.width)*0.5)-ROI.x, ((camHeight-ROI.height)*0.5)-ROI.y);
+
     //grayImageTest.draw(0, 0);
     
   //  grayImage.draw(320, 0);
@@ -213,29 +230,29 @@ void ofApp::draw(){
      }
      */
     
+    /*
     ofFill();
     ofColor(0, 0, 0);
     ofRect(0, 0, camWidth, ROI.y);
     ofRect(0, 0, ROI.x, camHeight);
     ofRect(0, ROI.height+ROI.y, camWidth, camHeight);
     ofRect(ROI.width+ROI.x, 0, camWidth, camHeight);
-
+*/
     
     if (showCalibrationScreen) {
         ofSetHexColor(0xffffff);
         grayImage.draw(0, 0);
         ofNoFill();
         ofSetColor(255, 0, 0);
-        ofRect(ROI);
-        
+        ofColor(0, 255, 0);
+        ofRect((camWidth-ROI.width)*0.5, (camHeight-ROI.height)*0.5, ROI.width, ROI.height);
     
         if (contourFinder.nBlobs > 0){
             contourFinder.blobs[0].draw(0, 0);
- 
-
+            
             ofSetColor(255, 0, 0);
             ofFill();
-            ofCircle(contourFinder.blobs[0].centroid.x*(scaleRatio/(camWidth/ROI.width))+ROI.x, contourFinder.blobs[0].centroid.y*scaleRatio/(camHeight/ROI.height)+ROI.y, 10);
+            ofCircle(contourFinder.blobs[0].centroid.x*scaleRatio+((camWidth-ROI.width)/2), contourFinder.blobs[0].centroid.y*scaleRatio+((camHeight-ROI.height)/2), 10);
 
             ofSetColor(0, 255, 0);
             ofCircle(contourFinder.blobs[0].centroid.x, contourFinder.blobs[0].centroid.y, 10);
@@ -280,18 +297,19 @@ void ofApp::keyPressed(int key){
 			threshold --;
 			if (threshold < 0) threshold = 0;
 			break;
-        case 'u':
+        case 'o':
             ROI.width = ROI.width+5;
 			break;
-        case 'j':
+        case 'l':
             ROI.width = ROI.width-5;
-			break;
+ 			break;
         case 'i':
             ROI.height = ROI.height+5;
 			break;
         case 'k':
             ROI.height = ROI.height-5;
 			break;
+
         case 'w':
             ROI.y = ROI.y-5;
 			break;
