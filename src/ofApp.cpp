@@ -15,10 +15,15 @@
 void ofApp::setup(){
     
     
-    camWidth = 1280;	// try to grab at this size.
+    camWidth = 1280;
 	camHeight = 720;
-//    camHeight = 400;
     
+    ROI.width = camWidth/4;
+    ROI.height = camHeight/4;
+    ROI.x = 0;
+    ROI.y = 0;
+
+    scaleRatio = 4;
     
 #ifdef _USE_LIVE_VIDEO
     //we can now get back a list of devices.
@@ -41,15 +46,18 @@ void ofApp::setup(){
     vidPlayer.play();
 #endif
     
-    grayImageTest.allocate(camWidth, camHeight);
-
-    colorImg.allocate(camWidth, camHeight); // one color image
-    colorImgSmall.allocate(camWidth, camHeight); // second color image
     
+    colorImg.allocate(camWidth, camHeight); // one color image
+    grayImage.allocate(camWidth, camHeight);
+    grayBg.allocate(camWidth/scaleRatio, camHeight/scaleRatio);
+
+    
+    /*
     // This is used for analysing a smaller image
     grayImage.allocate(320, 180); // one gray image
     grayBg.allocate(320, 180);
 	grayDiff.allocate(320, 180);
+    */
     
     /*
      // This is used for analizing HD video
@@ -59,8 +67,8 @@ void ofApp::setup(){
      */
     
     //******** Selects the method for learning background ***********
-	bLearnBakground = false; // learn from video ('space bar')
-    bLoadPictureBakground = true; // load from picture file ('p' key)
+	bLearnBakground = true; // learn from video ('space bar')
+    bLoadPictureBakground = false; // load from picture file ('p' key)
     //***************************************************************
     
     
@@ -100,36 +108,42 @@ void ofApp::update(){
 #endif
     
     
+    
     // Assigns a frame from the video/camera to a color image
 	if (bNewFrame){
 #ifdef _USE_LIVE_VIDEO
-        colorImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight/2);
+        colorImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight);
 #else
         colorImg.setFromPixels(vidPlayer.getPixels(), camWidth, camHeight);
-        
 #endif
+    
+        grayImage.clear();
+        grayImage.allocate(camWidth, camHeight);
+        grayImage = colorImg;
+        grayImage.resize(camWidth/scaleRatio, camHeight/scaleRatio);
+        grayImage.setROI(ROI);
         
-        colorImgSmall.resize(camWidth, camHeight);
-        colorImgSmall = colorImg;
-        colorImgSmall.resize(320, 180);
-        grayImage = colorImgSmall;
         
-        
+        //******** LEARN BACKGROUND (space bar) *******************
         if (bLearnBakground == true){
-			grayBg = grayImage;		// the = sign copys the pixels from grayImage into grayBg (operator overloading)
-			bLearnBakground = false;
+			grayBg = grayImage;
+            bLearnBakground = false;
 		}
-
+        
+        //******** LOAD BACKGROUND PICTURE ('p' key) *******************
         if (bLoadPictureBakground == true){
             loader.loadImage("backgd_1.jpg");
             loader.setImageType(OF_IMAGE_GRAYSCALE);
+            loader.resize(camWidth/scaleRatio, camHeight/scaleRatio);
             grayBg.setFromPixels(loader.getPixels(),loader.getWidth(), loader.getHeight());
 			bLoadPictureBakground = false;
 		}
         
+     //   cout << "GRAY BG: " << grayBg.width << " x " << grayBg.height << endl;
+     //   cout << "GRAY Image: " << grayImage.width << " x " << grayImage.height << endl;
 		// take the abs value of the difference between background and incoming and then threshold:
 		grayDiff.absDiff(grayBg, grayImage);
-		grayDiff.threshold(threshold);
+        grayDiff.threshold(threshold);
         
 		// find co ntours which are between the size of 20 pixels and 1/3 the w*h pixels.
 		// also, find holes is set to true so we will get interior contours as well....
@@ -149,7 +163,6 @@ void ofApp::draw(){
 	ofSetHexColor(0xffffff);
     
 	//vidGrabber.draw(0, 0);
-    
     
 	colorImg.draw(0,0);
     //grayImageTest.draw(0, 0);
@@ -191,7 +204,6 @@ void ofApp::draw(){
         ofCircle(contourFinder.blobs[0].centroid.x*4, contourFinder.blobs[0].centroid.y*4, 10);
     }
     
-    
 	// finally, a report:
 	ofSetHexColor(0xffffff);
 	stringstream reportStr;
@@ -206,7 +218,14 @@ void ofApp::draw(){
     
     firstLine.drawLine();
     secondLine.drawLine();
-    
+
+    if (showCalibrationScreen) {
+    ofSetHexColor(0xffffff);
+    grayImage.draw(0, 0);
+    ofNoFill();
+    ofSetColor(255, 0, 0);
+    ofRect(ROI);
+    }
     
 }
 
@@ -228,7 +247,36 @@ void ofApp::keyPressed(int key){
 			threshold --;
 			if (threshold < 0) threshold = 0;
 			break;
-	}
+        case 'u':
+            ROI.width = ROI.width+1;
+			break;
+        case 'j':
+            ROI.width = ROI.width-1;
+			break;
+        case 'i':
+            ROI.height = ROI.height+1;
+			break;
+        case 'k':
+            ROI.height = ROI.height-1;
+			break;
+        case 'w':
+            ROI.y = ROI.y-1;
+			break;
+        case 's':
+            ROI.y = ROI.y+1;
+			break;
+        case 'a':
+            ROI.x = ROI.x-1;
+			break;
+        case 'd':
+            ROI.x = ROI.x+1;
+			break;
+        case 'z':
+            showCalibrationScreen = !showCalibrationScreen;
+			break;
+
+
+        }
 }
 
 

@@ -29,6 +29,9 @@ public:
 	
     int camWidth;
     int camHeight;
+    int scaleRatio;
+     
+    ofRectangle ROI;
     
     ofxCvColorImage			colorImg, colorImgSmall;
     ofxCvGrayscaleImage 	grayImage;
@@ -40,9 +43,9 @@ public:
     
     ofImage loader;
     
-    int 				threshold;
-    bool				bLearnBakground, bLoadPictureBakground;
-
+    int threshold;
+    bool bLearnBakground, bLoadPictureBakground;
+    bool showCalibrationScreen;
 
     Line firstLine;
     Line secondLine;
