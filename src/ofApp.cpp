@@ -74,7 +74,7 @@ void ofApp::setup(){
     //***************************************************************
     
     
-	threshold = 80;
+	threshold = 50;
     
     
 
@@ -179,7 +179,7 @@ void ofApp::draw(){
     
 	//vidGrabber.draw(0, 0);
     
-	colorImg.draw(0,0);
+	colorImg.draw(0, 0);
     //grayImageTest.draw(0, 0);
     
   //  grayImage.draw(320, 0);
@@ -213,11 +213,36 @@ void ofApp::draw(){
      }
      */
     
-    if (contourFinder.nBlobs > 0){
-        contourFinder.blobs[0].draw(0, 0);
+    ofFill();
+    ofColor(0, 0, 0);
+    ofRect(0, 0, camWidth, ROI.y);
+    ofRect(0, 0, ROI.x, camHeight);
+    ofRect(0, ROI.height+ROI.y, camWidth, camHeight);
+    ofRect(ROI.width+ROI.x, 0, camWidth, camHeight);
+
+    
+    if (showCalibrationScreen) {
+        ofSetHexColor(0xffffff);
+        grayImage.draw(0, 0);
+        ofNoFill();
         ofSetColor(255, 0, 0);
-        ofCircle(contourFinder.blobs[0].centroid.x*4, contourFinder.blobs[0].centroid.y*4, 10);
+        ofRect(ROI);
+        
+    
+        if (contourFinder.nBlobs > 0){
+            contourFinder.blobs[0].draw(0, 0);
+ 
+
+            ofSetColor(255, 0, 0);
+            ofFill();
+            ofCircle(contourFinder.blobs[0].centroid.x*(scaleRatio/(camWidth/ROI.width))+ROI.x, contourFinder.blobs[0].centroid.y*scaleRatio/(camHeight/ROI.height)+ROI.y, 10);
+
+            ofSetColor(0, 255, 0);
+            ofCircle(contourFinder.blobs[0].centroid.x, contourFinder.blobs[0].centroid.y, 10);
+        }
     }
+    
+   
     
 	// finally, a report:
 	ofSetHexColor(0xffffff);
@@ -234,13 +259,6 @@ void ofApp::draw(){
     firstLine.drawLine();
     secondLine.drawLine();
 
-    if (showCalibrationScreen) {
-    ofSetHexColor(0xffffff);
-    grayImage.draw(0, 0);
-    ofNoFill();
-    ofSetColor(255, 0, 0);
-    ofRect(ROI);
-    }
     
 }
 
@@ -263,28 +281,28 @@ void ofApp::keyPressed(int key){
 			if (threshold < 0) threshold = 0;
 			break;
         case 'u':
-            ROI.width = ROI.width+1;
+            ROI.width = ROI.width+5;
 			break;
         case 'j':
-            ROI.width = ROI.width-1;
+            ROI.width = ROI.width-5;
 			break;
         case 'i':
-            ROI.height = ROI.height+1;
+            ROI.height = ROI.height+5;
 			break;
         case 'k':
-            ROI.height = ROI.height-1;
+            ROI.height = ROI.height-5;
 			break;
         case 'w':
-            ROI.y = ROI.y-1;
+            ROI.y = ROI.y-5;
 			break;
         case 's':
-            ROI.y = ROI.y+1;
+            ROI.y = ROI.y+5;
 			break;
         case 'a':
-            ROI.x = ROI.x-1;
+            ROI.x = ROI.x-5;
 			break;
         case 'd':
-            ROI.x = ROI.x+1;
+            ROI.x = ROI.x+5;
 			break;
         case 'z':
             showCalibrationScreen = !showCalibrationScreen;
