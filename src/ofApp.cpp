@@ -18,8 +18,8 @@ void ofApp::setup(){
     camWidth = 1280;
 	camHeight = 720;
     
-    ROI.width = camWidth/4;
-    ROI.height = camHeight/4;
+    ROI.width = camWidth;
+    ROI.height = camHeight;
     ROI.x = 0;
     ROI.y = 0;
 
@@ -47,9 +47,11 @@ void ofApp::setup(){
 #endif
     
     
-    colorImg.allocate(camWidth, camHeight); // one color image
-    grayImage.allocate(camWidth, camHeight);
-    grayBg.allocate(camWidth/scaleRatio, camHeight/scaleRatio);
+    colorImg.allocate(camWidth, camHeight);
+    grayTempImage.allocate(camWidth, camHeight);
+    
+//    grayImage.allocate(camWidth, camHeight);
+//    grayBg.allocate(camWidth/scaleRatio, camHeight/scaleRatio);
 
     
     /*
@@ -113,16 +115,26 @@ void ofApp::update(){
 	if (bNewFrame){
 #ifdef _USE_LIVE_VIDEO
         colorImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight);
+  
 #else
         colorImg.setFromPixels(vidPlayer.getPixels(), camWidth, camHeight);
 #endif
     
-        grayImage.clear();
-        grayImage.allocate(camWidth, camHeight);
-        grayImage = colorImg;
-        grayImage.resize(camWidth/scaleRatio, camHeight/scaleRatio);
-        grayImage.setROI(ROI);
+      
+        grayTempImage.allocate(camWidth, camHeight);
+        grayTempImage = colorImg;
+        grayTempImage.setROI(ROI);
+        cout << "COLOR IMG: " << colorImg.width << " x " << colorImg.height << endl;
+        cout << "GRAY TEMP: " << grayTempImage.width << " x " << grayTempImage.height << endl;
+        cout << "ROI TEMP: " << grayTempImage.getROI().height << " x " << grayTempImage.getROI().width << endl;
         
+        grayImage.clear();
+        grayImage.allocate(ROI.width, ROI.height);
+        grayImage.setFromPixels(grayTempImage.getRoiPixels(), ROI.width, ROI.height);
+        grayImage.resize(camWidth/scaleRatio, camHeight/scaleRatio);
+      
+        grayTempImage.clear();
+
         
         //******** LEARN BACKGROUND (space bar) *******************
         if (bLearnBakground == true){
@@ -151,7 +163,10 @@ void ofApp::update(){
         
 		contourFinder.findContours(grayDiff, 1, (320*180), 1, false);	// find holes (it is computationally expensive!!)
         //addjust the value of the maximum blob size!
-	}
+
+      
+         }
+         
     
 }
 

@@ -37,7 +37,7 @@ public:
     ofxCvGrayscaleImage 	grayImage;
     ofxCvGrayscaleImage 	grayBg;
     ofxCvGrayscaleImage 	grayDiff;
-    ofxCvGrayscaleImage 	grayImageTest;
+    ofxCvGrayscaleImage 	grayTempImage;
 
     ofxCvContourFinder 	contourFinder;
     
