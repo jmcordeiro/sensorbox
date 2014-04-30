@@ -17,6 +17,7 @@ class Line {
     int velocity;
     int opacity;
     int thickness;
+    int xIniPos;
     int xPosition;
     int yPosition;
     bool isVertical;
@@ -47,8 +48,8 @@ public:
     
     void setOrientation();
     bool getOrientation();
-    
-    void setCamSize(int, int);
+        
+    void setCamSize(int _width, int _height, int _x, int _y);
     
 };
 

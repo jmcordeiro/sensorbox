@@ -15,11 +15,14 @@ Line::Line(){
     opacity = 1;
     thickness = 1;
     xPosition = 0;
+    yPosition = 0;
     isVertical = true;
     status = false;
     width = 1280;
     height = 720;
     reverse = false;
+    xIniPos = 0;
+
 };
 
 Line::~Line(){
@@ -30,10 +33,10 @@ void Line::drawLine(){
     if (status) {
         ofSetColor(0,0,255);    //set te color to blue
         ofSetLineWidth(thickness);
-        ofLine(xPosition, 0, xPosition, height);
+        ofLine(xPosition, yPosition, xPosition, height);
   
-        if (xPosition >= width) reverse = true;
-        if (xPosition <= 0) reverse = false;
+        if (xPosition >= width+xIniPos) reverse = true;
+        if (xPosition <= 0+xIniPos) reverse = false;
         
         if (reverse) {
             xPosition = xPosition-velocity;
@@ -85,8 +88,11 @@ void Line::setOrientation(){
 bool Line::getOrientation(){
 };
 
-void Line::setCamSize(int _width, int _height){
+void Line::setCamSize(int _width, int _height, int _x, int _y){
     width = _width;
     height = _height;
+    xIniPos = _x;
+    yPosition = _y;
+    
 };
 

@@ -14,21 +14,24 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
     
-    
+    // Define the capture size of the c‰mera
     camWidth = 1280;
 	camHeight = 720;
     
+    // ********* define an initial ROI - Region Of Interest *********
     ROI.width = 1265; // set it to camWidth to have ROI = to camera size
     ROI.height = 390;// set it to camHeight to have ROI = to camera size
     ROI.x = 10; // set it to zero to get ROI = camwidth
     ROI.y = 330; // set it to zero to get ROI = camheight
 
+    // Define a scale ratio to resize the original image for analysis
     scaleRatio = 4;
     
-#ifdef _USE_LIVE_VIDEO
-    //we can now get back a list of devices.
-	vector<ofVideoDevice> devices = vidGrabber.listDevices();
     
+#ifdef _USE_LIVE_VIDEO
+    // Get back a list of devices (cameras).
+	vector<ofVideoDevice> devices = vidGrabber.listDevices();
+
     for(int i = 0; i < devices.size(); i++){
 		cout << devices[i].id << ": " << devices[i].deviceName;
         if( devices[i].bAvailable ){
@@ -37,6 +40,7 @@ void ofApp::setup(){
             cout << " - unavailable " << endl;
         }
 	}
+    // use camera 1 for the analysis
 	vidGrabber.setDeviceID(1);
     
     //vidGrabber.setVerbose(true);  // check what this is!
@@ -46,35 +50,30 @@ void ofApp::setup(){
     vidPlayer.play();
 #endif
     
-    
+    // **** allocate memory for different images used along the way
     colorImg.allocate(camWidth, camHeight);
     grayTempImage.allocate(camWidth, camHeight);
     grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
 
-    
-//    grayImage.allocate(camWidth, camHeight);
-//    grayBg.allocate(camWidth/scaleRatio, camHeight/scaleRatio);
 
-    
-    
     //******** Selects the method for learning background ***********
 	bLearnBakground = false; // learn from video ('space bar')
     bLoadPictureBakground = true; // load from picture file ('p' key)
-    //***************************************************************
+
     
-    
+    //******** threshold used for image analysis
 	threshold = 50;
     
+    
     // ************ LINE DECLARATION **************
-    firstLine.setCamSize(camWidth, camHeight);
-    secondLine.setCamSize(camWidth, camHeight);
+    firstLine.setCamSize(ROI.width, camHeight, (camWidth-ROI.width)/2, (camHeight-ROI.height)/2);
+    secondLine.setCamSize(ROI.width, camHeight, (camWidth-ROI.width)/2, (camHeight-ROI.height)/2);
     
     firstLine.setStatus(true);
     firstLine.setThickness(5);
     
     secondLine.setStatus(true);
     secondLine.setThickness(5);
-    // ********************************************
 
     
     ofSetFrameRate(15);
@@ -91,10 +90,9 @@ void ofApp::update(){
     bool bNewFrame = false;
     
     // ************ LINE UPDATE **************
-    firstLine.setCamSize(ROI.width, camHeight);
-    secondLine.setCamSize(ROI.width, camHeight);
-    // ********************************************
-
+    firstLine.setCamSize(ROI.width, ROI.height+(camHeight-ROI.height)/2, (camWidth-ROI.width)/2, (camHeight-ROI.height)/2);
+    secondLine.setCamSize(ROI.width, ROI.height+(camHeight-ROI.height)/2, (camWidth-ROI.width)/2, (camHeight-ROI.height)/2);
+    
     
 #ifdef _USE_LIVE_VIDEO
     vidGrabber.update();
@@ -122,12 +120,9 @@ void ofApp::update(){
         grayImage.clear();
         grayImage.allocate(ROI.width, ROI.height);
         grayImage.setFromPixels(grayTempImage.getRoiPixels(), ROI.width, ROI.height);
-  //      grayImage.resize(camWidth/scaleRatio, camHeight/scaleRatio);
         grayImage.resize(ROI.width/scaleRatio, ROI.height/scaleRatio);
       
       
-        
-
         
         //******** LEARN BACKGROUND (space bar) *******************
         if (bLearnBakground == true){
@@ -165,19 +160,14 @@ void ofApp::update(){
 		}
         
 
-        
 		// take the abs value of the difference between background and incoming and then threshold:
         grayDiff.clear();
         grayDiff.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
 		grayDiff.absDiff(grayBg, grayImage);
         grayDiff.threshold(threshold);
         
-		// find co ntours which are between the size of 20 pixels and 1/3 the w*h pixels.
-		// also, find holes is set to true so we will get interior contours as well....
-        
-        
-		contourFinder.findContours(grayDiff, 1, (ROI.width/scaleRatio*ROI.height/scaleRatio/4), 1, false);	// find holes (it is computationally expensive!!)
-        //addjust the value of the maximum blob size!
+        // **** find contours *******
+        contourFinder.findContours(grayDiff, 1, (ROI.width/scaleRatio*ROI.height/scaleRatio/4), 1, false);
 
          }
     
@@ -193,8 +183,6 @@ void ofApp::draw(){
     
 	//vidGrabber.draw(0, 0);
 	colorImg.draw(((camWidth-ROI.width)*0.5)-ROI.x, ((camHeight-ROI.height)*0.5)-ROI.y);
-
-
     
     firstLine.drawLine();
     secondLine.drawLine();
@@ -202,22 +190,32 @@ void ofApp::draw(){
     
     
     if (showCalibrationScreen) {
+        
+        // *** draw graySmall Image use (ROI scaled) ***
         ofSetHexColor(0xffffff);
         grayImage.draw(0, 0);
         ofNoFill();
         ofSetColor(255, 0, 0);
-        ofColor(0, 255, 0);
         ofRect((camWidth-ROI.width)*0.5, (camHeight-ROI.height)*0.5, ROI.width, ROI.height);
+        
+        // *** draw background image in use ***
+        ofSetHexColor(0xffffff);
+        grayBg.draw(camWidth/scaleRatio, 0);
     
+        
         if (contourFinder.nBlobs > 0){
+
+            // *** draw point and contour on small image ***
+            ofSetColor(0, 255, 0);
+            ofFill();
+            ofCircle(contourFinder.blobs[0].centroid.x, contourFinder.blobs[0].centroid.y, 10);
             contourFinder.blobs[0].draw(0, 0);
             
+            // *** draw point on big image ***
             ofSetColor(255, 0, 0);
-            ofFill();
             ofCircle(contourFinder.blobs[0].centroid.x*scaleRatio+((camWidth-ROI.width)/2), contourFinder.blobs[0].centroid.y*scaleRatio+((camHeight-ROI.height)/2), 10);
-
-            ofSetColor(0, 255, 0);
-            ofCircle(contourFinder.blobs[0].centroid.x, contourFinder.blobs[0].centroid.y, 10);
+            }
+        
             
             // ****** A report **********************
             ofSetHexColor(0xffffff);
@@ -231,8 +229,18 @@ void ofApp::draw(){
             ofDrawBitmapString(ofToString(ofGetFrameRate()), 10, 10);
             // **************************************
 
-        }
+        
     }else{
+        
+        // *** draw point on big image *** (comment on real use)
+        if (contourFinder.nBlobs > 0){
+        ofSetColor(0, 255, 0);
+        ofFill();
+        ofCircle(contourFinder.blobs[0].centroid.x*scaleRatio+((camWidth-ROI.width)/2), contourFinder.blobs[0].centroid.y*scaleRatio+((camHeight-ROI.height)/2), 5);
+
+        }
+        
+        // *** draw black frame arround display window ***
         ofSetColor(0, 0, 0);
         ofFill();
         ofRect(0, 0, camWidth, (camHeight-ROI.height)/2);
@@ -240,12 +248,6 @@ void ofApp::draw(){
         ofRect(0, 0, (camWidth-ROI.width)/2, camHeight);
         ofRect(((camWidth-ROI.width)/2)+ROI.width, 0, camWidth, camHeight);
     }
-    
-   
-    
-	   
-
-
 
 }
 
