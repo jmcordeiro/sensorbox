@@ -18,10 +18,10 @@ void ofApp::setup(){
     camWidth = 1280;
 	camHeight = 720;
     
-    ROI.width = camWidth;
-    ROI.height = camHeight;
-    ROI.x = 0;
-    ROI.y = 0;
+    ROI.width = 1265; // set it to camWidth to have ROI = to camera size
+    ROI.height = 390;// set it to camHeight to have ROI = to camera size
+    ROI.x = 10; // set it to zero to get ROI = camwidth
+    ROI.y = 330; // set it to zero to get ROI = camheight
 
     scaleRatio = 4;
     
@@ -56,30 +56,15 @@ void ofApp::setup(){
 //    grayBg.allocate(camWidth/scaleRatio, camHeight/scaleRatio);
 
     
-    /*
-    // This is used for analysing a smaller image
-    grayImage.allocate(320, 180); // one gray image
-    grayBg.allocate(320, 180);
-	grayDiff.allocate(320, 180);
-    */
-    
-    /*
-     // This is used for analizing HD video
-     grayImage.allocate(1280, 720);
-     grayBg.allocate(1280, 720);
-     grayDiff.allocate(1280, 720);
-     */
     
     //******** Selects the method for learning background ***********
-	bLearnBakground = true; // learn from video ('space bar')
-    bLoadPictureBakground = false; // load from picture file ('p' key)
+	bLearnBakground = false; // learn from video ('space bar')
+    bLoadPictureBakground = true; // load from picture file ('p' key)
     //***************************************************************
     
     
 	threshold = 50;
     
-    
-
     // ************ LINE DECLARATION **************
     firstLine.setCamSize(camWidth, camHeight);
     secondLine.setCamSize(camWidth, camHeight);
@@ -93,6 +78,8 @@ void ofApp::setup(){
 
     
     ofSetFrameRate(15);
+    
+    
 }
 
 
@@ -101,8 +88,13 @@ void ofApp::setup(){
 void ofApp::update(){
 
 	ofBackground(0,0,0);
-    
     bool bNewFrame = false;
+    
+    // ************ LINE UPDATE **************
+    firstLine.setCamSize(ROI.width, camHeight);
+    secondLine.setCamSize(ROI.width, camHeight);
+    // ********************************************
+
     
 #ifdef _USE_LIVE_VIDEO
     vidGrabber.update();
@@ -126,20 +118,14 @@ void ofApp::update(){
         grayTempImage.allocate(camWidth, camHeight);
         grayTempImage = colorImg;
         grayTempImage.setROI(ROI);
-        cout << "COLOR IMG: " << colorImg.width << " x " << colorImg.height << endl;
-        cout << "GRAY TEMP: " << grayTempImage.width << " x " << grayTempImage.height << endl;
-        cout << "ROI TEMP: " << grayTempImage.getROI().width << " x " << grayTempImage.getROI().height << endl;
-        
+      
         grayImage.clear();
         grayImage.allocate(ROI.width, ROI.height);
         grayImage.setFromPixels(grayTempImage.getRoiPixels(), ROI.width, ROI.height);
   //      grayImage.resize(camWidth/scaleRatio, camHeight/scaleRatio);
         grayImage.resize(ROI.width/scaleRatio, ROI.height/scaleRatio);
       
-        cout << "COLOR IMG: " << colorImg.width << " x " << colorImg.height << endl;
-        cout << "GRAY TEMP: " << grayTempImage.width << " x " << grayTempImage.height << endl;
-        cout << "ROI TEMP: " << grayTempImage.getROI().width << " x " << grayTempImage.getROI().height << endl;
-
+      
         
 
         
@@ -149,21 +135,32 @@ void ofApp::update(){
             grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
             grayImage.scaleIntoMe(grayBg);
 			grayBg = grayImage;
-            bLearnBakground = false;
+        
+            bgImg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
+            unsigned char * pixels = grayBg.getPixels();
+            bgImg.setFromPixels(pixels, ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
+            bgImg.saveImage("background-"+ofGetTimestampString()+".png");
             
-            cout <<"***************" << endl << endl;
-            cout << "GRAY BG: " << grayBg.width << " x " << grayBg.height << endl;
-            cout << "GRAY IMG: " << grayImage.width << " x " << grayImage.height << endl;
+            bLearnBakground = false;
+            cout << "------------------" << endl;
+            cout << "------------------" << endl; 
+            cout << "CAPTURE BACKGROUNG" << endl;
+            cout << "------------------" << endl;
+            cout << "------------------" << endl;
 
 		}
  
         
         //******** LOAD BACKGROUND PICTURE ('p' key) *******************
         if (bLoadPictureBakground == true){
-            loader.loadImage("backgd_1.jpg");
+            loader.loadImage("background.png");
+            cout << "load image from file" << endl;
             loader.setImageType(OF_IMAGE_GRAYSCALE);
-            loader.resize(camWidth/scaleRatio, camHeight/scaleRatio);
-            grayBg.setFromPixels(loader.getPixels(),loader.getWidth(), loader.getHeight());
+            loader.resize(ROI.width/scaleRatio, ROI.width/scaleRatio);
+            cout << "resize image" << endl;
+            grayBg.clear();
+            grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
+            grayBg.setFromPixels(loader.getPixels(),ROI.width/scaleRatio, ROI.height/scaleRatio);
 			bLoadPictureBakground = false;
 		}
         
@@ -183,6 +180,8 @@ void ofApp::update(){
         //addjust the value of the maximum blob size!
 
          }
+    
+    
 }
 
 //--------------------------------------------------------------
@@ -193,51 +192,14 @@ void ofApp::draw(){
 	ofSetHexColor(0xffffff);
     
 	//vidGrabber.draw(0, 0);
-    
- //   colorImg.draw(0, 0);
 	colorImg.draw(((camWidth-ROI.width)*0.5)-ROI.x, ((camHeight-ROI.height)*0.5)-ROI.y);
 
-    //grayImageTest.draw(0, 0);
+
     
-  //  grayImage.draw(320, 0);
-	//grayBg.draw(320*2,0);
-    
- //   grayDiff.draw(320*3,0);
-    
-	// then draw the contours:
-    
-    //	ofFill();
-    //	ofSetHexColor(0x333333);
-    //	ofRect(360,540,320,240);
-    //	ofSetHexColor(0xffffff);
-    
-	// we could draw the whole contour finder
-	//contourFinder.draw(0, 0);
+    firstLine.drawLine();
+    secondLine.drawLine();
     
     
-    /*	// or, instead we can draw each blob individually from the blobs vector,
-     // this is how to get access to them:
-     for (int i = 0; i < contourFinder.nBlobs; i++){
-     contourFinder.blobs[i].draw(0, 0);
-     
-     // draw over the centroid if the blob is a hole
-     ofSetColor(255);
-     if(contourFinder.blobs[i].hole){
-     ofDrawBitmapString("hole",
-     contourFinder.blobs[i].boundingRect.getCenter().x,
-     contourFinder.blobs[i].boundingRect.getCenter().y);
-     }
-     }
-     */
-    
-    /*
-    ofFill();
-    ofColor(0, 0, 0);
-    ofRect(0, 0, camWidth, ROI.y);
-    ofRect(0, 0, ROI.x, camHeight);
-    ofRect(0, ROI.height+ROI.y, camWidth, camHeight);
-    ofRect(ROI.width+ROI.x, 0, camWidth, camHeight);
-*/
     
     if (showCalibrationScreen) {
         ofSetHexColor(0xffffff);
@@ -256,27 +218,35 @@ void ofApp::draw(){
 
             ofSetColor(0, 255, 0);
             ofCircle(contourFinder.blobs[0].centroid.x, contourFinder.blobs[0].centroid.y, 10);
+            
+            // ****** A report **********************
+            ofSetHexColor(0xffffff);
+            stringstream reportStr;
+            reportStr << "bg subtraction and blob detection" << endl
+            << "press ' ' to capture bg" << endl
+            << "threshold " << threshold << " (press: +/-)" << endl
+            << "num blobs found " << contourFinder.nBlobs << ", fps: " << ofGetFrameRate();
+            
+            ofDrawBitmapString(reportStr.str(), 20, 600);
+            ofDrawBitmapString(ofToString(ofGetFrameRate()), 10, 10);
+            // **************************************
+
         }
+    }else{
+        ofSetColor(0, 0, 0);
+        ofFill();
+        ofRect(0, 0, camWidth, (camHeight-ROI.height)/2);
+        ofRect(0, ((camHeight-ROI.height)/2)+ROI.height, camWidth, camHeight);
+        ofRect(0, 0, (camWidth-ROI.width)/2, camHeight);
+        ofRect(((camWidth-ROI.width)/2)+ROI.width, 0, camWidth, camHeight);
     }
     
    
     
-	// finally, a report:
-	ofSetHexColor(0xffffff);
-	stringstream reportStr;
-	reportStr << "bg subtraction and blob detection" << endl
-    << "press ' ' to capture bg" << endl
-    << "threshold " << threshold << " (press: +/-)" << endl
-    << "num blobs found " << contourFinder.nBlobs << ", fps: " << ofGetFrameRate();
-    
-	
-    ofDrawBitmapString(reportStr.str(), 20, 600);
-    ofDrawBitmapString(ofToString(ofGetFrameRate()), 10, 10);
-    
-    firstLine.drawLine();
-    secondLine.drawLine();
+	   
 
-    
+
+
 }
 
 //--------------------------------------------------------------
@@ -325,8 +295,15 @@ void ofApp::keyPressed(int key){
         case 'z':
             showCalibrationScreen = !showCalibrationScreen;
 			break;
-
-
+        case 'q':
+            cout <<"***************" << endl;
+            cout << "GRAY BG: " << grayBg.width << " x " << grayBg.height << endl;
+            cout << "GRAY IMG: " << grayImage.width << " x " << grayImage.height << endl;
+            cout << "COLOR IMG: " << colorImg.width << " x " << colorImg.height << endl;
+            cout << "GRAY TEMP: " << grayTempImage.width << " x " << grayTempImage.height << endl;
+            cout << "ROI TEMP: " << grayTempImage.getROI().width << " x " << grayTempImage.getROI().height << endl;
+            cout << "ROI x, y: " << grayTempImage.getROI().x << " , " << grayTempImage.getROI().y << endl << endl;
+			break;
         }
 }
 

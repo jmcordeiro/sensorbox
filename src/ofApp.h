@@ -1,7 +1,6 @@
 #pragma once
 
 #include "ofMain.h"
-
 #include "ofxOpenCv.h"
 #include "drawLine.h"
 
@@ -47,6 +46,8 @@ public:
     bool bLearnBakground, bLoadPictureBakground;
     bool showCalibrationScreen;
 
+    ofImage bgImg;
+    
     Line firstLine;
     Line secondLine;
     
