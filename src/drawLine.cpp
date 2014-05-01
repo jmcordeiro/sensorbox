@@ -22,10 +22,14 @@ Line::Line(){
     height = 720;
     reverse = false;
     xIniPos = 0;
+    paralaxX = 0;
+    lineSender.setup(HOST, PORT);
+
 
 };
 
 Line::~Line(){
+
 };
 
 void Line::drawLine(){
@@ -46,6 +50,7 @@ void Line::drawLine(){
         
     }
     
+    getLinePosition();
     
 };
 
@@ -56,10 +61,18 @@ void Line::setStatus(bool _status){
 bool Line::getStatus(){
 };
 
-int Line::getXposition(){
-};
 
-int Line::getYposition(){
+int Line::getLinePosition(){
+    
+    int linePos;
+    linePos = (int) (xPosition-paralaxX)/(width/100);
+    cout << "LINE POS: "<<linePos << endl;
+    
+    ofxOscMessage l1_p;
+    l1_p.setAddress("/line_1_Pos");
+    l1_p.addIntArg(linePos);
+    lineSender.sendMessage(l1_p);
+    
 };
 
 void Line::setVelocity(int _vel){
@@ -90,9 +103,10 @@ bool Line::getOrientation(){
 
 void Line::setCamSize(int _width, int _height, int _x, int _y){
     width = _width;
-    height = _height;
+    height = _height+_y;
     xIniPos = _x;
     yPosition = _y;
+    paralaxX = _x;
     
 };
 

@@ -38,27 +38,28 @@
 
 class LiveFish{
 
-    int fishXpos;
-    int fishyYpos;
     int velocity;
     int paning;
+    int paralaxX;
+    int paralaxY;
+    int canvasX;
+    int canvasY;
     string oscMessage;
     unsigned long long newTime;
     ofVec2f fishPos_1;
     ofVec2f fishPos_2;
     ofxOscSender oscSenderFish;
+    
 
     
 public:
     LiveFish();
     ~LiveFish();
-    void setFishPos(int _x, int _y);
+    void makeFishToWork(int _cX, int _cY, int _x, int _y, int _w, int _h, int _parX, int _parY, int _scaledOutput);
 
-    int getVelocity(float _x, float _y);
-    ofVec2f ofgetPosition();
+    int getVelocity();
+    ofVec2f getPosition(int _scaledOutput);
     
-    void sendOsc();
-
 
 };
 

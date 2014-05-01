@@ -12,6 +12,11 @@
 #include <iostream>
 #include "ofMain.h"
 
+#include "ofxOsc.h"
+
+#define HOST "localhost"
+#define PORT 12345
+
 
 class Line {
     int velocity;
@@ -25,6 +30,8 @@ class Line {
     int width;
     int height;
     bool reverse;
+    int paralaxX;
+    ofxOscSender lineSender;
     
 public:
     Line();
@@ -34,8 +41,7 @@ public:
     void setStatus(bool);
     bool getStatus();
     
-    int getXposition();
-    int getYposition();
+    int getLinePosition();
     
     void setVelocity(int);
     int getVelocity();

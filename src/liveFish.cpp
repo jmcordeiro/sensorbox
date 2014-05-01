@@ -18,55 +18,71 @@
 
 LiveFish::LiveFish(){
     newTime = ofGetElapsedTimeMillis();
-    fishXpos = 0;
-    fishyYpos = 0;
     fishPos_1 = ofVec2f(0 , 0);
     fishPos_2 = ofVec2f(0, 0);
     oscSenderFish.setup(HOST, PORT);
-
-
 }
 
 
 LiveFish::~LiveFish(){
 }
 
-void LiveFish::setFishPos(int _x, int _y){
-    fishXpos = _x;
-    fishyYpos = _y;
+void LiveFish::makeFishToWork(int _cX, int _cY, int _x, int _y, int _w, int _h, int _parX, int _parY, int _scaledOutput){
+   
+    fishPos_1 = ofVec2f(_x, _y);
+    canvasX = _w;
+    canvasY = _h;
+    paralaxX = _parX;
+    paralaxY = _parY;
+    
+    getVelocity();
+    getPosition(_scaledOutput);
+    
 }
 
+
 // returns fish velocity and send it over OSC
-int LiveFish::getVelocity(float _x, float _y){
-    fishPos_1 = ofVec2f(_x, _y);
+int LiveFish::getVelocity(){
     
+    // calculates velocity
     int distance = fishPos_2.squareDistance(fishPos_1);
-    newTime = ofGetElapsedTimeMillis()-newTime;
-    velocity = distance/(newTime*0.0001);
+    velocity = distance/(ofGetLastFrameTime()*100); // change this number for scling the velocity values
     fishPos_2 = ofVec2f(fishPos_1);
- 
+
+    cout << "new velocity: " << velocity << endl;
+    
+    
+    // Sends OSC Messagens (velocity)
     ofxOscMessage v, x, y;
     v.setAddress("/fishVelocity");
     v.addIntArg(velocity);
     oscSenderFish.sendMessage(v);
-
-    x.setAddress("/fishX");
-    x.addIntArg(_x); // change this to propprtional values (example:
-    oscSenderFish.sendMessage(x);
-
-    y.setAddress("/fishY");
-    y.addIntArg(_y);
-    oscSenderFish.sendMessage(y);
-
     
     return velocity;
 }
 
 
-ofVec2f LiveFish::ofgetPosition(){
+ofVec2f LiveFish::getPosition(int _scaledOutput){
+   
+    ofVec2f fishPosition;
+    fishPosition = ofVec2f((int) (fishPos_1.x-paralaxX)/(canvasX/_scaledOutput), (int)(fishPos_1.y-paralaxY)/(canvasY/_scaledOutput));
+    
+    //cout << fishPosition.x << " - " << fishPosition.y << endl;
+    
+    // Sends OSC Messagens (velocity)
+    ofxOscMessage p_x, p_y;
+    p_x.setAddress("/fishX");
+    p_x.addIntArg(fishPosition.x);
+    oscSenderFish.sendMessage(p_x);
+
+    p_y.setAddress("/fishY");
+    p_y.addIntArg(fishPosition.y);
+    oscSenderFish.sendMessage(p_y);
+
+    
+    return fishPosition;
     
 }
 
-void LiveFish::sendOsc(){
 
-}
+

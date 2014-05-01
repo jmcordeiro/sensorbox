@@ -31,6 +31,10 @@ public:
     int camWidth;
     int camHeight;
     int scaleRatio;
+    int paralax_x;
+    int paralax_y;
+    
+    ofVec2f fishPosBig, fishPosSmall;
      
     ofRectangle ROI;
     

@@ -1,9 +1,5 @@
 /*
- 
- notes:
- - maybe in the futre, for optimization purposes, i can use a static image as backgroun (white picture like the aquarios background
- - maybe I dont need to do frame differencing
- 
+  notes:
  - i'm testing doing the cv with a smaller image and drawing the image from VideGrabber
  - It works not so good and I'm not sure if it computationally less demanding (cpu 74%, memory 98%).
  */
@@ -24,6 +20,9 @@ void ofApp::setup(){
     ROI.x = 10; // set it to zero to get ROI = camwidth
     ROI.y = 330; // set it to zero to get ROI = camheight
 
+    paralax_x = (camWidth-ROI.width)*0.5;
+    paralax_y = (camHeight-ROI.height)*0.5;
+    
     // Define a scale ratio to resize the original image for analysis
     scaleRatio = 4;
     
@@ -65,15 +64,15 @@ void ofApp::setup(){
 	threshold = 50;
     
     
-    // ************ LINE DECLARATION **************
-    firstLine.setCamSize(ROI.width, camHeight, (camWidth-ROI.width)/2, (camHeight-ROI.height)/2);
-    secondLine.setCamSize(ROI.width, camHeight, (camWidth-ROI.width)/2, (camHeight-ROI.height)/2);
+    // ************ LINE DECLARATION ********
+    firstLine.setCamSize(ROI.width, camHeight, paralax_x, paralax_y);
+ //   secondLine.setCamSize(ROI.width, camHeight, paralax_x, paralax_y);
     
     firstLine.setStatus(true);
     firstLine.setThickness(5);
     
-    secondLine.setStatus(true);
-    secondLine.setThickness(5);
+ //   secondLine.setStatus(true);
+ //   secondLine.setThickness(5);
 
     
     ofSetFrameRate(15);
@@ -91,9 +90,14 @@ void ofApp::update(){
     bool bNewFrame = false;
 
     
-    // ************ LINE UPDATE **************
-    firstLine.setCamSize(ROI.width, ROI.height+(camHeight-ROI.height)/2, (camWidth-ROI.width)/2, (camHeight-ROI.height)/2);
-    secondLine.setCamSize(ROI.width, ROI.height+(camHeight-ROI.height)/2, (camWidth-ROI.width)/2, (camHeight-ROI.height)/2);
+    paralax_x = (camWidth-ROI.width)*0.5;
+    paralax_y = (camHeight-ROI.height)*0.5;
+
+
+    
+    // ************ LINE UPDATE ********* ()
+    firstLine.setCamSize(ROI.width, ROI.height, paralax_x, paralax_y);
+//    secondLine.setCamSize(ROI.width, ROI.height, paralax_x, paralax_y);
     
     
 #ifdef _USE_LIVE_VIDEO
@@ -125,7 +129,6 @@ void ofApp::update(){
         grayImage.resize(ROI.width/scaleRatio, ROI.height/scaleRatio);
       
       
-        
         //******** LEARN BACKGROUND (space bar) *******************
         if (bLearnBakground == true){
             grayBg.clear();
@@ -173,8 +176,18 @@ void ofApp::update(){
 
          }
     
-        cout << "velocity: " << myFish.getVelocity(contourFinder.blobs[0].centroid.x*scaleRatio+((camWidth-ROI.width)/2), contourFinder.blobs[0].centroid.y*scaleRatio+((camHeight-ROI.height)/2)) << endl;
+    if (contourFinder.nBlobs > 0){
+        fishPosSmall = ofVec2f(contourFinder.blobs[0].centroid.x, contourFinder.blobs[0].centroid.y);
+        fishPosBig = ofVec2f(fishPosSmall.x*scaleRatio+(paralax_x), fishPosSmall.y*scaleRatio+(paralax_y));
+    }
+    
+    // this method sends information for fish class variables
+    myFish.makeFishToWork(camWidth, camHeight, fishPosBig.x, fishPosBig.y, ROI.width, ROI.height, paralax_x, paralax_y, 100);
 
+
+    /*
+     cout << "velocity: " << myFish.getVelocity(fishPosBig.x,fishPosBig.y) << endl;
+*/
 
 }
 
@@ -186,11 +199,10 @@ void ofApp::draw(){
 	ofSetHexColor(0xffffff);
     
 	//vidGrabber.draw(0, 0);
-	colorImg.draw(((camWidth-ROI.width)*0.5)-ROI.x, ((camHeight-ROI.height)*0.5)-ROI.y);
+	colorImg.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
     
     firstLine.drawLine();
-    secondLine.drawLine();
-    
+   // secondLine.drawLine();
     
     
     if (showCalibrationScreen) {
@@ -200,7 +212,7 @@ void ofApp::draw(){
         grayImage.draw(0, 0);
         ofNoFill();
         ofSetColor(255, 0, 0);
-        ofRect((camWidth-ROI.width)*0.5, (camHeight-ROI.height)*0.5, ROI.width, ROI.height);
+        ofRect(paralax_x, paralax_y, ROI.width, ROI.height);
         
         // *** draw background image in use ***
         ofSetHexColor(0xffffff);
@@ -217,8 +229,7 @@ void ofApp::draw(){
             
             // *** draw point on big image ***
             ofSetColor(255, 0, 0);
-            ofCircle(contourFinder.blobs[0].centroid.x*scaleRatio+((camWidth-ROI.width)/2), contourFinder.blobs[0].centroid.y*scaleRatio+((camHeight-ROI.height)/2), 10);
-
+            ofCircle(fishPosBig.x, fishPosBig.y, 10);
 
             }
         
@@ -242,17 +253,17 @@ void ofApp::draw(){
         if (contourFinder.nBlobs > 0){
         ofSetColor(0, 255, 0);
         ofFill();
-        ofCircle(contourFinder.blobs[0].centroid.x*scaleRatio+((camWidth-ROI.width)/2), contourFinder.blobs[0].centroid.y*scaleRatio+((camHeight-ROI.height)/2), 5);
+        ofCircle(fishPosBig.x,fishPosBig.y, 5);
 
         }
         
         // *** draw black frame arround display window ***
         ofSetColor(0, 0, 0);
         ofFill();
-        ofRect(0, 0, camWidth, (camHeight-ROI.height)/2);
-        ofRect(0, ((camHeight-ROI.height)/2)+ROI.height, camWidth, camHeight);
-        ofRect(0, 0, (camWidth-ROI.width)/2, camHeight);
-        ofRect(((camWidth-ROI.width)/2)+ROI.width, 0, camWidth, camHeight);
+        ofRect(0, 0, camWidth, paralax_y);
+        ofRect(0, (paralax_y)+ROI.height, camWidth, camHeight);
+        ofRect(0, 0, paralax_x, camHeight);
+        ofRect((paralax_x)+ROI.width, 0, camWidth, camHeight);
     }
 
 }
@@ -260,11 +271,13 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     
-	switch (key){
-		case ' ':
+    switch (key) {
+
+        case ' ': // loads the picture as learning background
 			bLearnBakground = true;
 			break;
-        case 'p': // loads the picture as learning background
+    
+            case 'p': // loads the picture as learning background
 			bLoadPictureBakground = true;
 			break;
 		case 'y':
@@ -320,6 +333,6 @@ void ofApp::keyPressed(int key){
 void ofApp::mouseMoved(int x, int y ){
     
     firstLine.setVelocity(x / 100);
-    secondLine.setVelocity(y / 100);
+    //secondLine.setVelocity(y / 100);
     
 }
