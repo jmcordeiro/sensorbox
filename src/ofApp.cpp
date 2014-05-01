@@ -78,6 +78,7 @@ void ofApp::setup(){
     
     ofSetFrameRate(15);
     
+
     
 }
 
@@ -88,6 +89,7 @@ void ofApp::update(){
 
 	ofBackground(0,0,0);
     bool bNewFrame = false;
+
     
     // ************ LINE UPDATE **************
     firstLine.setCamSize(ROI.width, ROI.height+(camHeight-ROI.height)/2, (camWidth-ROI.width)/2, (camHeight-ROI.height)/2);
@@ -171,7 +173,9 @@ void ofApp::update(){
 
          }
     
-    
+        cout << "velocity: " << myFish.getVelocity(contourFinder.blobs[0].centroid.x*scaleRatio+((camWidth-ROI.width)/2), contourFinder.blobs[0].centroid.y*scaleRatio+((camHeight-ROI.height)/2)) << endl;
+
+
 }
 
 //--------------------------------------------------------------
@@ -214,6 +218,8 @@ void ofApp::draw(){
             // *** draw point on big image ***
             ofSetColor(255, 0, 0);
             ofCircle(contourFinder.blobs[0].centroid.x*scaleRatio+((camWidth-ROI.width)/2), contourFinder.blobs[0].centroid.y*scaleRatio+((camHeight-ROI.height)/2), 10);
+
+
             }
         
             

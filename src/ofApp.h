@@ -3,6 +3,8 @@
 #include "ofMain.h"
 #include "ofxOpenCv.h"
 #include "drawLine.h"
+#include "liveFish.h"
+
 
 // #define _USE_LIVE_VIDEO		// uncomment this to use a live camera
 // otherwise, we'll use a movie file
@@ -50,6 +52,8 @@ public:
     
     Line firstLine;
     Line secondLine;
+    
+    LiveFish myFish;
     
 };
 
