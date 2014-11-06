@@ -8,10 +8,16 @@
 
 #include "flickering.h"
 
+int a = 0;
 
 void flickering(int x, int y, int w, int h, int t){
     
-    ofColor(255, 0, 0, ofRandom(10));
-    ofRect(x, y, w, h);
+    if (ofGetFrameNum()%2== 0){
+        a = ofRandom(t);
+    }
     
+    
+    ofSetColor(0, 0, 0, a);
+
+    ofRect(x, y, w, h);
 };

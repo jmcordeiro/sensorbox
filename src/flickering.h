@@ -20,7 +20,7 @@
 #define HOST "localhost"
 #define PORT 12345
 
-int intensity;
+
 
 void flickering(int x, int y, int w, int h, int t);
 

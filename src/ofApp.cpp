@@ -191,6 +191,15 @@ void ofApp::update(){
 
 }
 
+
+
+
+
+
+
+
+
+
 //--------------------------------------------------------------
 void ofApp::draw(){
     
@@ -203,6 +212,12 @@ void ofApp::draw(){
     
     firstLine.drawLine();
    // secondLine.drawLine();
+    
+    
+    // draws the flickering effect assigned to the rithmic drone. The final argument changes the intensity
+    flickering(paralax_x, paralax_y, ROI.width, ROI.height,  40);
+    
+    
     
     
     if (showCalibrationScreen) {
@@ -266,6 +281,18 @@ void ofApp::draw(){
     }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
