@@ -4,9 +4,10 @@
 #include "ofxOpenCv.h"
 #include "drawLine.h"
 #include "liveFish.h"
+#include "flickering.h"
 
 
-// #define _USE_LIVE_VIDEO		// uncomment this to use a live camera
+#define _USE_LIVE_VIDEO		// uncomment this to use a live camera
 // otherwise, we'll use a movie file
 
 

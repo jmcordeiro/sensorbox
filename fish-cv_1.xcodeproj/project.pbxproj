@@ -25,6 +25,7 @@
 		4507870F191278650027FA62 /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450786F119126AF70027FA62 /* OscReceivedElements.cpp */; };
 		45078710191278650027FA62 /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450786F319126AF70027FA62 /* OscTypes.cpp */; };
 		453FAA4C19114986005F09CA /* liveFish.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453FAA4A19114986005F09CA /* liveFish.cpp */; };
+		45AA3E4A1A0BE4B8009B5B02 /* flickering.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3E481A0BE4B8009B5B02 /* flickering.cpp */; };
 		45CB3779190A8A4D001C9834 /* drawLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45CB3777190A8A4D001C9834 /* drawLine.cpp */; };
 		63020F16C7E8DED980111241 /* ofxCvImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C6151136D101F857DAE12722 /* ofxCvImage.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
@@ -134,6 +135,8 @@
 		453FAA4A19114986005F09CA /* liveFish.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = liveFish.cpp; sourceTree = "<group>"; };
 		453FAA4B19114986005F09CA /* liveFish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = liveFish.h; sourceTree = "<group>"; };
 		45410DD818BB205166E67E89 /* any.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = any.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/any.h; sourceTree = SOURCE_ROOT; };
+		45AA3E481A0BE4B8009B5B02 /* flickering.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = flickering.cpp; sourceTree = "<group>"; };
+		45AA3E491A0BE4B8009B5B02 /* flickering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flickering.h; sourceTree = "<group>"; };
 		45CB3777190A8A4D001C9834 /* drawLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = drawLine.cpp; sourceTree = "<group>"; };
 		45CB3778190A8A4D001C9834 /* drawLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = drawLine.h; sourceTree = "<group>"; };
 		45F38573A0B0DEEC8BBC7A2C /* simplex_downhill.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = simplex_downhill.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/simplex_downhill.h; sourceTree = SOURCE_ROOT; };
@@ -697,6 +700,8 @@
 			isa = PBXGroup;
 			children = (
 				45CB3777190A8A4D001C9834 /* drawLine.cpp */,
+				45AA3E481A0BE4B8009B5B02 /* flickering.cpp */,
+				45AA3E491A0BE4B8009B5B02 /* flickering.h */,
 				45CB3778190A8A4D001C9834 /* drawLine.h */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				453FAA4A19114986005F09CA /* liveFish.cpp */,
@@ -815,6 +820,7 @@
 				4507870D191278650027FA62 /* OscOutboundPacketStream.cpp in Sources */,
 				4507870E191278650027FA62 /* OscPrintReceivedElements.cpp in Sources */,
 				4507870F191278650027FA62 /* OscReceivedElements.cpp in Sources */,
+				45AA3E4A1A0BE4B8009B5B02 /* flickering.cpp in Sources */,
 				45078710191278650027FA62 /* OscTypes.cpp in Sources */,
 				45078708191270600027FA62 /* IpEndpointName.cpp in Sources */,
 				45078709191270600027FA62 /* NetworkingUtils.cpp in Sources */,

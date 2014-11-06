@@ -39,8 +39,8 @@ void ofApp::setup(){
             cout << " - unavailable " << endl;
         }
 	}
-    // use camera 1 for the analysis
-	vidGrabber.setDeviceID(1);
+    // use camera 0 for the analysis
+	vidGrabber.setDeviceID(0);
     
     //vidGrabber.setVerbose(true);  // check what this is!
     vidGrabber.initGrabber(camWidth,camHeight);
@@ -239,8 +239,7 @@ void ofApp::draw(){
             stringstream reportStr;
             reportStr << "bg subtraction and blob detection" << endl
             << "press ' ' to capture bg" << endl
-            << "threshold " << threshold << " (press: +/-)" << endl
-            << "num blobs found " << contourFinder.nBlobs << ", fps: " << ofGetFrameRate();
+            << "threshold " << threshold << " (press: +/-)" << endl << "num blobs found " << contourFinder.nBlobs << ", fps: " << ofGetFrameRate() <<endl  << "'p': // loads the picture as learning background" << "'y':  threshold ++ " << "'r': threshold --;" << "'o': ROI width  +;" << "'l': ROI width - ; " << endl <<"'i': ROI height +" <<       " 'k': ROI height - " << "'w': ROI y -" << "'s': ROI y + "<< "'a': ROI x -" << " 'd': ROI x + " << "'z': showCalibrationScreen " << "'q':";
             
             ofDrawBitmapString(reportStr.str(), 20, 600);
             ofDrawBitmapString(ofToString(ofGetFrameRate()), 10, 10);
