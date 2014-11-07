@@ -5,7 +5,7 @@
 #include "drawLine.h"
 #include "liveFish.h"
 #include "flickering.h"
-
+#include "demoParticle.h"
 
 #define _USE_LIVE_VIDEO		// uncomment this to use a live camera
 // otherwise, we'll use a movie file
@@ -20,6 +20,7 @@ public:
     
     void keyPressed(int key);
     void mouseMoved(int x, int y );
+    void resetParticles();
 
     
 #ifdef _USE_LIVE_VIDEO
@@ -62,9 +63,13 @@ public:
     
     
     
+    particleMode currentMode;
+    string currentModeStr;
     
-    
-    
+    vector <demoParticle> p;
+    vector <ofPoint> attractPoints;
+    vector <ofPoint> attractPointsWithMovement;
+
     
     
     
