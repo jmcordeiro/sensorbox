@@ -86,6 +86,7 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
+
 	ofBackground(0,0,0);
     bool bNewFrame = false;
  
@@ -193,8 +194,10 @@ void ofApp::update(){
     
     // *************** BUBBLE PARTICLES *****************
     // (NOT WORKINGGGGGGG)
-    //   PrtBubbles.updatePrtSqr();
-    
+     //  PrtBubbles.updatePrtSqr();
+    //bubbles.fluidUpdate(ROI.width, ROI.height);
+
+
 }
 
 
@@ -286,10 +289,12 @@ void ofApp::draw(){
     
     // *************** BUBBLE PARTICLES *****************
     // (NOT WORKINGGGGGGG)
-    // PrtBubbles.drawPrtSqr();
+   //  PrtBubbles.drawPrtSqr();
+
+    
+    //  bubbles.fluidDraw();
 
 }
-
 
 
 

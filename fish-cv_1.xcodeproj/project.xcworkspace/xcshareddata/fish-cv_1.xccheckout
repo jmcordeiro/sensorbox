@@ -5,34 +5,47 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>CED556BA-C9C9-44B0-B6CC-0E49C0C09080</string>
+	<string>ED58625C-5B3A-4861-9A1A-B949AB84731A</string>
 	<key>IDESourceControlProjectName</key>
 	<string>fish-cv_1</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>912A5C00-3F57-408A-A2BA-ACDD46887875</key>
-		<string>https://github.com/jmcordeiro/fish_sound_Project.git</string>
+		<key>bcafe4b5-2c32-5291-7ec0-ce57b7db7bff++505</key>
+		<string>https://github.com/jmcordeiro/fish_opencvExample/trunk</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
-	<string>fish-cv_1.xcodeproj/project.xcworkspace</string>
+	<string>fish-cv_1.xcodeproj</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>912A5C00-3F57-408A-A2BA-ACDD46887875</key>
+		<key>bcafe4b5-2c32-5291-7ec0-ce57b7db7bff++505</key>
 		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>bcafe4b5-2c32-5291-7ec0-ce57b7db7bff++505</key>
+		<string>https://github.com/jmcordeiro/fish_opencvExample</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
 	<string>https://github.com/jmcordeiro/fish_sound_Project.git</string>
 	<key>IDESourceControlProjectVersion</key>
-	<integer>110</integer>
+	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>912A5C00-3F57-408A-A2BA-ACDD46887875</string>
+	<string>bcafe4b5-2c32-5291-7ec0-ce57b7db7bff++505</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>912A5C00-3F57-408A-A2BA-ACDD46887875</string>
+			<string>bcafe4b5-2c32-5291-7ec0-ce57b7db7bff++505</string>
+			<key>IDESourceControlWCCName</key>
+			<string>fish_opencvExample</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>bcafe4b5-2c32-5291-7ec0-ce57b7db7bff++505</string>
 			<key>IDESourceControlWCCName</key>
 			<string>fish_opencvExample</string>
 		</dict>
