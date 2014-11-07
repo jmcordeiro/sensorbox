@@ -6,6 +6,8 @@
 #include "liveFish.h"
 #include "flickering.h"
 
+#include "ofxGpuParticles.h"
+#include "particlesSqr.h"
 
 #define _USE_LIVE_VIDEO		// uncomment this to use a live camera
 // otherwise, we'll use a movie file
@@ -60,11 +62,16 @@ public:
     
     LiveFish myFish;
     
+    ParticlesSqr PrtBubbles;
     
     
+    //******** THIS IS FOR THE PARTICLES **********
+    // set any update uniforms in this function
+    void onParticlesUpdate(ofShader& shader);
     
-    
-    
+    ofxGpuParticles particles;
+    ofEasyCam cam;
+        //******** THIS IS FOR THE PARTICLES **********
     
     
     

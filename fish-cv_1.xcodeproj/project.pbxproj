@@ -25,6 +25,8 @@
 		4507870F191278650027FA62 /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450786F119126AF70027FA62 /* OscReceivedElements.cpp */; };
 		45078710191278650027FA62 /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450786F319126AF70027FA62 /* OscTypes.cpp */; };
 		453FAA4C19114986005F09CA /* liveFish.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453FAA4A19114986005F09CA /* liveFish.cpp */; };
+		458622A91A0C2A0500193433 /* GpuParticles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 458622A61A0C2A0500193433 /* GpuParticles.cpp */; };
+		458622AD1A0C2A4700193433 /* particlesSqr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 458622AB1A0C2A4700193433 /* particlesSqr.cpp */; };
 		45AA3E4A1A0BE4B8009B5B02 /* flickering.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3E481A0BE4B8009B5B02 /* flickering.cpp */; };
 		45CB3779190A8A4D001C9834 /* drawLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45CB3777190A8A4D001C9834 /* drawLine.cpp */; };
 		63020F16C7E8DED980111241 /* ofxCvImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C6151136D101F857DAE12722 /* ofxCvImage.cpp */; };
@@ -135,6 +137,17 @@
 		453FAA4A19114986005F09CA /* liveFish.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = liveFish.cpp; sourceTree = "<group>"; };
 		453FAA4B19114986005F09CA /* liveFish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = liveFish.h; sourceTree = "<group>"; };
 		45410DD818BB205166E67E89 /* any.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = any.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/any.h; sourceTree = SOURCE_ROOT; };
+		458622A31A0C2A0500193433 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		458622A41A0C2A0500193433 /* readme.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.md; sourceTree = "<group>"; };
+		458622A61A0C2A0500193433 /* GpuParticles.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GpuParticles.cpp; sourceTree = "<group>"; };
+		458622A71A0C2A0500193433 /* GpuParticles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GpuParticles.h; sourceTree = "<group>"; };
+		458622A81A0C2A0500193433 /* ofxGpuParticles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGpuParticles.h; sourceTree = "<group>"; };
+		458622AB1A0C2A4700193433 /* particlesSqr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = particlesSqr.cpp; sourceTree = "<group>"; };
+		458622AC1A0C2A4700193433 /* particlesSqr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = particlesSqr.h; sourceTree = "<group>"; };
+		458622AE1A0C2AA900193433 /* draw.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = draw.frag; sourceTree = "<group>"; };
+		458622AF1A0C2AA900193433 /* draw.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = draw.vert; sourceTree = "<group>"; };
+		458622B01A0C2AA900193433 /* update.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = update.frag; sourceTree = "<group>"; };
+		458622B11A0C2AA900193433 /* update.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = update.vert; sourceTree = "<group>"; };
 		45AA3E481A0BE4B8009B5B02 /* flickering.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = flickering.cpp; sourceTree = "<group>"; };
 		45AA3E491A0BE4B8009B5B02 /* flickering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flickering.h; sourceTree = "<group>"; };
 		45CB3777190A8A4D001C9834 /* drawLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = drawLine.cpp; sourceTree = "<group>"; };
@@ -487,6 +500,26 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		458622A21A0C2A0500193433 /* ofxGpuParticles */ = {
+			isa = PBXGroup;
+			children = (
+				458622A31A0C2A0500193433 /* .gitignore */,
+				458622A41A0C2A0500193433 /* readme.md */,
+				458622A51A0C2A0500193433 /* src */,
+			);
+			path = ofxGpuParticles;
+			sourceTree = "<group>";
+		};
+		458622A51A0C2A0500193433 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				458622A61A0C2A0500193433 /* GpuParticles.cpp */,
+				458622A71A0C2A0500193433 /* GpuParticles.h */,
+				458622A81A0C2A0500193433 /* ofxGpuParticles.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		5236346776DB8ECC4B121CA3 /* gpu */ = {
 			isa = PBXGroup;
 			children = (
@@ -581,6 +614,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				458622A21A0C2A0500193433 /* ofxGpuParticles */,
 				450786D719126AF70027FA62 /* ofxOsc */,
 				A0B90D3B0ADB9C1716816714 /* ofxOpenCv */,
 			);
@@ -699,6 +733,12 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				458622AE1A0C2AA900193433 /* draw.frag */,
+				458622AF1A0C2AA900193433 /* draw.vert */,
+				458622B01A0C2AA900193433 /* update.frag */,
+				458622B11A0C2AA900193433 /* update.vert */,
+				458622AB1A0C2A4700193433 /* particlesSqr.cpp */,
+				458622AC1A0C2A4700193433 /* particlesSqr.h */,
 				45CB3777190A8A4D001C9834 /* drawLine.cpp */,
 				45AA3E481A0BE4B8009B5B02 /* flickering.cpp */,
 				45AA3E491A0BE4B8009B5B02 /* flickering.h */,
@@ -819,12 +859,14 @@
 			files = (
 				4507870D191278650027FA62 /* OscOutboundPacketStream.cpp in Sources */,
 				4507870E191278650027FA62 /* OscPrintReceivedElements.cpp in Sources */,
+				458622A91A0C2A0500193433 /* GpuParticles.cpp in Sources */,
 				4507870F191278650027FA62 /* OscReceivedElements.cpp in Sources */,
 				45AA3E4A1A0BE4B8009B5B02 /* flickering.cpp in Sources */,
 				45078710191278650027FA62 /* OscTypes.cpp in Sources */,
 				45078708191270600027FA62 /* IpEndpointName.cpp in Sources */,
 				45078709191270600027FA62 /* NetworkingUtils.cpp in Sources */,
 				4507870A191270600027FA62 /* UdpSocket.cpp in Sources */,
+				458622AD1A0C2A4700193433 /* particlesSqr.cpp in Sources */,
 				4507870B191270600027FA62 /* NetworkingUtilsWin.cpp in Sources */,
 				4507870C191270600027FA62 /* UdpSocketWin.cpp in Sources */,
 				4507870319126ED00027FA62 /* ofxOscBundle.cpp in Sources */,
