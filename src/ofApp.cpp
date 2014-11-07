@@ -337,24 +337,26 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::resetParticles(){
-    
-    //these are the attraction points used in the forth demo
-    attractPoints.clear();
-    for(int i = 0; i < 4; i++){
-        attractPoints.push_back( ofPoint( ofMap(i, 0, 4, 100, ofGetWidth()-100) , ofRandom(100, ofGetHeight()-100) ) );
-    }
-    
-    attractPointsWithMovement = attractPoints;
-    
-    for(unsigned int i = 0; i < p.size(); i++){
-        p[i].setMode(currentMode);
-        p[i].setAttractPoints(&attractPointsWithMovement);;
-        p[i].reset();
-    }
+
+       
+        //these are the attraction points used in the forth demo
+        attractPoints.clear();
+        for(int i = 0; i < 4; i++){
+            attractPoints.push_back( ofPoint( ofMap(i, 0, 4, 100, ofGetWidth()-100) , ofRandom(100, ofGetHeight()-100) ) );
+        }
+        
+        attractPointsWithMovement = attractPoints;
+        
+        for(unsigned int i = 0; i < p.size(); i++){
+            p[i].setMode(currentMode);
+            p[i].setAttractPoints(&attractPointsWithMovement);;
+            p[i].reset();
+            
+
 }
 
 
-
+}
 
 
 

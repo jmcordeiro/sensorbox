@@ -20,13 +20,8 @@
 		<key>bcafe4b5-2c32-5291-7ec0-ce57b7db7bff++505</key>
 		<string>../..</string>
 	</dict>
-	<key>IDESourceControlProjectRepositoryRootDictionary</key>
-	<dict>
-		<key>bcafe4b5-2c32-5291-7ec0-ce57b7db7bff++505</key>
-		<string>https://github.com/jmcordeiro/fish_opencvExample</string>
-	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/jmcordeiro/fish_opencvExample/trunk/fish-cv_1.xcodeproj</string>
+	<string>https://github.com/jmcordeiro/fish_opencvExample</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>111</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
@@ -35,7 +30,7 @@
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.subversion</string>
+			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>bcafe4b5-2c32-5291-7ec0-ce57b7db7bff++505</string>
 			<key>IDESourceControlWCCName</key>
@@ -43,7 +38,7 @@
 		</dict>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
+			<string>public.vcs.subversion</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>bcafe4b5-2c32-5291-7ec0-ce57b7db7bff++505</string>
 			<key>IDESourceControlWCCName</key>

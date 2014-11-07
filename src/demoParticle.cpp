@@ -36,25 +36,52 @@ ofVec2f demoParticle::getFishPosPrt(){
 
 //------------------------------------------------------------------
 void demoParticle::reset(){
+    
+    if( mode == PARTICLE_MODE_NOISE ){
+    
 	//the unique val allows us to set properties slightly differently for each particle
 	uniqueVal = ofRandom(-10000, 10000);
 	
-	pos.x = ofRandomWidth();
-	pos.y = ofRandomHeight();
+	pos.x = fishPosPrt.x;
+	pos.y = fishPosPrt.y;
 	
-	vel.x = ofRandom(-3.9, 3.9);
-	vel.y = ofRandom(-3.9, 3.9);
+	vel.x = ofRandom(-2.0, 2.0);
+	vel.y = ofRandom(-3.9);
 	
 	frc   = ofPoint(0,0,0);
 	
 	scale = ofRandom(0.5, 1.0);
-	
+
+    if( mode == PARTICLE_MODE_NOISE ){
+        drag  = ofRandom(0.97, 0.99);
+        vel.y = fabs(vel.y) * -6.0; //make the particles all be going up
+    }else{
+        drag  = ofRandom(0.95, 0.998);
+    }
+
+    }else{
+    
+        //the unique val allows us to set properties slightly differently for each particle
+        uniqueVal = ofRandom(-10000, 10000);
+        
+        pos.x = ofRandomWidth();
+        pos.y = ofRandomHeight();
+        
+        vel.x = ofRandom(-3.9, 3.9);
+        vel.y = ofRandom(-3.9, 3.9);
+        
+        frc   = ofPoint(0,0,0);
+        
+        scale = ofRandom(0.5, 1.0);
+        
 	if( mode == PARTICLE_MODE_NOISE ){
 		drag  = ofRandom(0.97, 0.99);
 		vel.y = fabs(vel.y) * 3.0; //make the particles all be going down
 	}else{
 		drag  = ofRandom(0.95, 0.998);	
 	}
+        
+    }
 }
 
 //------------------------------------------------------------------
@@ -93,6 +120,25 @@ void demoParticle::update(){
 		}
 	}
 	else if( mode == PARTICLE_MODE_NOISE ){
+       
+        
+
+        float fakeWindX = ofSignedNoise(pos.x * 0.003, pos.y * -0.006, ofGetElapsedTimef() * 0.6);
+        
+        frc.x = fakeWindX * 0.25 + ofSignedNoise(uniqueVal, pos.y * 0.04) * 0.6;
+        frc.y = fabs(ofSignedNoise(uniqueVal, pos.x * 0.006, ofGetElapsedTimef()*0.2) * 0.09 + 0.18)*-1;
+        
+        vel *= drag;
+        vel += frc * 0.9;
+        
+        //we do this so as to skip the bounds check for the bottom and make the particles go back to the top of the screen
+        if( pos.y <= 0 ){
+            pos.y = -5;
+        }
+
+        
+        
+        /*
 		//lets simulate falling snow 
 		//the fake wind is meant to add a shift to the particles based on where in x they are
 		//we add pos.y as an arg so to prevent obvious vertical banding around x values - try removing the pos.y * 0.006 to see the banding
@@ -105,10 +151,13 @@ void demoParticle::update(){
 		vel += frc * 0.4;
 		
 		//we do this so as to skip the bounds check for the bottom and make the particles go back to the top of the screen
-		if( pos.y + vel.y > ofGetHeight() ){
+		if( pos.y - vel.y > ofGetHeight() ){
 			pos.y -= ofGetHeight();
 		}
+         */
 	}
+         
+         
 	else if( mode == PARTICLE_MODE_NEAREST_POINTS ){
 		
 		if( attractPoints ){
@@ -157,7 +206,7 @@ void demoParticle::update(){
 	
 	pos += vel; 
 	
-	
+	/*
 	//3 - (optional) LIMIT THE PARTICLES TO STAY ON SCREEN 
 	//we could also pass in bounds to check - or alternatively do this at the ofApp level
 	if( pos.x > ofGetWidth() ){
@@ -175,7 +224,7 @@ void demoParticle::update(){
 		pos.y = 0;
 		vel.y *= -1.0;
 	}	
-		
+*/
 }
 
 //------------------------------------------------------------------
@@ -183,17 +232,21 @@ void demoParticle::draw(){
 
 	if( mode == PARTICLE_MODE_ATTRACT ){
 		ofSetColor(0, 0, 0);
+        	ofLine(pos.x, pos.y, fishPosPrt.x,fishPosPrt.y);
 	}
 	else if( mode == PARTICLE_MODE_REPEL ){
 		ofSetColor(0, 0, 0);
+        	ofCircle(pos.x, pos.y, scale * 4.0);
 	}
 	else if( mode == PARTICLE_MODE_NOISE ){
 		ofSetColor(0, 0, 0);
+        	ofCircle(pos.x, pos.y, scale * 4.0);
 	}
 	else if( mode == PARTICLE_MODE_NEAREST_POINTS ){
 		ofSetColor(0, 0, 0);
+        	ofCircle(pos.x, pos.y, scale * 4.0);
 	}
 			
-	ofCircle(pos.x, pos.y, scale * 4.0);
+
 }
 
