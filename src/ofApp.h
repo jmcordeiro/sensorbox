@@ -12,7 +12,7 @@
 // otherwise, we'll use a movie file
 
 
-class ofApp : public ofBaseApp{
+class ofApp : public ofBaseApp, public ofxMidiListener{
     
 public:
     void setup();
@@ -22,6 +22,7 @@ public:
     void keyPressed(int key);
     void mouseMoved(int x, int y );
     void resetParticles();
+    void exit();
 
     
 #ifdef _USE_LIVE_VIDEO
@@ -76,7 +77,7 @@ public:
 
     stringstream text;
 
-    ofxMidiIn mymidi;
+    ofxMidiIn midiIn;
     
     ofxMidiMessage midiMessage;
 

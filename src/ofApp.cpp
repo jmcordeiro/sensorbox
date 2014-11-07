@@ -87,6 +87,28 @@ void ofApp::setup(){
     //   secondLine.setThickness(5);
     
     
+    
+    // *********** MIDI **************
+    // print input ports to console
+    midiIn.listPorts(); // via instance
+    //ofxMidiIn::listPorts(); // via static as well
+    
+    // open port by number (you may need to change this)
+    midiIn.openPort(0);
+    //midiIn.openPort("IAC Pure Data In");	// by name
+    //midiIn.openVirtualPort("ofxMidiIn Input"); // open a virtual port
+    
+    // don't ignore sysex, timing, & active sense messages,
+    // these are ignored by default
+    midiIn.ignoreTypes(false, false, false);
+    
+    // add testApp as a listener
+    midiIn.addListener(this);
+    
+    // print received messages to the console
+    midiIn.setVerbose(true);
+    
+    
     ofSetFrameRate(15);
     
     
@@ -337,30 +359,26 @@ void ofApp::draw(){
 
 //--------------------------------------------------------------
 void ofApp::resetParticles(){
-
-       
-        //these are the attraction points used in the forth demo
-        attractPoints.clear();
-        for(int i = 0; i < 4; i++){
-            attractPoints.push_back( ofPoint( ofMap(i, 0, 4, 100, ofGetWidth()-100) , ofRandom(100, ofGetHeight()-100) ) );
-        }
+    
+    
+    //these are the attraction points used in the forth demo
+    attractPoints.clear();
+    for(int i = 0; i < 4; i++){
+        attractPoints.push_back( ofPoint( ofMap(i, 0, 4, 100, ofGetWidth()-100) , ofRandom(100, ofGetHeight()-100) ) );
+    }
+    
+    attractPointsWithMovement = attractPoints;
+    
+    for(unsigned int i = 0; i < p.size(); i++){
+        p[i].setMode(currentMode);
+        p[i].setAttractPoints(&attractPointsWithMovement);;
+        p[i].reset();
         
-        attractPointsWithMovement = attractPoints;
         
-        for(unsigned int i = 0; i < p.size(); i++){
-            p[i].setMode(currentMode);
-            p[i].setAttractPoints(&attractPointsWithMovement);;
-            p[i].reset();
-            
-
+    }
+    
+    
 }
-
-
-}
-
-
-
-
 
 
 
@@ -460,4 +478,21 @@ void ofApp::mouseMoved(int x, int y ){
     firstLine.setVelocity(x / 100);
     //secondLine.setVelocity(y / 100);
     
+}
+
+
+
+//--------------------------------------------------------------
+void ofApp::exit() {
+    
+    // clean up
+    midiIn.closePort();
+      midiIn.removeListener(this);
+}
+
+//--------------------------------------------------------------
+void ofApp::newMidiMessage(ofxMidiMessage& msg) {
+    
+    // make a copy of the latest message
+    midiMessage = msg;
 }
