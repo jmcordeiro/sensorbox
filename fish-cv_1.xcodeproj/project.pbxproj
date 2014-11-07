@@ -26,14 +26,6 @@
 		45078710191278650027FA62 /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450786F319126AF70027FA62 /* OscTypes.cpp */; };
 		453FAA4C19114986005F09CA /* liveFish.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453FAA4A19114986005F09CA /* liveFish.cpp */; };
 		45579B9F1A0D115700D32AF9 /* demoParticle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45579B9D1A0D115700D32AF9 /* demoParticle.cpp */; };
-		45579D661A0D6B5B00D32AF9 /* ofxRtMidiIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45579D3D1A0D6B5B00D32AF9 /* ofxRtMidiIn.cpp */; };
-		45579D671A0D6B5B00D32AF9 /* ofxRtMidiOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45579D3F1A0D6B5B00D32AF9 /* ofxRtMidiOut.cpp */; };
-		45579D6D1A0D6B5B00D32AF9 /* ofxBaseMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45579D4C1A0D6B5B00D32AF9 /* ofxBaseMidi.cpp */; };
-		45579D6E1A0D6B5B00D32AF9 /* ofxMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45579D4E1A0D6B5B00D32AF9 /* ofxMidi.cpp */; };
-		45579D6F1A0D6B5B00D32AF9 /* ofxMidiIn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45579D511A0D6B5B00D32AF9 /* ofxMidiIn.cpp */; };
-		45579D701A0D6B5B00D32AF9 /* ofxMidiMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45579D531A0D6B5B00D32AF9 /* ofxMidiMessage.cpp */; };
-		45579D711A0D6B5B00D32AF9 /* ofxMidiOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45579D551A0D6B5B00D32AF9 /* ofxMidiOut.cpp */; };
-		45579D901A0D6FDE00D32AF9 /* RtMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45579D8A1A0D6FDE00D32AF9 /* RtMidi.cpp */; };
 		45AA3E4A1A0BE4B8009B5B02 /* flickering.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3E481A0BE4B8009B5B02 /* flickering.cpp */; };
 		45CB3779190A8A4D001C9834 /* drawLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45CB3777190A8A4D001C9834 /* drawLine.cpp */; };
 		63020F16C7E8DED980111241 /* ofxCvImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C6151136D101F857DAE12722 /* ofxCvImage.cpp */; };
@@ -146,26 +138,6 @@
 		45410DD818BB205166E67E89 /* any.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = any.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/any.h; sourceTree = SOURCE_ROOT; };
 		45579B9D1A0D115700D32AF9 /* demoParticle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = demoParticle.cpp; sourceTree = "<group>"; };
 		45579B9E1A0D115700D32AF9 /* demoParticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = demoParticle.h; sourceTree = "<group>"; };
-		45579D3D1A0D6B5B00D32AF9 /* ofxRtMidiIn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxRtMidiIn.cpp; sourceTree = "<group>"; };
-		45579D3E1A0D6B5B00D32AF9 /* ofxRtMidiIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxRtMidiIn.h; sourceTree = "<group>"; };
-		45579D3F1A0D6B5B00D32AF9 /* ofxRtMidiOut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxRtMidiOut.cpp; sourceTree = "<group>"; };
-		45579D401A0D6B5B00D32AF9 /* ofxRtMidiOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxRtMidiOut.h; sourceTree = "<group>"; };
-		45579D4C1A0D6B5B00D32AF9 /* ofxBaseMidi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBaseMidi.cpp; sourceTree = "<group>"; };
-		45579D4D1A0D6B5B00D32AF9 /* ofxBaseMidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBaseMidi.h; sourceTree = "<group>"; };
-		45579D4E1A0D6B5B00D32AF9 /* ofxMidi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMidi.cpp; sourceTree = "<group>"; };
-		45579D4F1A0D6B5B00D32AF9 /* ofxMidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMidi.h; sourceTree = "<group>"; };
-		45579D501A0D6B5B00D32AF9 /* ofxMidiConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMidiConstants.h; sourceTree = "<group>"; };
-		45579D511A0D6B5B00D32AF9 /* ofxMidiIn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMidiIn.cpp; sourceTree = "<group>"; };
-		45579D521A0D6B5B00D32AF9 /* ofxMidiIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMidiIn.h; sourceTree = "<group>"; };
-		45579D531A0D6B5B00D32AF9 /* ofxMidiMessage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMidiMessage.cpp; sourceTree = "<group>"; };
-		45579D541A0D6B5B00D32AF9 /* ofxMidiMessage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMidiMessage.h; sourceTree = "<group>"; };
-		45579D551A0D6B5B00D32AF9 /* ofxMidiOut.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxMidiOut.cpp; sourceTree = "<group>"; };
-		45579D561A0D6B5B00D32AF9 /* ofxMidiOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMidiOut.h; sourceTree = "<group>"; };
-		45579D571A0D6B5B00D32AF9 /* ofxMidiTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMidiTypes.h; sourceTree = "<group>"; };
-		45579D881A0D6FDE00D32AF9 /* readme */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme; sourceTree = "<group>"; };
-		45579D891A0D6FDE00D32AF9 /* RtError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RtError.h; sourceTree = "<group>"; };
-		45579D8A1A0D6FDE00D32AF9 /* RtMidi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RtMidi.cpp; sourceTree = "<group>"; };
-		45579D8B1A0D6FDE00D32AF9 /* RtMidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RtMidi.h; sourceTree = "<group>"; };
 		45AA3E481A0BE4B8009B5B02 /* flickering.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = flickering.cpp; sourceTree = "<group>"; };
 		45AA3E491A0BE4B8009B5B02 /* flickering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flickering.h; sourceTree = "<group>"; };
 		45CB3777190A8A4D001C9834 /* drawLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = drawLine.cpp; sourceTree = "<group>"; };
@@ -518,72 +490,6 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		45579CE21A0D6B5B00D32AF9 /* ofxMidi */ = {
-			isa = PBXGroup;
-			children = (
-				45579D3B1A0D6B5B00D32AF9 /* src */,
-			);
-			path = ofxMidi;
-			sourceTree = "<group>";
-		};
-		45579D3B1A0D6B5B00D32AF9 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				45579D7C1A0D6FDE00D32AF9 /* libs */,
-				45579D3C1A0D6B5B00D32AF9 /* desktop */,
-				45579D4C1A0D6B5B00D32AF9 /* ofxBaseMidi.cpp */,
-				45579D4D1A0D6B5B00D32AF9 /* ofxBaseMidi.h */,
-				45579D4E1A0D6B5B00D32AF9 /* ofxMidi.cpp */,
-				45579D4F1A0D6B5B00D32AF9 /* ofxMidi.h */,
-				45579D501A0D6B5B00D32AF9 /* ofxMidiConstants.h */,
-				45579D511A0D6B5B00D32AF9 /* ofxMidiIn.cpp */,
-				45579D521A0D6B5B00D32AF9 /* ofxMidiIn.h */,
-				45579D531A0D6B5B00D32AF9 /* ofxMidiMessage.cpp */,
-				45579D541A0D6B5B00D32AF9 /* ofxMidiMessage.h */,
-				45579D551A0D6B5B00D32AF9 /* ofxMidiOut.cpp */,
-				45579D561A0D6B5B00D32AF9 /* ofxMidiOut.h */,
-				45579D571A0D6B5B00D32AF9 /* ofxMidiTypes.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		45579D3C1A0D6B5B00D32AF9 /* desktop */ = {
-			isa = PBXGroup;
-			children = (
-				45579D3D1A0D6B5B00D32AF9 /* ofxRtMidiIn.cpp */,
-				45579D3E1A0D6B5B00D32AF9 /* ofxRtMidiIn.h */,
-				45579D3F1A0D6B5B00D32AF9 /* ofxRtMidiOut.cpp */,
-				45579D401A0D6B5B00D32AF9 /* ofxRtMidiOut.h */,
-			);
-			path = desktop;
-			sourceTree = "<group>";
-		};
-		45579D7B1A0D6F0700D32AF9 /* midi */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = midi;
-			sourceTree = "<group>";
-		};
-		45579D7C1A0D6FDE00D32AF9 /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				45579D871A0D6FDE00D32AF9 /* rtmidi */,
-			);
-			path = libs;
-			sourceTree = "<group>";
-		};
-		45579D871A0D6FDE00D32AF9 /* rtmidi */ = {
-			isa = PBXGroup;
-			children = (
-				45579D881A0D6FDE00D32AF9 /* readme */,
-				45579D891A0D6FDE00D32AF9 /* RtError.h */,
-				45579D8A1A0D6FDE00D32AF9 /* RtMidi.cpp */,
-				45579D8B1A0D6FDE00D32AF9 /* RtMidi.h */,
-			);
-			path = rtmidi;
-			sourceTree = "<group>";
-		};
 		5236346776DB8ECC4B121CA3 /* gpu */ = {
 			isa = PBXGroup;
 			children = (
@@ -678,8 +584,6 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
-				45579D7B1A0D6F0700D32AF9 /* midi */,
-				45579CE21A0D6B5B00D32AF9 /* ofxMidi */,
 				450786D719126AF70027FA62 /* ofxOsc */,
 				A0B90D3B0ADB9C1716816714 /* ofxOpenCv */,
 			);
@@ -921,11 +825,8 @@
 				4507870D191278650027FA62 /* OscOutboundPacketStream.cpp in Sources */,
 				4507870E191278650027FA62 /* OscPrintReceivedElements.cpp in Sources */,
 				4507870F191278650027FA62 /* OscReceivedElements.cpp in Sources */,
-				45579D671A0D6B5B00D32AF9 /* ofxRtMidiOut.cpp in Sources */,
 				45AA3E4A1A0BE4B8009B5B02 /* flickering.cpp in Sources */,
 				45078710191278650027FA62 /* OscTypes.cpp in Sources */,
-				45579D6F1A0D6B5B00D32AF9 /* ofxMidiIn.cpp in Sources */,
-				45579D6D1A0D6B5B00D32AF9 /* ofxBaseMidi.cpp in Sources */,
 				45078708191270600027FA62 /* IpEndpointName.cpp in Sources */,
 				45078709191270600027FA62 /* NetworkingUtils.cpp in Sources */,
 				4507870A191270600027FA62 /* UdpSocket.cpp in Sources */,
@@ -934,13 +835,10 @@
 				4507870319126ED00027FA62 /* ofxOscBundle.cpp in Sources */,
 				4507870419126ED00027FA62 /* ofxOscMessage.cpp in Sources */,
 				4507870519126ED00027FA62 /* ofxOscParameterSync.cpp in Sources */,
-				45579D661A0D6B5B00D32AF9 /* ofxRtMidiIn.cpp in Sources */,
 				45579B9F1A0D115700D32AF9 /* demoParticle.cpp in Sources */,
-				45579D701A0D6B5B00D32AF9 /* ofxMidiMessage.cpp in Sources */,
 				4507870619126ED00027FA62 /* ofxOscReceiver.cpp in Sources */,
 				4507870719126ED00027FA62 /* ofxOscSender.cpp in Sources */,
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
-				45579D6E1A0D6B5B00D32AF9 /* ofxMidi.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				63020F16C7E8DED980111241 /* ofxCvImage.cpp in Sources */,
 				45CB3779190A8A4D001C9834 /* drawLine.cpp in Sources */,
@@ -948,10 +846,8 @@
 				453FAA4C19114986005F09CA /* liveFish.cpp in Sources */,
 				250A95BA26587BE85DB0A353 /* ofxCvColorImage.cpp in Sources */,
 				FB09C6B2A1DA0EA217240CB8 /* ofxCvGrayscaleImage.cpp in Sources */,
-				45579D711A0D6B5B00D32AF9 /* ofxMidiOut.cpp in Sources */,
 				1D5F3298C2FA073628012944 /* ofxCvContourFinder.cpp in Sources */,
 				D3301F6A0B43BB293ED97C1D /* ofxCvShortImage.cpp in Sources */,
-				45579D901A0D6FDE00D32AF9 /* RtMidi.cpp in Sources */,
 				E212C821D1064B92DD953A42 /* ofxCvHaarFinder.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1015,9 +911,6 @@
 					../../../addons/ofxOpenCv/libs/opencv/lib/osx,
 					../../../addons/ofxOpenCv/src,
 					src,
-					../../../addons/ofxMidi/src,
-					../../../addons/ofxMidi/src/Desktop/rtmidi,
-					../../../addons/ofxMidi/libs/rtmidi,
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.6;
 				ONLY_ACTIVE_ARCH = NO;
