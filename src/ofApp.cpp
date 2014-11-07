@@ -349,6 +349,57 @@ void ofApp::draw(){
     
     ofSetColor(230);
     ofDrawBitmapString(currentModeStr + "\n\nSpacebar to reset. \nKeys 1-4 to change mode.", 10, 20);
+ 
+    
+    
+    
+    if (showMidi) {
+
+        ofSetColor(255, 0, 0);
+        ofRect(0, 0, ofGetWidth(), 300);
+        
+        ofSetColor(0);
+        
+        // draw the last recieved message contents to the screen
+        text << "Received: " << ofxMidiMessage::getStatusString(midiMessage.status);
+        ofDrawBitmapString(text.str(), 20, 20);
+        text.str(""); // clear
+        
+        text << "channel: " << midiMessage.channel;
+        ofDrawBitmapString(text.str(), 20, 34);
+        text.str(""); // clear
+        
+        text << "pitch: " << midiMessage.pitch;
+        ofDrawBitmapString(text.str(), 20, 48);
+        text.str(""); // clear
+        ofRect(20, 58, ofMap(midiMessage.pitch, 0, 127, 0, ofGetWidth()-40), 20);
+        
+        text << "velocity: " << midiMessage.velocity;
+        ofDrawBitmapString(text.str(), 20, 96);
+        text.str(""); // clear
+        ofRect(20, 105, ofMap(midiMessage.velocity, 0, 127, 0, ofGetWidth()-40), 20);
+        
+        text << "control: " << midiMessage.control;
+        ofDrawBitmapString(text.str(), 20, 144);
+        text.str(""); // clear
+        ofRect(20, 154, ofMap(midiMessage.control, 0, 127, 0, ofGetWidth()-40), 20);
+        
+        text << "value: " << midiMessage.value;
+        ofDrawBitmapString(text.str(), 20, 192);
+        text.str(""); // clear
+        if(midiMessage.status == MIDI_PITCH_BEND) {
+            ofRect(20, 202, ofMap(midiMessage.value, 0, MIDI_MAX_BEND, 0, ofGetWidth()-40), 20);
+        }
+        else {
+            ofRect(20, 202, ofMap(midiMessage.value, 0, 127, 0, ofGetWidth()-40), 20);
+        }
+        
+        text << "delta: " << midiMessage.deltatime;
+        ofDrawBitmapString(text.str(), 20, 240);
+        text.str(""); // clear
+    }
+    
+    
     
 }
 
@@ -380,8 +431,14 @@ void ofApp::resetParticles(){
     
 }
 
+//--------------------------------------------------------------
+void ofApp::keyReleased(int key){
 
+    if( key == 'm' ){
+        showMidi = false;
+    }
 
+}
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
@@ -409,6 +466,10 @@ void ofApp::keyPressed(int key){
         resetParticles();
     }
     
+    if( key == 'm' ){
+showMidi = true;
+    }
+
     
     
     
