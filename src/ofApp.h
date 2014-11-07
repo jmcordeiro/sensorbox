@@ -6,6 +6,7 @@
 #include "liveFish.h"
 #include "flickering.h"
 #include "demoParticle.h"
+#include "ofxMidi.h"
 
 #define _USE_LIVE_VIDEO		// uncomment this to use a live camera
 // otherwise, we'll use a movie file
@@ -71,7 +72,14 @@ public:
     vector <ofPoint> attractPointsWithMovement;
 
     
+    void newMidiMessage(ofxMidiMessage& eventArgs);
+
+    stringstream text;
+
+    ofxMidiIn mymidi;
     
+    ofxMidiMessage midiMessage;
+
     
 };
 
