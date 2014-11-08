@@ -11,6 +11,7 @@ enum particleMode{
 
 class demoParticle{
 
+protected:
     ofVec2f fishPosPrt;
     
 	public:
@@ -36,8 +37,9 @@ class demoParticle{
 		
 		vector <ofPoint> * attractPoints;
     
-        void setFishPosPrt(ofVec2f x);
+        void setFishPosPrt(ofVec2f);
         ofVec2f getFishPosPrt();
 
+    
     
 };

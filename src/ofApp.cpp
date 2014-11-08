@@ -9,7 +9,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    
+        
     // Define the capture size of the c‰mera
     camWidth = 1280;
     camHeight = 720;
@@ -19,15 +19,12 @@ void ofApp::setup(){
     fadeScreenIntensity = 0;
     
     // ********* FOR PARTICLES *****************
-    
     int num = 15;
-    p.assign(num, demoParticle(fishPosBig));
+    p.assign(num, demoParticle());
     currentMode = PARTICLE_MODE_ATTRACT;
     currentModeStr = "1 - PARTICLE_MODE_ATTRACT: attracts to mouse";
     resetParticles();
-    
-    
-    
+
     
     // ********* define an initial ROI - Region Of Interest *********
     ROI.width = 1265; // set it to camWidth to have ROI = to camera size
@@ -144,11 +141,17 @@ void ofApp::update(){
         fadeScreenIntensity = midiMessage.value*2;
     }
 
+    if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 14 && midiMessage.value == 127) {
+        fishBreath.resetParticles();
+    }
 
+    if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 19) {
+    //    fishBreath.setBintensity(midiMessage.value*2);
+    }
     
     
     // ************ LINE UPDATE *********
-    firstLine.setCamSize(ROI.width, ROI.height, paralax_x, paralax_y);
+    firstLine.setCamSize(ROI.width, ofGetWindowHeight(), paralax_x, 0);
     //    secondLine.setCamSize(ROI.width, ROI.height, paralax_x, paralax_y);
     
     
@@ -242,6 +245,8 @@ void ofApp::update(){
      */
     
     
+    fishBreath.bubblesUpdate(fishPosBig);
+
     
     // *********  FOR PARTICLES ***************
     for(unsigned int i = 0; i < p.size(); i++){
@@ -279,16 +284,8 @@ void ofApp::draw(){
     //vidGrabber.draw(0, 0);
     colorImg.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
     
-    firstLine.drawLine();
-    // secondLine.drawLine();
-    
-    
-    // draws the flickering effect assigned to the rithmic drone. The final argument changes the intensity
-    flickering(paralax_x, paralax_y, ROI.width, ROI.height,  flickIntensity, masterBpm);
 
-    
-    
-    
+    //*********** CALIBRATION SYSTEM (z) *****************
     if (showCalibrationScreen) {
         
         // *** draw graySmall Image use (ROI scaled) ***
@@ -318,7 +315,7 @@ void ofApp::draw(){
         }
         
         
-        // ****** A report ('z' key) **********************
+        // *************** A report ('z' key) ***********
         ofSetHexColor(0xffffff);
         stringstream reportStr;
         reportStr << "bg subtraction and blob detection" << endl
@@ -327,28 +324,34 @@ void ofApp::draw(){
         
         ofDrawBitmapString(reportStr.str(), 20, 600);
         ofDrawBitmapString(ofToString(ofGetFrameRate()), 10, 10);
-        // **************************************
-        
         
     }else{
         
         // *** draw point on big image *** (comment on real use)
         if (contourFinder.nBlobs > 0){
-            ofSetColor(0, 255, 0);
+            ofSetColor(0, 0, 0);
             ofFill();
-            ofCircle(fishPosBig.x,fishPosBig.y, 5);
-            
+            ofCircle(fishPosBig.x,fishPosBig.y, 2);
         }
         
-        // *** draw black frame arround display window ***
+        // *** draw white frame arround display window ***
         ofSetColor(255, 255, 255);
         ofFill();
         ofRect(0, 0, camWidth, paralax_y);
         ofRect(0, (paralax_y)+ROI.height, camWidth, camHeight);
         ofRect(0, 0, paralax_x, camHeight);
         ofRect((paralax_x)+ROI.width, 0, camWidth, camHeight);
+        
+        
     }
+
     
+    firstLine.drawLine();
+    // secondLine.drawLine();
+    
+    // draws the flickering effect assigned to the rithmic drone. The final argument changes the intensity
+    // flickering(paralax_x, paralax_y, ROI.width, ROI.height,  flickIntensity, masterBpm);
+    flickering(0, 0, ofGetWindowWidth(), ofGetWindowHeight(),  flickIntensity, masterBpm);
     
     
     // ************************ draw Particles ******************
@@ -418,6 +421,8 @@ void ofApp::draw(){
         text.str(""); // clear
     }
     
+    fishBreath.bubblesDraw();
+
  
     fadeScreen(fadeScreenIntensity);
     
@@ -431,7 +436,7 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::resetParticles(){
     
-    
+   /*
     //these are the attraction points used in the forth demo
     attractPoints.clear();
     for(int i = 0; i < 4; i++){
@@ -439,10 +444,10 @@ void ofApp::resetParticles(){
     }
     
     attractPointsWithMovement = attractPoints;
-    
+    */
     for(unsigned int i = 0; i < p.size(); i++){
         p[i].setMode(currentMode);
-        p[i].setAttractPoints(&attractPointsWithMovement);;
+     //   p[i].setAttractPoints(&attractPointsWithMovement);;
         p[i].reset();
         
         
@@ -481,7 +486,11 @@ void ofApp::keyPressed(int key){
         currentModeStr = "4 - PARTICLE_MODE_NOISE: snow particle simulation";
         resetParticles();
     }
-    
+
+    if( key == '5'){
+        fishBreath.resetParticles();
+      }
+
     if( key == ' ' ){
         resetParticles();
     }

@@ -121,8 +121,6 @@ void demoParticle::update(){
 	}
 	else if( mode == PARTICLE_MODE_NOISE ){
        
-        
-
         float fakeWindX = ofSignedNoise(pos.x * 0.003, pos.y * -0.006, ofGetElapsedTimef() * 0.6);
         
         frc.x = fakeWindX * 0.25 + ofSignedNoise(uniqueVal, pos.y * 0.04) * 0.6;

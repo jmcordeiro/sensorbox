@@ -2,13 +2,15 @@
 
 #include "ofMain.h"
 #include "ofxOpenCv.h"
+#include "ofxMidi.h"
+
 #include "drawLine.h"
 #include "liveFish.h"
-#include "flickering.h"
 #include "demoParticle.h"
-#include "ofxMidi.h"
 #include "fadeScreen.h"
-
+#include "flickering.h"
+#include "bubbles.h"
+#include "setupMidi.h"
 
 #define _USE_LIVE_VIDEO		// uncomment this to use a live camera
 // otherwise, we'll use a movie file
@@ -23,7 +25,6 @@ public:
     int masterBpm;  // (should convert to private!!)
     int flickIntensity;  // (should convert to private!!)
     int fadeScreenIntensity;  // (should convert to private!!)
-
     
     void setup();
     void update();
@@ -71,28 +72,23 @@ public:
     
     Line firstLine;
     Line secondLine;
-    
     LiveFish myFish;
-    
-    
-    
+
+    Bubble fishBreath;
+
+    //*********** Template Prt ***************
     particleMode currentMode;
     string currentModeStr;
-    
     vector <demoParticle> p;
     vector <ofPoint> attractPoints;
     vector <ofPoint> attractPointsWithMovement;
 
-    
+    //******** MIDI STUFF *****************
     void newMidiMessage(ofxMidiMessage& eventArgs);
-
     stringstream text;
-
     ofxMidiIn midiIn;
-    
     ofxMidiMessage midiMessage;
 
-    
 };
 
 
