@@ -35,6 +35,7 @@
 		4561A3F51A0D7BB000DA4DC5 /* ofxMidiMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4561A3D81A0D7BB000DA4DC5 /* ofxMidiMessage.cpp */; };
 		4561A3F61A0D7BB000DA4DC5 /* ofxMidiOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4561A3DA1A0D7BB000DA4DC5 /* ofxMidiOut.cpp */; };
 		4561A4011A0D7BEE00DA4DC5 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4561A4001A0D7BEE00DA4DC5 /* CoreMIDI.framework */; };
+		4561A4051A0E865300DA4DC5 /* fadeScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4561A4031A0E865300DA4DC5 /* fadeScreen.cpp */; };
 		45AA3E4A1A0BE4B8009B5B02 /* flickering.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3E481A0BE4B8009B5B02 /* flickering.cpp */; };
 		45CB3779190A8A4D001C9834 /* drawLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45CB3777190A8A4D001C9834 /* drawLine.cpp */; };
 		63020F16C7E8DED980111241 /* ofxCvImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C6151136D101F857DAE12722 /* ofxCvImage.cpp */; };
@@ -170,6 +171,8 @@
 		4561A3DB1A0D7BB000DA4DC5 /* ofxMidiOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMidiOut.h; sourceTree = "<group>"; };
 		4561A3DC1A0D7BB000DA4DC5 /* ofxMidiTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMidiTypes.h; sourceTree = "<group>"; };
 		4561A4001A0D7BEE00DA4DC5 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
+		4561A4031A0E865300DA4DC5 /* fadeScreen.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fadeScreen.cpp; sourceTree = "<group>"; };
+		4561A4041A0E865300DA4DC5 /* fadeScreen.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fadeScreen.h; sourceTree = "<group>"; };
 		45AA3E481A0BE4B8009B5B02 /* flickering.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = flickering.cpp; sourceTree = "<group>"; };
 		45AA3E491A0BE4B8009B5B02 /* flickering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flickering.h; sourceTree = "<group>"; };
 		45CB3777190A8A4D001C9834 /* drawLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = drawLine.cpp; sourceTree = "<group>"; };
@@ -807,6 +810,8 @@
 			isa = PBXGroup;
 			children = (
 				45579B9D1A0D115700D32AF9 /* demoParticle.cpp */,
+				4561A4031A0E865300DA4DC5 /* fadeScreen.cpp */,
+				4561A4041A0E865300DA4DC5 /* fadeScreen.h */,
 				45579B9E1A0D115700D32AF9 /* demoParticle.h */,
 				45CB3777190A8A4D001C9834 /* drawLine.cpp */,
 				45AA3E481A0BE4B8009B5B02 /* flickering.cpp */,
@@ -933,6 +938,7 @@
 				4561A3E91A0D7BB000DA4DC5 /* RtMidi.cpp in Sources */,
 				45AA3E4A1A0BE4B8009B5B02 /* flickering.cpp in Sources */,
 				45078710191278650027FA62 /* OscTypes.cpp in Sources */,
+				4561A4051A0E865300DA4DC5 /* fadeScreen.cpp in Sources */,
 				4561A3F41A0D7BB000DA4DC5 /* ofxMidiIn.cpp in Sources */,
 				4561A3F21A0D7BB000DA4DC5 /* ofxBaseMidi.cpp in Sources */,
 				45078708191270600027FA62 /* IpEndpointName.cpp in Sources */,

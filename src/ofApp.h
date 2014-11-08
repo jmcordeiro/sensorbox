@@ -7,6 +7,8 @@
 #include "flickering.h"
 #include "demoParticle.h"
 #include "ofxMidi.h"
+#include "fadeScreen.h"
+
 
 #define _USE_LIVE_VIDEO		// uncomment this to use a live camera
 // otherwise, we'll use a movie file
@@ -20,6 +22,9 @@ class ofApp : public ofBaseApp, public ofxMidiListener{
 public:
     int masterBpm;  // (should convert to private!!)
     int flickIntensity;  // (should convert to private!!)
+    int fadeScreenIntensity;  // (should convert to private!!)
+
+    
     void setup();
     void update();
     void draw();

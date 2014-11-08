@@ -10,11 +10,7 @@
 #define __fish_cv_1__flickering__
 
 #include <iostream>
-
-
-#include <iostream>
 #include "ofMain.h"
-
 #include "ofxOsc.h"
 
 #define HOST "localhost"

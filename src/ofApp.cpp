@@ -16,6 +16,7 @@ void ofApp::setup(){
     
     flickIntensity = 0;
     masterBpm = 120;
+    fadeScreenIntensity = 0;
     
     // ********* FOR PARTICLES *****************
     
@@ -121,6 +122,9 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
+
+    
+    ofSetWindowTitle(ofToString(ofGetFrameRate()));
     
     masterBpm = 120;
     
@@ -136,7 +140,11 @@ void ofApp::update(){
         flickIntensity = midiMessage.value*2;
     }
 
-    
+    if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 33) {
+        fadeScreenIntensity = midiMessage.value*2;
+    }
+
+
     
     
     // ************ LINE UPDATE *********
@@ -333,7 +341,7 @@ void ofApp::draw(){
         }
         
         // *** draw black frame arround display window ***
-        ofSetColor(0, 0, 0);
+        ofSetColor(255, 255, 255);
         ofFill();
         ofRect(0, 0, camWidth, paralax_y);
         ofRect(0, (paralax_y)+ROI.height, camWidth, camHeight);
@@ -410,7 +418,8 @@ void ofApp::draw(){
         text.str(""); // clear
     }
     
-    
+ 
+    fadeScreen(fadeScreenIntensity);
     
 }
 
