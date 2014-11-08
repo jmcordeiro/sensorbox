@@ -22,7 +22,7 @@
 
 
 
-void flickering(int x, int y, int w, int h, int t);
+void flickering(int x, int y, int w, int h, int t, int bpm);
 
 
 

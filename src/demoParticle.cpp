@@ -97,8 +97,8 @@ void demoParticle::update(){
 		vel *= drag; //apply drag
 		vel += frc * 0.6; //apply force
         
-        cout << "fish x: " << getFishPosPrt().x << endl;
-        cout << "fish y: " << getFishPosPrt().y << endl;
+        //cout << "fish x: " << getFishPosPrt().x << endl;
+        //cout << "fish y: " << getFishPosPrt().y << endl;
 
     }
 	else if( mode == PARTICLE_MODE_REPEL ){

@@ -66,7 +66,7 @@ int Line::getLinePosition(){
     
     int linePos;
     linePos = (int) (xPosition-paralaxX)/(width/100);
-    cout << "LINE POS: "<<linePos << endl;
+    //cout << "LINE POS: "<<linePos << endl;
     
     ofxOscMessage l1_p;
     l1_p.setAddress("/line_1_Pos");

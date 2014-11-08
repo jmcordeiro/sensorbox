@@ -49,7 +49,7 @@ int LiveFish::getVelocity(){
     velocity = distance/(ofGetLastFrameTime()*100); // change this number for scling the velocity values
     fishPos_2 = ofVec2f(fishPos_1);
 
-    cout << "new velocity: " << velocity << endl;
+    // cout << "new velocity: " << velocity << endl;
     
     
     // Sends OSC Messagens (velocity)

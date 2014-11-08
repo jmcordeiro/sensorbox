@@ -14,6 +14,8 @@ void ofApp::setup(){
     camWidth = 1280;
     camHeight = 720;
     
+    flickIntensity = 0;
+    masterBpm = 120;
     
     // ********* FOR PARTICLES *****************
     
@@ -120,11 +122,20 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
+    masterBpm = 120;
+    
     ofBackground(0,0,0);
     bool bNewFrame = false;
     
     paralax_x = (camWidth-ROI.width)*0.5;
     paralax_y = (camHeight-ROI.height)*0.5;
+    
+    
+    // updates flickering intensity assigned to the rithmic drone.
+    if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 17) {
+        flickIntensity = midiMessage.value*2;
+    }
+
     
     
     
@@ -265,8 +276,8 @@ void ofApp::draw(){
     
     
     // draws the flickering effect assigned to the rithmic drone. The final argument changes the intensity
-    flickering(paralax_x, paralax_y, ROI.width, ROI.height,  40);
-    
+    flickering(paralax_x, paralax_y, ROI.width, ROI.height,  flickIntensity, masterBpm);
+
     
     
     
@@ -299,7 +310,7 @@ void ofApp::draw(){
         }
         
         
-        // ****** A report **********************
+        // ****** A report ('z' key) **********************
         ofSetHexColor(0xffffff);
         stringstream reportStr;
         reportStr << "bg subtraction and blob detection" << endl
@@ -349,12 +360,12 @@ void ofApp::draw(){
     
     ofSetColor(230);
     ofDrawBitmapString(currentModeStr + "\n\nSpacebar to reset. \nKeys 1-4 to change mode.", 10, 20);
- 
     
     
     
+    // ***************** MIDI Menu ('m' key) **********************
     if (showMidi) {
-
+        
         ofSetColor(255, 0, 0);
         ofRect(0, 0, ofGetWidth(), 300);
         
@@ -433,11 +444,11 @@ void ofApp::resetParticles(){
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-
+    
     if( key == 'm' ){
         showMidi = false;
     }
-
+    
 }
 
 //--------------------------------------------------------------
@@ -467,9 +478,9 @@ void ofApp::keyPressed(int key){
     }
     
     if( key == 'm' ){
-showMidi = true;
+        showMidi = true;
     }
-
+    
     
     
     
@@ -548,7 +559,7 @@ void ofApp::exit() {
     
     // clean up
     midiIn.closePort();
-      midiIn.removeListener(this);
+    midiIn.removeListener(this);
 }
 
 //--------------------------------------------------------------
@@ -556,4 +567,12 @@ void ofApp::newMidiMessage(ofxMidiMessage& msg) {
     
     // make a copy of the latest message
     midiMessage = msg;
+    
+    cout << "************************" << endl;
+    cout << "midiMessage.channel" << midiMessage.channel << endl;
+    cout << "midiMessage.control" << midiMessage.control << endl;
+    cout << "midiMessage.status" << midiMessage.status << endl;
+    cout << "midiMessage.velocity" << midiMessage.velocity << endl;
+    cout << "midiMessage.value" << midiMessage.value << endl;
+    
 }

@@ -9,15 +9,19 @@
 #include "flickering.h"
 
 int a = 0;
-
-void flickering(int x, int y, int w, int h, int t){
+int firstFrame = 0;
+int frameDif = 0;
+void flickering(int x, int y, int w, int h, int t, int bpm){
     
-    if (ofGetFrameNum()%2== 0){
-        a = ofRandom(t);
+    if ((ofGetFrameNum()%int(bpm*0.25)) == 0){
+        firstFrame = ofGetFrameNum();
     }
     
-    
-    ofSetColor(0, 0, 0, a);
-
+    frameDif = ofGetFrameNum()-firstFrame;
+    if (frameDif < 1) {
+        ofSetColor(0, 0, 0, t*0.8);
+    }else{
+        ofSetColor(0, 0, 0, ofRandom(t*0.2, t*0.5));
+    }
     ofRect(x, y, w, h);
 };

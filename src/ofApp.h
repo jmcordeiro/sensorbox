@@ -11,12 +11,15 @@
 #define _USE_LIVE_VIDEO		// uncomment this to use a live camera
 // otherwise, we'll use a movie file
 
+// USE screen resolution of 1080 x 720 for ber displaying (720p)
 
 class ofApp : public ofBaseApp, public ofxMidiListener{
     
     bool showMidi = false;
     
 public:
+    int masterBpm;  // (should convert to private!!)
+    int flickIntensity;  // (should convert to private!!)
     void setup();
     void update();
     void draw();
