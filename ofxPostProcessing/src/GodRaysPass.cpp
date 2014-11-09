@@ -58,11 +58,14 @@ namespace itg
 
             void main(void)
             {
+                
+                
                 vec4 origColor = texture2D(otex, gl_TexCoord[0].st);
                 vec4 raysColor = texture2D(rtex, gl_TexCoord[0].st);
-
+                
+                
                 if (lightDirDOTviewDir>0.0){
-                    float exposure	= 0.1/float(NUM_SAMPLES);
+                    float exposure	= 0.1/float(NUM_SAMPLES); // estava 0.1
                     float decay		= 1.0 ;
                     float density	= 0.5;
                     float weight	= 6.0;

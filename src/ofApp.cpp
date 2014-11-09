@@ -15,23 +15,21 @@ void ofApp::setup(){
     camWidth = 1280;
     camHeight = 720;
     
-    //cordeiro
+/* THIS APLIES FX TO THE FISH - NOT TO BE USED
     fishFx.init(ofGetWindowWidth(), ofGetWindowHeight());
- //   fishFx.createPass<GodRaysPass>();
+    fishFx.setFlip(false);
 
+//    fishFx.createPass<KaleidoscopePass>();
+//   fishFx.createPass<FxaaPass>();
+//   fishFx.createPass<BloomPass>();
+//   fishFx.createPass<DofPass>(); // blur
+//   fishFx.createPass<GodRaysPass>(); //
+//   fishFx.createPass<NoiseWarpPass>();
+//   fishFx.createPass<VerticalTiltShifPass>();
+//   fishFx.createPass<PixelatePass>();
+//    fishFx.createPass<EdgePass>();
 
-  /*
-    fishFx.createPass<KaleidoscopePass>();
-   fishFx.createPass<FxaaPass>();
-   fishFx.createPass<BloomPass>();
-   fishFx.createPass<DofPass>();
-
-   fishFx.createPass<NoiseWarpPass>();
-    fishFx.createPass<PixelatePass>();
-    fishFx.createPass<EdgePass>();
-    fishFx.createPass<VerticalTiltShifPass>();
-*/
-    
+ */
     flickIntensity = 0;
     masterBpm = 120;
     fadeScreenIntensity = 0;
