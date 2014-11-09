@@ -9,10 +9,28 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-        
+    
+    
     // Define the capture size of the c‰mera
     camWidth = 1280;
     camHeight = 720;
+    
+    //cordeiro
+    fishFx.init(ofGetWindowWidth(), ofGetWindowHeight());
+ //   fishFx.createPass<GodRaysPass>();
+
+
+  /*
+    fishFx.createPass<KaleidoscopePass>();
+   fishFx.createPass<FxaaPass>();
+   fishFx.createPass<BloomPass>();
+   fishFx.createPass<DofPass>();
+
+   fishFx.createPass<NoiseWarpPass>();
+    fishFx.createPass<PixelatePass>();
+    fishFx.createPass<EdgePass>();
+    fishFx.createPass<VerticalTiltShifPass>();
+*/
     
     flickIntensity = 0;
     masterBpm = 120;
@@ -108,6 +126,7 @@ void ofApp::setup(){
     // print received messages to the console
     midiIn.setVerbose(true);
     
+
     
     ofSetFrameRate(15);
     
@@ -146,7 +165,7 @@ void ofApp::update(){
     }
 
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 19) {
-        fishBreath.bintensity = midiMessage.value*2;
+        fishBreath.bintensity = midiMessage.value;
     }
     
     
@@ -280,10 +299,11 @@ void ofApp::draw(){
     
     // draw the incoming, the grayscale, the bg and the thresholded difference
     ofSetHexColor(0xffffff);
-    
-    //vidGrabber.draw(0, 0);
+
+    fishFx.begin();
+    // draw the video
     colorImg.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
-    
+    fishFx.end();
 
     //*********** CALIBRATION SYSTEM (z) *****************
     if (showCalibrationScreen) {

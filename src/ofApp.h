@@ -3,6 +3,8 @@
 #include "ofMain.h"
 #include "ofxOpenCv.h"
 #include "ofxMidi.h"
+#include "ofxPostProcessing.h"
+
 
 #include "drawLine.h"
 #include "liveFish.h"
@@ -88,6 +90,8 @@ public:
     stringstream text;
     ofxMidiIn midiIn;
     ofxMidiMessage midiMessage;
+
+    ofxPostProcessing fishFx;
 
 };
 
