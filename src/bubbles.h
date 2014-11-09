@@ -17,8 +17,10 @@
 
 class Bubble: public demoParticle {
 
-   // int bintensity;
 public:
+    
+    int bintensity;
+
     
    // void setBintensity(int);
     Bubble();

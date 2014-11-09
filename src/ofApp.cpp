@@ -146,7 +146,7 @@ void ofApp::update(){
     }
 
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 19) {
-    //    fishBreath.setBintensity(midiMessage.value*2);
+        fishBreath.bintensity = midiMessage.value*2;
     }
     
     

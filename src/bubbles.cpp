@@ -15,6 +15,7 @@ Bubble::Bubble(){
     bubblesMode = PARTICLE_MODE_NOISE;
     bubblesModeStr = "Breathing";
  //   setBintensity(1);
+    bintensity = 1;
     resetParticles();
     
 };
@@ -28,6 +29,8 @@ Bubble::~Bubble(){
 void Bubble::bubblesUpdate(ofVec2f xy){
 
 //    bubbles.assign(bintensity, demoParticle());
+    
+    bubbles.resize(bintensity);
     
     for(unsigned int i = 0; i < bubbles.size(); i++){
         bubbles[i].setFishPosPrt(xy);
