@@ -298,10 +298,10 @@ void ofApp::draw(){
     // draw the incoming, the grayscale, the bg and the thresholded difference
     ofSetHexColor(0xffffff);
 
-    fishFx.begin();
+//    fishFx.begin();
     // draw the video
     colorImg.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
-    fishFx.end();
+//    fishFx.end();
 
     //*********** CALIBRATION SYSTEM (z) *****************
     if (showCalibrationScreen) {
@@ -597,6 +597,7 @@ void ofApp::exit() {
     midiIn.closePort();
     midiIn.removeListener(this);
 }
+
 
 //--------------------------------------------------------------
 void ofApp::newMidiMessage(ofxMidiMessage& msg) {
