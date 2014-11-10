@@ -14,6 +14,8 @@
 #include "flickering.h"
 #include "bubbles.h"
 #include "setupMidi.h"
+#include "lines_square.h"
+
 
 #define _USE_LIVE_VIDEO		// uncomment this to use a live camera
 // otherwise, we'll use a movie file
@@ -29,6 +31,9 @@ public:
     int flickIntensity;  // (should convert to private!!)
     int fadeScreenIntensity;  // (should convert to private!!)
     int fadeScreenIntensityWhite;  // (should convert to private!!)
+    int lineHiVel; // (should convert to private!!)
+    int lineLowVel;  // (should convert to private!!)
+    int rectOpacity;  // should be bla bla bla
     
     void setup();
     void update();
@@ -74,8 +79,9 @@ public:
 
     ofImage bgImg;
     
-    Line firstLine;
-    Line secondLine;
+    Line * firstLine = new Line;
+    Line * secondLine = new Line;
+    
     LiveFish myFish;
 
     Bubble fishBreath;

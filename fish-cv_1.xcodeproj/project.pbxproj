@@ -66,6 +66,7 @@
 		45CB3779190A8A4D001C9834 /* drawLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45CB3777190A8A4D001C9834 /* drawLine.cpp */; };
 		45EE431C1A11291F00C2CECB /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 45EE42F51A11291F00C2CECB /* README.md */; };
 		45EE431D1A11291F00C2CECB /* ofxPostGlitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45EE431A1A11291F00C2CECB /* ofxPostGlitch.cpp */; };
+		45EE43201A113E6400C2CECB /* lines_square.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45EE431E1A113E6400C2CECB /* lines_square.cpp */; };
 		63020F16C7E8DED980111241 /* ofxCvImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C6151136D101F857DAE12722 /* ofxCvImage.cpp */; };
 		BBAB23CB13894F3D00AA2426 /* GLUT.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = BBAB23BE13894E4700AA2426 /* GLUT.framework */; };
 		D3301F6A0B43BB293ED97C1D /* ofxCvShortImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8A4DD23693DFAB8EC05FAA5D /* ofxCvShortImage.cpp */; };
@@ -296,6 +297,8 @@
 		45EE43181A11291F00C2CECB /* twist.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = twist.vert; sourceTree = "<group>"; };
 		45EE431A1A11291F00C2CECB /* ofxPostGlitch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxPostGlitch.cpp; sourceTree = "<group>"; };
 		45EE431B1A11291F00C2CECB /* ofxPostGlitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxPostGlitch.h; sourceTree = "<group>"; };
+		45EE431E1A113E6400C2CECB /* lines_square.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = lines_square.cpp; sourceTree = "<group>"; };
+		45EE431F1A113E6400C2CECB /* lines_square.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = lines_square.h; sourceTree = "<group>"; };
 		45F38573A0B0DEEC8BBC7A2C /* simplex_downhill.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = simplex_downhill.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/simplex_downhill.h; sourceTree = SOURCE_ROOT; };
 		49EFFCF36CF194CCE0E1FAAB /* kdtree_index.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = kdtree_index.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/kdtree_index.h; sourceTree = SOURCE_ROOT; };
 		516717F84C0146512C47A3EC /* ofxCvHaarFinder.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = ofxCvHaarFinder.h; path = ../../../addons/ofxOpenCv/src/ofxCvHaarFinder.h; sourceTree = SOURCE_ROOT; };
@@ -1072,6 +1075,8 @@
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 				4561A40C1A0ECEAF00DA4DC5 /* setupMidi.cpp */,
 				4561A40D1A0ECEAF00DA4DC5 /* setupMidi.h */,
+				45EE431E1A113E6400C2CECB /* lines_square.cpp */,
+				45EE431F1A113E6400C2CECB /* lines_square.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1204,6 +1209,7 @@
 				45078709191270600027FA62 /* NetworkingUtils.cpp in Sources */,
 				454B52601A0F8E4500AE36F3 /* GodRaysPass.cpp in Sources */,
 				4507870A191270600027FA62 /* UdpSocket.cpp in Sources */,
+				45EE43201A113E6400C2CECB /* lines_square.cpp in Sources */,
 				4507870B191270600027FA62 /* NetworkingUtilsWin.cpp in Sources */,
 				4507870C191270600027FA62 /* UdpSocketWin.cpp in Sources */,
 				45EE431C1A11291F00C2CECB /* README.md in Sources */,

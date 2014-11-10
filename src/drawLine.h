@@ -31,12 +31,14 @@ class Line {
     int height;
     bool reverse;
     int paralaxX;
-    ofxOscSender lineSender;
+  //  ofxOscSender lineSender;
     
 public:
     Line();
     ~Line();
     void drawLine();
+    
+    void lineUpdate(int, int);
     
     void setStatus(bool);
     bool getStatus();
@@ -46,7 +48,7 @@ public:
     void setVelocity(int);
     int getVelocity();
     
-    void setOpacity();
+    void setOpacity(int);
     int getOpacity();
     
     void setThickness(int);
@@ -55,7 +57,6 @@ public:
     void setOrientation();
     bool getOrientation();
         
-    void setCamSize(int _width, int _height, int _x, int _y);
     
 };
 

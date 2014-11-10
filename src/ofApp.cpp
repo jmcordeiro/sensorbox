@@ -28,14 +28,16 @@ void ofApp::setup(){
      //   fishFx.createPass<VerticalTiltShifPass>();
      //   fishFx.createPass<PixelatePass>();
      //    fishFx.createPass<EdgePass>();
-     
      */
-    
     
     flickIntensity = 0;
     masterBpm = 120;
     fadeScreenIntensity = 0;
     fadeScreenIntensityWhite = 0;
+    lineHiVel = 0;
+    lineLowVel = 0;
+    rectOpacity = 0;
+    
     
     // ********* FOR PARTICLES *****************
     int num = 15;
@@ -62,7 +64,6 @@ void ofApp::setup(){
     // Define a scale ratio to resize the original image for analysis
     scaleRatio = 4;
     
-    
 #ifdef _USE_LIVE_VIDEO
     // Get back a list of devices (cameras).
     vector<ofVideoDevice> devices = vidGrabber.listDevices();
@@ -75,10 +76,8 @@ void ofApp::setup(){
             cout << " - unavailable " << endl;
         }
     }
-    // use camera 0 for the analysis
-    vidGrabber.setDeviceID(0);
-    
-    //vidGrabber.setVerbose(true);  // check what this is!
+    vidGrabber.setDeviceID(0);  // use camera 0 for the analysis
+
     vidGrabber.initGrabber(camWidth,camHeight);
 #else
     vidPlayer.loadMovie("test_animation.mov");
@@ -96,19 +95,17 @@ void ofApp::setup(){
     bLoadPictureBakground = true; // load from picture file ('p' key)
     
     
-    //******** threshold used for image analysis
+    //******** threshold used for image analysis ******************
     threshold = 50;
     
     
     // ************ LINE DECLARATION ********
-    firstLine.setCamSize(ROI.width, camHeight, paralax_x, paralax_y);
-    //   secondLine.setCamSize(ROI.width, camHeight, paralax_x, paralax_y);
     
-    firstLine.setStatus(true);
-    firstLine.setThickness(5);
+  //  firstLine->setStatus(true);
+  //  firstLine->setThickness(5);
     
-    //   secondLine.setStatus(true);
-    //   secondLine.setThickness(5);
+  //  secondLine->setStatus(true);
+  //  secondLine->setThickness(5);
     
     
     
@@ -136,8 +133,6 @@ void ofApp::setup(){
     
     ofSetFrameRate(15);
     
-    
-    
 }
 
 
@@ -145,10 +140,7 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    
-    
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
-    
     masterBpm = 120;
     
     ofBackground(255,255,255);
@@ -157,38 +149,71 @@ void ofApp::update(){
     paralax_x = (camWidth-ROI.width)*0.5;
     paralax_y = (camHeight-ROI.height)*0.5;
     
+    
     // ******* for glitch *************************
     // myGlitch.setFx(OFXPOSTGLITCH_CONVERGENCE,true);
     
     
+    // ******************************************************************
+    // ************** MIDI SETUP ****************************************
+    // ******************************************************************
     
-    
-    
-    // updates flickering intensity assigned to the rithmic drone.
+    // ---------------------- Rhythm Drone Intensity ----------------------------
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 17) {
         flickIntensity = midiMessage.value*2;
     }
     
+    // ---------------------- Screen Fade out to black ----------------------------
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 33) {
         fadeScreenIntensity = midiMessage.value*2;
     }
     
+    // ---------------------- Bubbles trigger ----------------------------
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 14 && midiMessage.value == 127) {
         fishBreath.resetParticles();
     }
     
+    // ---------------------- Bubbles intensity (number of bubbles) ----------------------------
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 19) {
         fishBreath.bintensity = midiMessage.value;
     }
-   
+    
+    // ---------------------- Fish Fade in (white) ----------------------------
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 24) {
         fadeScreenIntensityWhite = midiMessage.value*2;
     }
+    
+    // ---------------------- Line Low ----------------------------
+    if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 37) {
+        lineLowVel = midiMessage.value;
+    }
+    
+    // ---------------------- Line Hi --------------------------
+    if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 38) {
+        lineHiVel = midiMessage.value;
+    }
+  
+    // ---------------------- Line Low ----------------------------
+    if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 21) {
+        firstLine->setOpacity(midiMessage.value*2);
+    }
+    
+    // ---------------------- Line Hi --------------------------
+    if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 22) {
+        secondLine->setOpacity(midiMessage.value*2);
+    }
+
+    // ---------------------- Retangle Opacity --------------------------
+    if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 39) {
+        rectOpacity = midiMessage.value*2;
+    }
 
     
-    // ************ LINE UPDATE *********
-    firstLine.setCamSize(ROI.width, ofGetWindowHeight(), paralax_x, 0);
-    //    secondLine.setCamSize(ROI.width, ROI.height, paralax_x, paralax_y);
+    
+    // ************ LINE UPDATE *************************************************
+    
+    firstLine->lineUpdate(lineLowVel, 5);
+    secondLine->lineUpdate(lineHiVel, 1);
     
     
 #ifdef _USE_LIVE_VIDEO
@@ -240,7 +265,6 @@ void ofApp::update(){
             
         }
         
-        
         //******** LOAD BACKGROUND PICTURE ('p' key) *******************
         if (bLoadPictureBakground == true){
             loader.loadImage("background.png");
@@ -263,8 +287,8 @@ void ofApp::update(){
         
         // **** find contours *******
         contourFinder.findContours(grayDiff, 1, (ROI.width/scaleRatio*ROI.height/scaleRatio/4), 1, false);
-        
     }
+    
     
     if (contourFinder.nBlobs > 0){
         fishPosSmall = ofVec2f(contourFinder.blobs[0].centroid.x, contourFinder.blobs[0].centroid.y);
@@ -274,12 +298,10 @@ void ofApp::update(){
     // this method sends information for fish class variables
     myFish.makeFishToWork(camWidth, camHeight, fishPosBig.x, fishPosBig.y, ROI.width, ROI.height, paralax_x, paralax_y, 100);
     
-    
-    /*
-     cout << "velocity: " << myFish.getVelocity(fishPosBig.x,fishPosBig.y) << endl;
-     */
+    // cout << "velocity: " << myFish.getVelocity(fishPosBig.x,fishPosBig.y) << endl;
     
     
+    // ************* Release bubbles *******************
     fishBreath.bubblesUpdate(fishPosBig);
     
     
@@ -295,18 +317,7 @@ void ofApp::update(){
         attractPointsWithMovement[i].x = attractPoints[i].x + ofSignedNoise(i * 10, ofGetElapsedTimef() * 0.7) * 12.0;
         attractPointsWithMovement[i].y = attractPoints[i].y + ofSignedNoise(i * -10, ofGetElapsedTimef() * 0.7) * 12.0;
     }
-    
-    
-    colorImg.contrastStretch();
-    
 }
-
-
-
-
-
-
-
 
 
 
@@ -324,9 +335,11 @@ void ofApp::draw(){
     
     // *********** draw the video **************************
     colorImg.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
+
     
-    
+    // *********** Show/whide the fish **************************
     fadeScreenToWhite(fadeScreenIntensityWhite);
+    
     
     //*********** CALIBRATION SYSTEM (z) *****************
     if (showCalibrationScreen) {
@@ -354,7 +367,6 @@ void ofApp::draw(){
             // *** draw point on big image ***
             ofSetColor(255, 0, 0);
             ofCircle(fishPosBig.x, fishPosBig.y, 10);
-            
         }
         
         
@@ -370,32 +382,36 @@ void ofApp::draw(){
         
     }else{
         
-        // *** draw point on big image *** (comment on real use)
+        // ********** draw point on big image *** (comment on real use)
         if (contourFinder.nBlobs > 0){
             ofSetColor(0, 0, 0);
             ofFill();
             ofCircle(fishPosBig.x,fishPosBig.y, 2);
         }
         
-        // *** draw white frame arround display window ***
+        // ********** draw white frame arround display window ***
         ofSetColor(255, 255, 255);
         ofFill();
         ofRect(0, 0, camWidth, paralax_y);
         ofRect(0, (paralax_y)+ROI.height, camWidth, camHeight);
         ofRect(0, 0, paralax_x, camHeight);
         ofRect((paralax_x)+ROI.width, 0, camWidth, camHeight);
-        
-        
     }
     
+    // ************** Draw lines ************************
+    ofSetLineWidth(5);
+    firstLine->drawLine();
+    ofSetLineWidth(1);
+    secondLine->drawLine();
     
-    firstLine.drawLine();
-    // secondLine.drawLine();
+    // ************** Draw lines_Square ************************
+    lineSquare(firstLine->getLinePosition(), secondLine->getLinePosition(), firstLine->getOpacity(), secondLine->getOpacity(), rectOpacity);
+    //cout << "draw square: "<< firstLine.getLinePosition() << endl;
     
-    // draws the flickering effect assigned to the rithmic drone. The final argument changes the intensity
-    // flickering(paralax_x, paralax_y, ROI.width, ROI.height,  flickIntensity, masterBpm);
-    flickering(0, 0, ofGetWindowWidth(), ofGetWindowHeight(),  flickIntensity, masterBpm);
     
+    // ************** Rhythmic Drone ************************
+    flickering(0, 0, ofGetWindowWidth(), ofGetWindowHeight(),  flickIntensity, masterBpm);     //The final argument changes the intensity
+
     
     // ************************ draw Particles ******************
     for(unsigned int i = 0; i < p.size(); i++){
@@ -463,14 +479,9 @@ void ofApp::draw(){
         ofDrawBitmapString(text.str(), 20, 240);
         text.str(""); // clear
     }
-    
     fishBreath.bubblesDraw();
-    
     fadeScreen(fadeScreenIntensity);
-    
 }
-
-
 
 
 
@@ -487,16 +498,14 @@ void ofApp::resetParticles(){
      
      attractPointsWithMovement = attractPoints;
      */
+    
     for(unsigned int i = 0; i < p.size(); i++){
         p[i].setMode(currentMode);
         //   p[i].setAttractPoints(&attractPointsWithMovement);;
         p[i].reset();
-        
-        
     }
-    
-    
 }
+
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
@@ -504,8 +513,8 @@ void ofApp::keyReleased(int key){
     if( key == 'm' ){
         showMidi = false;
     }
-    
 }
+
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
@@ -575,7 +584,6 @@ void ofApp::keyPressed(int key){
         case 'k':
             ROI.height = ROI.height-5;
             break;
-            
         case 'w':
             ROI.y = ROI.y-5;
             break;
@@ -607,7 +615,7 @@ void ofApp::keyPressed(int key){
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
     
-    firstLine.setVelocity(x / 100);
+   // firstLine.setVelocity(x / 100);
     //secondLine.setVelocity(y / 100);
     
 }

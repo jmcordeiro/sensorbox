@@ -11,19 +11,16 @@
 
 
 Line::Line(){
-    velocity = 1;
+    velocity = 0;
     opacity = 1;
     thickness = 1;
     xPosition = 0;
     yPosition = 0;
-    isVertical = true;
-    status = false;
-    width = 1280;
-    height = 720;
+   // isVertical = true;
+   // status = false;
     reverse = false;
-    xIniPos = 0;
-    paralaxX = 0;
-    lineSender.setup(HOST, PORT);
+  //  xIniPos = 0;
+  //  lineSender.setup(HOST, PORT);
 
 
 };
@@ -32,27 +29,23 @@ Line::~Line(){
 
 };
 
-void Line::drawLine(){
+void Line::lineUpdate(int vel, int intensity){
+    if (xPosition >= ofGetWindowWidth()) reverse = true;
+    if (xPosition <= 0) reverse = false;
     
-    if (status) {
-        ofSetColor(0,0,255);    //set te color to blue
-        ofSetLineWidth(thickness);
-        ofLine(xPosition, yPosition, xPosition, height);
-  
-        if (xPosition >= width+xIniPos) reverse = true;
-        if (xPosition <= 0+xIniPos) reverse = false;
-        
-        if (reverse) {
-            xPosition = xPosition-velocity;
-        }else{
-        xPosition = xPosition+velocity;
-        }
-        
+    if (reverse) {
+        xPosition = xPosition-vel;
+    }else{
+        xPosition = xPosition+vel;
     }
-    
-    getLinePosition();
-    
+}
+
+
+void Line::drawLine(){
+        ofSetColor(0, 0, 0, opacity);
+        ofLine(xPosition, 0, xPosition, ofGetHeight());
 };
+
 
 void Line::setStatus(bool _status){
     status = _status;
@@ -64,28 +57,34 @@ bool Line::getStatus(){
 
 int Line::getLinePosition(){
     
-    int linePos;
-    linePos = (int) (xPosition-paralaxX)/(width/100);
+   // int linePos;
+   // linePos = (int) (xPosition-paralaxX)/(width/100);
     //cout << "LINE POS: "<<linePos << endl;
-    
+   
+    /*
     ofxOscMessage l1_p;
     l1_p.setAddress("/line_1_Pos");
     l1_p.addIntArg(linePos);
     lineSender.sendMessage(l1_p);
+    */
+    
+    return xPosition;
     
 };
 
 void Line::setVelocity(int _vel){
-    velocity = _vel;
+ //   velocity = _vel;
 };
 
 int Line::getVelocity(){
 };
 
-void Line::setOpacity(){
+void Line::setOpacity(int o){
+    opacity = o;
 };
 
 int Line::getOpacity(){
+    return opacity;
 };
 
 void Line::setThickness(int _thickness){
@@ -101,12 +100,4 @@ void Line::setOrientation(){
 bool Line::getOrientation(){
 };
 
-void Line::setCamSize(int _width, int _height, int _x, int _y){
-    width = _width;
-    height = _height+_y;
-    xIniPos = _x;
-    yPosition = _y;
-    paralaxX = _x;
-    
-};
 
