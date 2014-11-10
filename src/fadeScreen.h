@@ -15,9 +15,9 @@
 
 
 
-void fadeScreen(int intensity);
+void fadeScreen(int intensity); // to black
 
-
+void fadeScreenToWhite(int intensity); // to white
 
 
 

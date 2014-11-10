@@ -4,6 +4,7 @@
 #include "ofxOpenCv.h"
 #include "ofxMidi.h"
 #include "ofxPostProcessing.h"
+#include "ofxPostGlitch.h"
 
 
 #include "drawLine.h"
@@ -27,6 +28,7 @@ public:
     int masterBpm;  // (should convert to private!!)
     int flickIntensity;  // (should convert to private!!)
     int fadeScreenIntensity;  // (should convert to private!!)
+    int fadeScreenIntensityWhite;  // (should convert to private!!)
     
     void setup();
     void update();
@@ -78,6 +80,9 @@ public:
 
     Bubble fishBreath;
 
+    ofFbo myFbo;
+    ofxPostGlitch myGlitch;
+    
     //*********** Template Prt ***************
     particleMode currentMode;
     string currentModeStr;

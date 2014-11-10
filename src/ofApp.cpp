@@ -15,24 +15,27 @@ void ofApp::setup(){
     camWidth = 1280;
     camHeight = 720;
     
-/* THIS APLIES FX TO THE FISH - NOT TO BE USED
-    fishFx.init(ofGetWindowWidth(), ofGetWindowHeight());
-    fishFx.setFlip(false);
-
-//    fishFx.createPass<KaleidoscopePass>();
-//   fishFx.createPass<FxaaPass>();
-//   fishFx.createPass<BloomPass>();
-//   fishFx.createPass<DofPass>(); // blur
-//   fishFx.createPass<GodRaysPass>(); //
-//   fishFx.createPass<NoiseWarpPass>();
-//   fishFx.createPass<VerticalTiltShifPass>();
-//   fishFx.createPass<PixelatePass>();
-//    fishFx.createPass<EdgePass>();
-
- */
+    /* THIS APLIES FX TO THE FISH - NOT TO BE USED
+     fishFx.init(ofGetWindowWidth(), ofGetWindowHeight());
+     fishFx.setFlip(false);
+     
+     //    fishFx.createPass<KaleidoscopePass>();
+     //   fishFx.createPass<FxaaPass>();
+     //   fishFx.createPass<BloomPass>();
+     //   fishFx.createPass<DofPass>(); // blur
+     //   fishFx.createPass<GodRaysPass>(); //
+     //   fishFx.createPass<NoiseWarpPass>();
+     //   fishFx.createPass<VerticalTiltShifPass>();
+     //   fishFx.createPass<PixelatePass>();
+     //    fishFx.createPass<EdgePass>();
+     
+     */
+    
+    
     flickIntensity = 0;
     masterBpm = 120;
     fadeScreenIntensity = 0;
+    fadeScreenIntensityWhite = 0;
     
     // ********* FOR PARTICLES *****************
     int num = 15;
@@ -40,7 +43,12 @@ void ofApp::setup(){
     currentMode = PARTICLE_MODE_ATTRACT;
     currentModeStr = "1 - PARTICLE_MODE_ATTRACT: attracts to mouse";
     resetParticles();
-
+    
+    
+    // ********* FOR Glitches *****************
+    // myFbo.allocate(ofGetWidth(),ofGetHeight());
+    // myGlitch.setup(&myFbo);
+    
     
     // ********* define an initial ROI - Region Of Interest *********
     ROI.width = 1265; // set it to camWidth to have ROI = to camera size
@@ -124,7 +132,7 @@ void ofApp::setup(){
     // print received messages to the console
     midiIn.setVerbose(true);
     
-
+    
     
     ofSetFrameRate(15);
     
@@ -136,36 +144,47 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::update(){
-
+    
+    
     
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
     
     masterBpm = 120;
     
-    ofBackground(0,0,0);
+    ofBackground(255,255,255);
     bool bNewFrame = false;
     
     paralax_x = (camWidth-ROI.width)*0.5;
     paralax_y = (camHeight-ROI.height)*0.5;
+    
+    // ******* for glitch *************************
+    // myGlitch.setFx(OFXPOSTGLITCH_CONVERGENCE,true);
+    
+    
+    
     
     
     // updates flickering intensity assigned to the rithmic drone.
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 17) {
         flickIntensity = midiMessage.value*2;
     }
-
+    
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 33) {
         fadeScreenIntensity = midiMessage.value*2;
     }
-
+    
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 14 && midiMessage.value == 127) {
         fishBreath.resetParticles();
     }
-
+    
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 19) {
         fishBreath.bintensity = midiMessage.value;
     }
-    
+   
+    if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 24) {
+        fadeScreenIntensityWhite = midiMessage.value*2;
+    }
+
     
     // ************ LINE UPDATE *********
     firstLine.setCamSize(ROI.width, ofGetWindowHeight(), paralax_x, 0);
@@ -185,7 +204,6 @@ void ofApp::update(){
     if (bNewFrame){
 #ifdef _USE_LIVE_VIDEO
         colorImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight);
-        
 #else
         colorImg.setFromPixels(vidPlayer.getPixels(), camWidth, camHeight);
 #endif
@@ -263,7 +281,7 @@ void ofApp::update(){
     
     
     fishBreath.bubblesUpdate(fishPosBig);
-
+    
     
     // *********  FOR PARTICLES ***************
     for(unsigned int i = 0; i < p.size(); i++){
@@ -279,6 +297,7 @@ void ofApp::update(){
     }
     
     
+    colorImg.contrastStretch();
     
 }
 
@@ -294,15 +313,21 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
     
-    
     // draw the incoming, the grayscale, the bg and the thresholded difference
     ofSetHexColor(0xffffff);
-
-//    fishFx.begin();
-    // draw the video
+    
+    // ********* GLITCH EFFECT ********* NOTTTT WORKING *****
+    //  myFbo.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
+    //  myGlitch.generateFx();
+    //  myFbo.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
+    
+    
+    // *********** draw the video **************************
     colorImg.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
-//    fishFx.end();
-
+    
+    
+    fadeScreenToWhite(fadeScreenIntensityWhite);
+    
     //*********** CALIBRATION SYSTEM (z) *****************
     if (showCalibrationScreen) {
         
@@ -362,7 +387,7 @@ void ofApp::draw(){
         
         
     }
-
+    
     
     firstLine.drawLine();
     // secondLine.drawLine();
@@ -440,8 +465,7 @@ void ofApp::draw(){
     }
     
     fishBreath.bubblesDraw();
-
- 
+    
     fadeScreen(fadeScreenIntensity);
     
 }
@@ -454,18 +478,18 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::resetParticles(){
     
-   /*
-    //these are the attraction points used in the forth demo
-    attractPoints.clear();
-    for(int i = 0; i < 4; i++){
-        attractPoints.push_back( ofPoint( ofMap(i, 0, 4, 100, ofGetWidth()-100) , ofRandom(100, ofGetHeight()-100) ) );
-    }
-    
-    attractPointsWithMovement = attractPoints;
-    */
+    /*
+     //these are the attraction points used in the forth demo
+     attractPoints.clear();
+     for(int i = 0; i < 4; i++){
+     attractPoints.push_back( ofPoint( ofMap(i, 0, 4, 100, ofGetWidth()-100) , ofRandom(100, ofGetHeight()-100) ) );
+     }
+     
+     attractPointsWithMovement = attractPoints;
+     */
     for(unsigned int i = 0; i < p.size(); i++){
         p[i].setMode(currentMode);
-     //   p[i].setAttractPoints(&attractPointsWithMovement);;
+        //   p[i].setAttractPoints(&attractPointsWithMovement);;
         p[i].reset();
         
         
@@ -504,11 +528,11 @@ void ofApp::keyPressed(int key){
         currentModeStr = "4 - PARTICLE_MODE_NOISE: snow particle simulation";
         resetParticles();
     }
-
+    
     if( key == '5'){
         fishBreath.resetParticles();
-      }
-
+    }
+    
     if( key == ' ' ){
         resetParticles();
     }
