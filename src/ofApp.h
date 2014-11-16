@@ -9,13 +9,13 @@
 
 #include "drawLine.h"
 #include "liveFish.h"
-#include "demoParticle.h"
+//#include "demoParticle.h"
 #include "fadeScreen.h"
 #include "flickering.h"
 #include "bubbles.h"
 #include "setupMidi.h"
 #include "lines_square.h"
-
+#include "rain.h"
 
 #define _USE_LIVE_VIDEO		// uncomment this to use a live camera
 // otherwise, we'll use a movie file
@@ -85,6 +85,7 @@ public:
     LiveFish myFish;
 
     Bubble fishBreath;
+    rain myRain;
 
     ofFbo myFbo;
     ofxPostGlitch myGlitch;

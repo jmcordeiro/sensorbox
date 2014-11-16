@@ -64,6 +64,7 @@
 		4561A40E1A0ECEAF00DA4DC5 /* setupMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4561A40C1A0ECEAF00DA4DC5 /* setupMidi.cpp */; };
 		45AA3E4A1A0BE4B8009B5B02 /* flickering.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3E481A0BE4B8009B5B02 /* flickering.cpp */; };
 		45CB3779190A8A4D001C9834 /* drawLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45CB3777190A8A4D001C9834 /* drawLine.cpp */; };
+		45DB3DF01A18C92C00378262 /* rain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45DB3DEE1A18C92C00378262 /* rain.cpp */; };
 		45EE431C1A11291F00C2CECB /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 45EE42F51A11291F00C2CECB /* README.md */; };
 		45EE431D1A11291F00C2CECB /* ofxPostGlitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45EE431A1A11291F00C2CECB /* ofxPostGlitch.cpp */; };
 		45EE43201A113E6400C2CECB /* lines_square.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45EE431E1A113E6400C2CECB /* lines_square.cpp */; };
@@ -260,6 +261,8 @@
 		45AA3E491A0BE4B8009B5B02 /* flickering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flickering.h; sourceTree = "<group>"; };
 		45CB3777190A8A4D001C9834 /* drawLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = drawLine.cpp; sourceTree = "<group>"; };
 		45CB3778190A8A4D001C9834 /* drawLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = drawLine.h; sourceTree = "<group>"; };
+		45DB3DEE1A18C92C00378262 /* rain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rain.cpp; sourceTree = "<group>"; };
+		45DB3DEF1A18C92C00378262 /* rain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rain.h; sourceTree = "<group>"; };
 		45EE42F51A11291F00C2CECB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		45EE42F71A11291F00C2CECB /* convergence.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = convergence.frag; sourceTree = "<group>"; };
 		45EE42F81A11291F00C2CECB /* convergence.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = convergence.vert; sourceTree = "<group>"; };
@@ -1061,6 +1064,8 @@
 				4561A4061A0E939900DA4DC5 /* bubbles.cpp */,
 				4561A4071A0E939900DA4DC5 /* bubbles.h */,
 				45579B9D1A0D115700D32AF9 /* demoParticle.cpp */,
+				45DB3DEE1A18C92C00378262 /* rain.cpp */,
+				45DB3DEF1A18C92C00378262 /* rain.h */,
 				45579B9E1A0D115700D32AF9 /* demoParticle.h */,
 				45CB3777190A8A4D001C9834 /* drawLine.cpp */,
 				45CB3778190A8A4D001C9834 /* drawLine.h */,
@@ -1197,6 +1202,7 @@
 				4561A4051A0E865300DA4DC5 /* fadeScreen.cpp in Sources */,
 				454B525D1A0F8E4500AE36F3 /* EdgePass.cpp in Sources */,
 				454B52571A0F8E4500AE36F3 /* BleachBypassPass.cpp in Sources */,
+				45DB3DF01A18C92C00378262 /* rain.cpp in Sources */,
 				4561A3F41A0D7BB000DA4DC5 /* ofxMidiIn.cpp in Sources */,
 				4561A3F21A0D7BB000DA4DC5 /* ofxBaseMidi.cpp in Sources */,
 				454B52621A0F8E4500AE36F3 /* KaleidoscopePass.cpp in Sources */,

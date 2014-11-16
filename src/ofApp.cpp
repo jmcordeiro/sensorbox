@@ -39,7 +39,7 @@ void ofApp::setup(){
     rectOpacity = 0;
     
     
-    // ********* FOR PARTICLES *****************
+    // ********* FOR PARTICLES (line around the fish) *****************
     int num = 15;
     p.assign(num, demoParticle());
     currentMode = PARTICLE_MODE_ATTRACT;
@@ -133,12 +133,15 @@ void ofApp::setup(){
     
     ofSetFrameRate(15);
     
+    myRain.reset();
 }
 
 
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    
+    myRain.rainUpdate();
     
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
     masterBpm = 120;
@@ -171,6 +174,7 @@ void ofApp::update(){
     // ---------------------- Bubbles trigger ----------------------------
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 14 && midiMessage.value == 127) {
         fishBreath.resetParticles();
+        myRain.resetParticles();
     }
     
     // ---------------------- Bubbles intensity (number of bubbles) ----------------------------
@@ -481,6 +485,8 @@ void ofApp::draw(){
     }
     fishBreath.bubblesDraw();
     fadeScreen(fadeScreenIntensity);
+    
+    myRain.rainDraw();
 }
 
 
@@ -520,6 +526,7 @@ void ofApp::keyReleased(int key){
 void ofApp::keyPressed(int key){
     
     // ************** For Particles *****************
+    /*
     if( key == '1'){
         currentMode = PARTICLE_MODE_ATTRACT;
         currentModeStr = "1 - PARTICLE_MODE_ATTRACT: attracts to mouse";
@@ -537,20 +544,19 @@ void ofApp::keyPressed(int key){
         currentModeStr = "4 - PARTICLE_MODE_NOISE: snow particle simulation";
         resetParticles();
     }
-    
     if( key == '5'){
         fishBreath.resetParticles();
     }
-    
     if( key == ' ' ){
         resetParticles();
     }
+    */
     
+    
+    // ************** For MIDI *****************
     if( key == 'm' ){
         showMidi = true;
     }
-    
-    
     
     
     // ************** For fish tracking *****************

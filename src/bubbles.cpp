@@ -59,8 +59,8 @@ void Bubble::bubblesDraw(){
         bubbles[i].draw();
     }
     
-    ofSetColor(230);
-    ofDrawBitmapString(bubblesModeStr + "\n\nSpacebar to reset. \nKeys 1-4 to change mode.", 10, 20);
+   // ofSetColor(230);
+   // ofDrawBitmapString(bubblesModeStr + "\n\nSpacebar to reset. \nKeys 1-4 to change mode.", 10, 20);
 };
 
 
@@ -89,7 +89,6 @@ void Bubble::resetParticles(){
    */
     for(unsigned int i = 0; i < bubbles.size(); i++){
         bubbles[i].setMode(bubblesMode);
-       // p[i].setAttractPoints(&attractPointsWithMovement);;
         bubbles[i].reset();
         
         

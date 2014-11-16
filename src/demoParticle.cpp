@@ -52,13 +52,30 @@ void demoParticle::reset(){
 	
 	scale = ofRandom(0.5, 1.0);
 
-    if( mode == PARTICLE_MODE_NOISE ){
         drag  = ofRandom(0.97, 0.99);
         vel.y = fabs(vel.y) * -6.0; //make the particles all be going up
-    }else{
-        drag  = ofRandom(0.95, 0.998);
-    }
 
+
+    }else if (mode == PARTICLE_MODE_RAIN){
+        
+        //the unique val allows us to set properties slightly differently for each particle
+        uniqueVal = ofRandom(-10000, 10000);
+        
+        pos.x = ofRandomWidth();
+        pos.y = ofRandom(-10,-600);
+        
+        vel.x = 15;
+        vel.y = ofRandom(14, 18);
+  
+        frc   = ofPoint(0,0,0);
+        
+          scale = 0.5;
+       
+            drag  = ofRandom(0.97, 0.99);
+//            vel.y = vel.y * 3.0; //make the particles all be going down
+        
+
+        
     }else{
     
         //the unique val allows us to set properties slightly differently for each particle
@@ -74,12 +91,8 @@ void demoParticle::reset(){
         
         scale = ofRandom(0.5, 1.0);
         
-	if( mode == PARTICLE_MODE_NOISE ){
-		drag  = ofRandom(0.97, 0.99);
-		vel.y = fabs(vel.y) * 3.0; //make the particles all be going down
-	}else{
+
 		drag  = ofRandom(0.95, 0.998);	
-	}
         
     }
 }
@@ -118,8 +131,7 @@ void demoParticle::update(){
 			frc.y = ofSignedNoise(uniqueVal, pos.x * 0.01, ofGetElapsedTimef()*0.2);
 			vel += frc * 0.04;
 		}
-	}
-	else if( mode == PARTICLE_MODE_NOISE ){
+	}else if( mode == PARTICLE_MODE_NOISE ){
        
         float fakeWindX = ofSignedNoise(pos.x * 0.003, pos.y * -0.006, ofGetElapsedTimef() * 0.6);
         
@@ -153,10 +165,7 @@ void demoParticle::update(){
 			pos.y -= ofGetHeight();
 		}
          */
-	}
-         
-         
-	else if( mode == PARTICLE_MODE_NEAREST_POINTS ){
+	} else if( mode == PARTICLE_MODE_NEAREST_POINTS ){
 		
 		if( attractPoints ){
 
@@ -197,32 +206,34 @@ void demoParticle::update(){
 		
 		}
 		
-	}
-	
-	
-	//2 - UPDATE OUR POSITION
+    }else if( mode == PARTICLE_MODE_RAIN ){
+        
+  //      frc.x = 0.3;
+
+//        frc.y = ofSignedNoise(uniqueVal, 0.006, ofGetElapsedTimef()*0.2) * 0.09 + 0.18;
+        
+//        vel *= drag;
+//        vel += frc * 0.4;
+        
+        
+        //we do this so as to skip the bounds check for the bottom and make the particles go back to the top of the screen
+        if( pos.y >= ofGetHeight() ){
+            pos.y = -5;
+            pos.x = ofRandom(-100, ofGetWidth());
+        }
+        
+        /*
+         //we do this so as to skip the bounds check for the bottom and make the particles go back to the top of the screen
+         if( pos.y - vel.y > ofGetHeight() ){
+         pos.y -= ofGetHeight();
+         }
+         */
+    }
+
+    //2 - UPDATE OUR POSITION
 	
 	pos += vel; 
 	
-	/*
-	//3 - (optional) LIMIT THE PARTICLES TO STAY ON SCREEN 
-	//we could also pass in bounds to check - or alternatively do this at the ofApp level
-	if( pos.x > ofGetWidth() ){
-		pos.x = ofGetWidth();
-		vel.x *= -1.0;
-	}else if( pos.x < 0 ){
-		pos.x = 0;
-		vel.x *= -1.0;
-	}
-	if( pos.y > ofGetHeight() ){
-		pos.y = ofGetHeight();
-		vel.y *= -1.0;
-	}
-	else if( pos.y < 0 ){
-		pos.y = 0;
-		vel.y *= -1.0;
-	}	
-*/
 }
 
 //------------------------------------------------------------------
@@ -244,6 +255,12 @@ void demoParticle::draw(){
 		ofSetColor(0, 0, 0);
         	ofCircle(pos.x, pos.y, scale * 4.0);
 	}
+    else if( mode == PARTICLE_MODE_RAIN){
+        ofSetColor(0, 0, 0, 255-pos.y);
+        ofSetLineWidth(scale);
+        ofLine(pos.x, pos.y, pos.x-10, pos.y-15);
+    }
+
 			
 
 }
