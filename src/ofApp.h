@@ -106,7 +106,9 @@ public:
     ofxMidiMessage midiMessage;
 
     ofxPostProcessing fishFx;
-
+    
+    ofxMidiOut midiOut;
+    ofxMidiMessage midiOutMsg;
 };
 
 

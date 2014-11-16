@@ -65,7 +65,7 @@ void demoParticle::reset(){
     }else if (mode == PARTICLE_MODE_RAIN){
         uniqueVal = ofRandom(-10000, 10000);
         
-        pos.x = ofRandomWidth();
+        pos.x = ofRandom(-100, ofGetWidth());
         pos.y = ofRandom(200,-400);
         
         vel.x = 15;
@@ -209,7 +209,7 @@ void demoParticle::update(){
     }else if( mode == PARTICLE_MODE_RAIN ){
         if( pos.y >= ofGetHeight() ){
             pos.y = -5;
-            pos.x = ofRandom(-100, ofGetWidth());
+            pos.x = ofRandom(-250, ofGetWidth());
         }
     }
     

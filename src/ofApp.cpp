@@ -131,7 +131,11 @@ void ofApp::setup(){
     midiIn.setVerbose(true);
     
     
+    midiOut.listPorts();
+
+    midiOut.openPort(2);
     
+ 
     ofSetFrameRate(15);
     
     myRain.reset();
@@ -174,7 +178,6 @@ void ofApp::update(){
     // ---------------------- Bubbles trigger ----------------------------
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 14 && midiMessage.value == 127) {
         fishBreath.resetParticles();
-        myRain.resetParticles();
     }
     
     // ---------------------- Bubbles intensity (number of bubbles) ----------------------------
@@ -217,9 +220,15 @@ void ofApp::update(){
     }
     // ---------------------- Rain Frequency --------------------------
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 34) {
-        rainF = midiMessage.value;
+        rainF = midiMessage.value*3;
     }
 
+    for (int i = 0; i < myRain.raining.size(); i++) {
+        if (myRain.raining[i].pos.y > paralax_y && myRain.raining[i].pos.y < paralax_y+20) {
+            midiOut.sendNoteOn(5, ofRandom(10, 30),  100);
+
+        }
+    }
     
     
     // ************ LINE UPDATE *************************************************
@@ -644,6 +653,7 @@ void ofApp::exit() {
     
     // clean up
     midiIn.closePort();
+    midiOut.closePort();
     midiIn.removeListener(this);
 }
 

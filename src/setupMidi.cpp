@@ -13,7 +13,4 @@
 
 void setupMidi(int channel, string status, int control){
 
- //   if (channel == 8 && status == MIDI_CONTROL_CHANGE && control == 17) {
- //       flickIntensity = midiMessage.value*2;
- //   }
 }
