@@ -18,8 +18,9 @@ protected:
 	public:
 		demoParticle();
         demoParticle(ofVec2f);
+        demoParticle(int);
 
-		void setMode(particleMode newMode);	
+		void setMode(particleMode newMode);
 		void setAttractPoints( vector <ofPoint> * attract );
 
 		void reset();
@@ -33,7 +34,8 @@ protected:
 		float drag; 
 		float uniqueVal;
 		float scale;
-		
+        int rainIntensity;
+    
 		particleMode mode;
 		
 		vector <ofPoint> * attractPoints;

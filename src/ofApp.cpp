@@ -37,7 +37,7 @@ void ofApp::setup(){
     lineHiVel = 0;
     lineLowVel = 0;
     rectOpacity = 0;
-    
+    rainInt = 1;
     
     // ********* FOR PARTICLES (line around the fish) *****************
     int num = 15;
@@ -80,7 +80,7 @@ void ofApp::setup(){
 
     vidGrabber.initGrabber(camWidth,camHeight);
 #else
-    vidPlayer.loadMovie("test_animation.mov");
+    vidPlayer.loadMovie("fish_movie.mov");
     vidPlayer.play();
 #endif
     
@@ -141,7 +141,7 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    myRain.rainUpdate();
+    myRain.rainUpdate(rainInt);
     
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
     masterBpm = 120;
@@ -210,6 +210,10 @@ void ofApp::update(){
     // ---------------------- Retangle Opacity --------------------------
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 39) {
         rectOpacity = midiMessage.value*2;
+    }
+    // ---------------------- Rain Intensity --------------------------
+    if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 18) {
+        rainInt = midiMessage.value;
     }
 
     
@@ -394,7 +398,7 @@ void ofApp::draw(){
         }
         
         // ********** draw white frame arround display window ***
-        ofSetColor(255, 255, 255);
+        ofSetColor(0, 0, 0);
         ofFill();
         ofRect(0, 0, camWidth, paralax_y);
         ofRect(0, (paralax_y)+ROI.height, camWidth, camHeight);
@@ -432,8 +436,8 @@ void ofApp::draw(){
         }
     }
     
-    ofSetColor(230);
-    ofDrawBitmapString(currentModeStr + "\n\nSpacebar to reset. \nKeys 1-4 to change mode.", 10, 20);
+    //zofSetColor(230);
+    //ofDrawBitmapString(currentModeStr + "\n\nSpacebar to reset. \nKeys 1-4 to change mode.", 10, 20);
     
     
     
@@ -644,10 +648,10 @@ void ofApp::newMidiMessage(ofxMidiMessage& msg) {
     midiMessage = msg;
     
     cout << "************************" << endl;
-    cout << "midiMessage.channel" << midiMessage.channel << endl;
-    cout << "midiMessage.control" << midiMessage.control << endl;
-    cout << "midiMessage.status" << midiMessage.status << endl;
-    cout << "midiMessage.velocity" << midiMessage.velocity << endl;
-    cout << "midiMessage.value" << midiMessage.value << endl;
+    cout << "midiMessage.channel: " << midiMessage.channel << endl;
+    cout << "midiMessage.control: " << midiMessage.control << endl;
+    cout << "midiMessage.status: " << midiMessage.status << endl;
+    cout << "midiMessage.velocity: " << midiMessage.velocity << endl;
+    cout << "midiMessage.value: " << midiMessage.value << endl;
     
 }

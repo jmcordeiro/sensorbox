@@ -26,7 +26,7 @@ public:
     rain();
     ~rain();
     
-    void rainUpdate();
+    void rainUpdate(int);
     void rainDraw();
     
     particleMode rainMode;
