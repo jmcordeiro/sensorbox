@@ -37,7 +37,8 @@ void ofApp::setup(){
     lineHiVel = 0;
     lineLowVel = 0;
     rectOpacity = 0;
-    rainInt = 1;
+    rainInt = 0;
+    rainF = 0;
     
     // ********* FOR PARTICLES (line around the fish) *****************
     int num = 15;
@@ -141,7 +142,6 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    myRain.rainUpdate(rainInt);
     
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
     masterBpm = 120;
@@ -214,6 +214,10 @@ void ofApp::update(){
     // ---------------------- Rain Intensity --------------------------
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 18) {
         rainInt = midiMessage.value;
+    }
+    // ---------------------- Rain Frequency --------------------------
+    if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 34) {
+        rainF = midiMessage.value;
     }
 
     
@@ -319,12 +323,15 @@ void ofApp::update(){
         p[i].setMode(currentMode);
         p[i].update();
     }
-    
     //lets add a bit of movement to the attract points
     for(unsigned int i = 0; i < attractPointsWithMovement.size(); i++){
         attractPointsWithMovement[i].x = attractPoints[i].x + ofSignedNoise(i * 10, ofGetElapsedTimef() * 0.7) * 12.0;
         attractPointsWithMovement[i].y = attractPoints[i].y + ofSignedNoise(i * -10, ofGetElapsedTimef() * 0.7) * 12.0;
     }
+
+    // ************* Update Rain *******************
+    myRain.rainUpdate(rainInt, rainF);
+
 }
 
 

@@ -35,6 +35,7 @@ public:
     int lineLowVel;  // (should convert to private!!)
     int rectOpacity;  // should be bla bla bla
     int rainInt; // should bla bla
+    int rainF; // should bla bla
     
     void setup();
     void update();

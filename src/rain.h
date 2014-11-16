@@ -20,13 +20,13 @@ class rain: public demoParticle {
 public:
     
     int rintensity;
-    
+    int rainFreq;
     
     // void setBintensity(int);
     rain();
     ~rain();
     
-    void rainUpdate(int);
+    void rainUpdate(int, int);
     void rainDraw();
     
     particleMode rainMode;
