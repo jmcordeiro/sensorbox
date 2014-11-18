@@ -9,6 +9,7 @@ demoParticle::demoParticle(){
 //------------------------------------------------------------------
 demoParticle::demoParticle(int rInt){
     rainIntensity = rInt;
+    prtIntensity = rInt;
 }
 
 
@@ -92,7 +93,6 @@ void demoParticle::reset(){
         
         scale = ofRandom(0.5, 1.0);
         
-        
         drag  = ofRandom(0.95, 0.998);
         
     }
@@ -112,8 +112,6 @@ void demoParticle::update(){
         vel *= drag; //apply drag
         vel += frc * 0.6; //apply force
         
-        //cout << "fish x: " << getFishPosPrt().x << endl;
-        //cout << "fish y: " << getFishPosPrt().y << endl;
         
     }
     else if( mode == PARTICLE_MODE_REPEL ){
@@ -223,7 +221,7 @@ void demoParticle::update(){
 void demoParticle::draw(){
     
     if( mode == PARTICLE_MODE_ATTRACT ){
-        ofSetColor(0, 0, 0);
+        ofSetColor(0, 0, 0, prtIntensity);
         ofLine(pos.x, pos.y, fishPosPrt.x,fishPosPrt.y);
     }
     else if( mode == PARTICLE_MODE_REPEL ){

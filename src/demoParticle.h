@@ -35,6 +35,7 @@ protected:
 		float uniqueVal;
 		float scale;
         int rainIntensity;
+        int prtIntensity;
     
 		particleMode mode;
 		

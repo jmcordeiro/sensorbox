@@ -36,6 +36,7 @@ public:
     int rectOpacity;  // should be bla bla bla
     int rainInt; // should bla bla
     int rainF; // should bla bla
+    int prtInt;
     
     void setup();
     void update();

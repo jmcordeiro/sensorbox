@@ -39,6 +39,7 @@ void ofApp::setup(){
     rectOpacity = 0;
     rainInt = 0;
     rainF = 0;
+    prtInt = 255;
     
     // ********* FOR PARTICLES (line around the fish) *****************
     int num = 15;
@@ -78,7 +79,7 @@ void ofApp::setup(){
         }
     }
     vidGrabber.setDeviceID(0);  // use camera 0 for the analysis
-
+    
     vidGrabber.initGrabber(camWidth,camHeight);
 #else
     vidPlayer.loadMovie("fish_movie.mov");
@@ -95,30 +96,16 @@ void ofApp::setup(){
     bLearnBakground = false; // learn from video ('space bar')
     bLoadPictureBakground = true; // load from picture file ('p' key)
     
-    
     //******** threshold used for image analysis ******************
     threshold = 50;
     
-    
-    // ************ LINE DECLARATION ********
-    
-  //  firstLine->setStatus(true);
-  //  firstLine->setThickness(5);
-    
-  //  secondLine->setStatus(true);
-  //  secondLine->setThickness(5);
-    
-    
-    
-    // *********** MIDI **************
+    // *********** MIDI IN SETUP **************
     // print input ports to console
     midiIn.listPorts(); // via instance
-    //ofxMidiIn::listPorts(); // via static as well
     
     // open port by number (you may need to change this)
-    midiIn.openPort(0);
+    midiIn.openPort(1);
     //midiIn.openPort("IAC Pure Data In");	// by name
-    //midiIn.openVirtualPort("ofxMidiIn Input"); // open a virtual port
     
     // don't ignore sysex, timing, & active sense messages,
     // these are ignored by default
@@ -131,13 +118,14 @@ void ofApp::setup(){
     midiIn.setVerbose(true);
     
     
+    // *********** MIDI OUT **************
     midiOut.listPorts();
-
     midiOut.openPort(2);
     
- 
+    
     ofSetFrameRate(15);
     
+    // *********** RAIN **************
     myRain.reset();
 }
 
@@ -199,7 +187,7 @@ void ofApp::update(){
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 38) {
         lineHiVel = midiMessage.value;
     }
-  
+    
     // ---------------------- Line Low ----------------------------
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 21) {
         firstLine->setOpacity(midiMessage.value*2);
@@ -209,7 +197,7 @@ void ofApp::update(){
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 22) {
         secondLine->setOpacity(midiMessage.value*2);
     }
-
+    
     // ---------------------- Retangle Opacity --------------------------
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 39) {
         rectOpacity = midiMessage.value*2;
@@ -222,11 +210,16 @@ void ofApp::update(){
     if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 34) {
         rainF = midiMessage.value*3;
     }
+    // ---------------------- Anchors Intensity --------------------------
+    if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 20) {
+        prtInt = midiMessage.value*2;
+    }
 
+    // ---------------------- MIDI OUT - Triggers midinotes everytime a drop of rain shows up on screen -----------------
     for (int i = 0; i < myRain.raining.size(); i++) {
         if (myRain.raining[i].pos.y > paralax_y && myRain.raining[i].pos.y < paralax_y+20) {
             midiOut.sendNoteOn(5, ofRandom(10, 30),  100);
-
+            
         }
     }
     
@@ -337,10 +330,14 @@ void ofApp::update(){
         attractPointsWithMovement[i].x = attractPoints[i].x + ofSignedNoise(i * 10, ofGetElapsedTimef() * 0.7) * 12.0;
         attractPointsWithMovement[i].y = attractPoints[i].y + ofSignedNoise(i * -10, ofGetElapsedTimef() * 0.7) * 12.0;
     }
-
+    
     // ************* Update Rain *******************
     myRain.rainUpdate(rainInt, rainF);
-
+    
+    // ************* Update Anchors Intensity *******************
+    for (int i = 0; i < p.size(); i++){
+        p[i].prtIntensity = prtInt;
+    }
 }
 
 
@@ -359,7 +356,7 @@ void ofApp::draw(){
     
     // *********** draw the video **************************
     colorImg.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
-
+    
     
     // *********** Show/whide the fish **************************
     fadeScreenToWhite(fadeScreenIntensityWhite);
@@ -435,13 +432,17 @@ void ofApp::draw(){
     
     // ************** Rhythmic Drone ************************
     flickering(0, 0, ofGetWindowWidth(), ofGetWindowHeight(),  flickIntensity, masterBpm);     //The final argument changes the intensity
-
     
-    // ************************ draw Particles ******************
+    
+    // ************************ DRAW Particles (lines around fish) ******************
+  
+    
     for(unsigned int i = 0; i < p.size(); i++){
         p[i].draw();
     }
-    
+   
+     //cordeiro -  not sure if this part belwo is needed!!!
+    /*
     ofSetColor(190);
     if( currentMode == PARTICLE_MODE_NEAREST_POINTS ){
         for(unsigned int i = 0; i < attractPoints.size(); i++){
@@ -451,10 +452,7 @@ void ofApp::draw(){
             ofCircle(attractPointsWithMovement[i], 4);
         }
     }
-    
-    //zofSetColor(230);
-    //ofDrawBitmapString(currentModeStr + "\n\nSpacebar to reset. \nKeys 1-4 to change mode.", 10, 20);
-    
+    */
     
     
     // ***************** MIDI Menu ('m' key) **********************
@@ -503,9 +501,15 @@ void ofApp::draw(){
         ofDrawBitmapString(text.str(), 20, 240);
         text.str(""); // clear
     }
+    
+    
+    // *********** DRAW Bubbles ***************
     fishBreath.bubblesDraw();
+    
+    // *********** DRAW Fade SCREEN ***************
     fadeScreen(fadeScreenIntensity);
     
+    // *********** DRAW Rain ***************
     myRain.rainDraw();
 }
 
@@ -515,19 +519,8 @@ void ofApp::draw(){
 //--------------------------------------------------------------
 void ofApp::resetParticles(){
     
-    /*
-     //these are the attraction points used in the forth demo
-     attractPoints.clear();
-     for(int i = 0; i < 4; i++){
-     attractPoints.push_back( ofPoint( ofMap(i, 0, 4, 100, ofGetWidth()-100) , ofRandom(100, ofGetHeight()-100) ) );
-     }
-     
-     attractPointsWithMovement = attractPoints;
-     */
-    
     for(unsigned int i = 0; i < p.size(); i++){
         p[i].setMode(currentMode);
-        //   p[i].setAttractPoints(&attractPointsWithMovement);;
         p[i].reset();
     }
 }
@@ -546,31 +539,31 @@ void ofApp::keyReleased(int key){
 void ofApp::keyPressed(int key){
     
     // ************** For Particles *****************
-    /*
-    if( key == '1'){
-        currentMode = PARTICLE_MODE_ATTRACT;
-        currentModeStr = "1 - PARTICLE_MODE_ATTRACT: attracts to mouse";
-    }
-    if( key == '2'){
-        currentMode = PARTICLE_MODE_REPEL;
-        currentModeStr = "2 - PARTICLE_MODE_REPEL: repels from mouse";
-    }
-    if( key == '3'){
-        currentMode = PARTICLE_MODE_NEAREST_POINTS;
-        currentModeStr = "3 - PARTICLE_MODE_NEAREST_POINTS: hold 'f' to disable force";
-    }
-    if( key == '4'){
-        currentMode = PARTICLE_MODE_NOISE;
-        currentModeStr = "4 - PARTICLE_MODE_NOISE: snow particle simulation";
-        resetParticles();
-    }
-    if( key == '5'){
-        fishBreath.resetParticles();
-    }
-    if( key == ' ' ){
-        resetParticles();
-    }
-    */
+    
+     if( key == '1'){
+     currentMode = PARTICLE_MODE_ATTRACT;
+     currentModeStr = "1 - PARTICLE_MODE_ATTRACT: attracts to mouse";
+     }
+     if( key == '2'){
+     currentMode = PARTICLE_MODE_REPEL;
+     currentModeStr = "2 - PARTICLE_MODE_REPEL: repels from mouse";
+     }
+     if( key == '3'){
+     currentMode = PARTICLE_MODE_NEAREST_POINTS;
+     currentModeStr = "3 - PARTICLE_MODE_NEAREST_POINTS: hold 'f' to disable force";
+     }
+     if( key == '4'){
+     currentMode = PARTICLE_MODE_NOISE;
+     currentModeStr = "4 - PARTICLE_MODE_NOISE: snow particle simulation";
+     resetParticles();
+     }
+     if( key == '5'){
+     fishBreath.resetParticles();
+     }
+     if( key == ' ' ){
+     resetParticles();
+     }
+    
     
     
     // ************** For MIDI *****************
@@ -641,9 +634,9 @@ void ofApp::keyPressed(int key){
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
     
-   // firstLine.setVelocity(x / 100);
+    // firstLine.setVelocity(x / 100);
     //secondLine.setVelocity(y / 100);
-    
+   
 }
 
 
