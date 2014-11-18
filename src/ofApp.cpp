@@ -99,6 +99,7 @@ void ofApp::setup(){
     //******** threshold used for image analysis ******************
     threshold = 50;
     
+    
     // *********** MIDI IN SETUP **************
     // print input ports to console
     midiIn.listPorts(); // via instance
@@ -560,7 +561,7 @@ void ofApp::keyPressed(int key){
      if( key == '5'){
      fishBreath.resetParticles();
      }
-     if( key == ' ' ){
+     if( key == '6' ){
      resetParticles();
      }
     

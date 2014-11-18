@@ -15,7 +15,7 @@ Bubble::Bubble(){
     bubblesMode = PARTICLE_MODE_NOISE;
     bubblesModeStr = "Breathing";
  //   setBintensity(1);
-    bintensity = 1;
+    bintensity = 255;
     resetParticles();
     
 };

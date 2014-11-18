@@ -85,6 +85,9 @@ void demoParticle::reset(){
         
         pos.x = ofRandomWidth();
         pos.y = ofRandomHeight();
+        while (pos.y > 300 && pos.y < 500) {
+            pos.y = ofRandomHeight();
+        }
         
         vel.x = ofRandom(-3.9, 3.9);
         vel.y = ofRandom(-3.9, 3.9);
@@ -110,7 +113,7 @@ void demoParticle::update(){
         frc.normalize(); //by normalizing we disregard how close the particle is to the attraction point
         
         vel *= drag; //apply drag
-        vel += frc * 0.6; //apply force
+        vel += frc * 0.01; //apply force
         
         
     }
@@ -211,8 +214,8 @@ void demoParticle::update(){
         }
     }
     
-    //2 - UPDATE OUR POSITION
     
+    //2 - UPDATE OUR POSITION
     pos += vel;
     
 }
