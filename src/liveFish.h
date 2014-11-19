@@ -45,7 +45,6 @@ class LiveFish{
     int canvasY;
     string oscMessage;
     unsigned long long newTime;
-    ofVec2f fishPos_1;
     ofVec2f fishPos_2;
     ofxOscSender oscSenderFish;
     
@@ -57,6 +56,7 @@ public:
     void makeFishToWork(int _cX, int _cY, int _x, int _y, int _w, int _h, int _parX, int _parY, int _scaledOutput);
 
     int velocity;
+    ofVec2f fishPos_1;
 
     int getVelocity();
     ofVec2f getPosition(int _scaledOutput);
