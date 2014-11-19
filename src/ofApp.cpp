@@ -200,7 +200,7 @@ void ofApp::update(){
     }
     
     // ---------------------- Retangle Opacity --------------------------
-    if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 39) {
+    if (midiMessage.channel == 8 && midiMessage.status == MIDI_CONTROL_CHANGE && midiMessage.control == 23) {
         rectOpacity = midiMessage.value*2;
     }
     // ---------------------- Rain Intensity --------------------------
@@ -219,7 +219,7 @@ void ofApp::update(){
     // ---------------------- MIDI OUT - Triggers midinotes everytime a drop of rain shows up on screen (channel 1) -----------------
     for (int i = 0; i < myRain.raining.size(); i++) {
         if (myRain.raining[i].pos.y > paralax_y && myRain.raining[i].pos.y < paralax_y+20) {
-            midiOut.sendNoteOn(1, ofRandom(10, 30),  100);
+            midiOut.sendNoteOn(1, 100,  100);
         }
     }
     // ---------------------- MIDI OUT - Velocity of the fish (channel 2) -----------------
@@ -245,6 +245,9 @@ void ofApp::update(){
     if (secondLine->getLinePosition() < 5 || secondLine->getLinePosition() > 1255) {
         midiOut.sendNoteOn(6, 100,  100);
     } ;
+
+    // ---------------------- MIDI OUT - Square Size  (channel 7) -----------------
+    midiOut.sendNoteOn(7, 0.2*(lineSquare(firstLine->getLinePosition(), secondLine->getLinePosition(), firstLine->getOpacity(), secondLine->getOpacity(), rectOpacity)), 100);
 
     
     // ************ LINE UPDATE *************************************************

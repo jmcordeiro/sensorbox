@@ -15,4 +15,4 @@
 #endif /* defined(__fish_cv_1__lines_square__) */
 
 
-void lineSquare(int, int, int, int, int);
+int lineSquare(int, int, int, int, int);
