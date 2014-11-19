@@ -38,7 +38,6 @@
 
 class LiveFish{
 
-    int velocity;
     int paning;
     int paralaxX;
     int paralaxY;
@@ -56,6 +55,8 @@ public:
     LiveFish();
     ~LiveFish();
     void makeFishToWork(int _cX, int _cY, int _x, int _y, int _w, int _h, int _parX, int _parY, int _scaledOutput);
+
+    int velocity;
 
     int getVelocity();
     ofVec2f getPosition(int _scaledOutput);
