@@ -228,13 +228,24 @@ void ofApp::update(){
     
     // ---------------------- MIDI OUT - Position of the fish (channel 3 and 4) -----------------
     // changes the way the SOLO fish sounds
-    midiOut.sendNoteOn(3,myFish.fishPos_1.x,  100);
+    //midiOut.sendNoteOn(3,myFish.fishPos_1.x,  100); // for panning
     midiOut.sendControlChange(3, 180, myFish.fishPos_1.x/10);
     midiOut.sendControlChange(4, 180, ofMap(myFish.fishPos_1.y, 150.0, 600.0, 0.0, 127.0));
-    cout << "X: " << myFish.fishPos_1.x << endl;
-    cout << "Y: " << ofMap(myFish.fishPos_1.y, 150.0, 600.0, 0.0, 127.0) << endl;
+    //cout << "X: " << myFish.fishPos_1.x << endl;
+    //cout << "Y: " << ofMap(myFish.fishPos_1.y, 150.0, 600.0, 0.0, 127.0) << endl;
+
+    // ---------------------- MIDI OUT - Line 1  (channel 5) -----------------
+//    midiOut.sendNoteOn(5,firstLine->getLinePosition(),  100);
+    if (firstLine->getLinePosition() < 5 || firstLine->getLinePosition() > 1255) {
+        midiOut.sendNoteOn(5, 100,  100);
+    } ;
     
-    
+    // ---------------------- MIDI OUT - Line 2  (channel 6) -----------------
+    //    midiOut.sendNoteOn(5,firstLine->getLinePosition(),  100);
+    if (secondLine->getLinePosition() < 5 || secondLine->getLinePosition() > 1255) {
+        midiOut.sendNoteOn(6, 100,  100);
+    } ;
+
     
     // ************ LINE UPDATE *************************************************
     
