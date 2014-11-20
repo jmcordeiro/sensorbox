@@ -433,7 +433,7 @@ void ofApp::draw(){
         if (contourFinder.nBlobs > 0){
             ofSetColor(0, 0, 0);
             ofFill();
-            ofCircle(fishPosBig.x,fishPosBig.y, 2);
+            //ofCircle(fishPosBig.x,fishPosBig.y, 2);
         }
         
         // ********** draw white frame arround display window ***
