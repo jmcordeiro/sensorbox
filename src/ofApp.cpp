@@ -84,6 +84,7 @@ void ofApp::setup(){
 #else
     vidPlayer.loadMovie("fish_movie.mov");
     vidPlayer.play();
+    vidPlayer.setLoopState(OF_LOOP_NORMAL);
 #endif
     
     // **** allocate memory for different images used along the way
