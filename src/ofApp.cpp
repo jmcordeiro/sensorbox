@@ -16,8 +16,7 @@ void ofApp::setup(){
     camHeight = 720;
     
 
-    
-      prtInt = 255;
+    prtInt = 255;
     
     
     // ********* define an initial ROI - Region Of Interest *********
@@ -70,6 +69,9 @@ void ofApp::setup(){
     
     ofSetFrameRate(15);
     
+    
+    mySound.loadSound("sound_1.wav");
+
 
 }
 
@@ -78,7 +80,8 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    
+    mySound.play(); //Plays sound
+
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
     
     ofBackground(255,255,255);
@@ -86,11 +89,6 @@ void ofApp::update(){
     
     paralax_x = (camWidth-ROI.width)*0.5;
     paralax_y = (camHeight-ROI.height)*0.5;
-    
-    
-    // ******* for glitch *************************
-    // myGlitch.setFx(OFXPOSTGLITCH_CONVERGENCE,true);
-    
     
     
     
@@ -190,12 +188,7 @@ void ofApp::draw(){
     // draw the incoming, the grayscale, the bg and the thresholded difference
     ofSetHexColor(0xffffff);
     
-    // ********* GLITCH EFFECT ********* NOTTTT WORKING *****
-    //  myFbo.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
-    //  myGlitch.generateFx();
-    //  myFbo.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
-    
-    
+     
     // *********** draw the video **************************
     colorImg.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
     
@@ -256,11 +249,6 @@ void ofApp::draw(){
         ofRect(0, 0, paralax_x, camHeight);
         ofRect((paralax_x)+ROI.width, 0, camWidth, camHeight);
     }
-    
-    
-    
-    
-    
     
   }
 

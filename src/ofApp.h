@@ -72,6 +72,8 @@ public:
     ofImage bgImg;
     
     LiveFish myFish;
+    
+    ofSoundPlayer mySound;
 
 
 };

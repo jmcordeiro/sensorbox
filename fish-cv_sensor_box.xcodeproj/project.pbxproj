@@ -62,6 +62,7 @@
 		4561A4051A0E865300DA4DC5 /* fadeScreen.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4561A4031A0E865300DA4DC5 /* fadeScreen.cpp */; };
 		4561A4081A0E939900DA4DC5 /* bubbles.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4561A4061A0E939900DA4DC5 /* bubbles.cpp */; };
 		4561A40E1A0ECEAF00DA4DC5 /* setupMidi.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4561A40C1A0ECEAF00DA4DC5 /* setupMidi.cpp */; };
+		459FB4AF1AEFC49A00053687 /* soundTrigger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 459FB4AD1AEFC49A00053687 /* soundTrigger.cpp */; };
 		45AA3E4A1A0BE4B8009B5B02 /* flickering.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45AA3E481A0BE4B8009B5B02 /* flickering.cpp */; };
 		45CB3779190A8A4D001C9834 /* drawLine.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45CB3777190A8A4D001C9834 /* drawLine.cpp */; };
 		45DB3DF01A18C92C00378262 /* rain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45DB3DEE1A18C92C00378262 /* rain.cpp */; };
@@ -257,6 +258,8 @@
 		4561A4071A0E939900DA4DC5 /* bubbles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bubbles.h; sourceTree = "<group>"; };
 		4561A40C1A0ECEAF00DA4DC5 /* setupMidi.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = setupMidi.cpp; sourceTree = "<group>"; };
 		4561A40D1A0ECEAF00DA4DC5 /* setupMidi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = setupMidi.h; sourceTree = "<group>"; };
+		459FB4AD1AEFC49A00053687 /* soundTrigger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = soundTrigger.cpp; sourceTree = "<group>"; };
+		459FB4AE1AEFC49A00053687 /* soundTrigger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soundTrigger.h; sourceTree = "<group>"; };
 		45AA3E481A0BE4B8009B5B02 /* flickering.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = flickering.cpp; sourceTree = "<group>"; };
 		45AA3E491A0BE4B8009B5B02 /* flickering.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = flickering.h; sourceTree = "<group>"; };
 		45CB3777190A8A4D001C9834 /* drawLine.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = drawLine.cpp; sourceTree = "<group>"; };
@@ -1090,6 +1093,8 @@
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
+				459FB4AD1AEFC49A00053687 /* soundTrigger.cpp */,
+				459FB4AE1AEFC49A00053687 /* soundTrigger.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1219,6 +1224,7 @@
 				45EE431D1A11291F00C2CECB /* ofxPostGlitch.cpp in Sources */,
 				45078708191270600027FA62 /* IpEndpointName.cpp in Sources */,
 				454B526D1A0F8E4500AE36F3 /* VerticalTiltShifPass.cpp in Sources */,
+				459FB4AF1AEFC49A00053687 /* soundTrigger.cpp in Sources */,
 				454B525E1A0F8E4500AE36F3 /* FakeSSSPass.cpp in Sources */,
 				45078709191270600027FA62 /* NetworkingUtils.cpp in Sources */,
 				454B52601A0F8E4500AE36F3 /* GodRaysPass.cpp in Sources */,
