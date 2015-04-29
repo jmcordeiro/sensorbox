@@ -37,6 +37,8 @@ Logger::Logger(){
         << "SPL"
         <<"*"
         << "temperature"
+        <<"*"
+        << "humidity"
         <<endl;
     }
     
@@ -54,7 +56,7 @@ Logger::~Logger(){
 }
 
 //which square, velocity, position, spl, temp;
-void Logger::listenAndSendOneReading(int cell, int vel, int x, int y, float spl, float temp){
+void Logger::listenAndSendOneReading(int cell, int vel, int x, int y, float spl, float temp, float hum){
     if (logFile.is_open()) {
         logFile
         << ofGetTimestampString()
@@ -71,7 +73,9 @@ void Logger::listenAndSendOneReading(int cell, int vel, int x, int y, float spl,
         <<"*"
         << spl // SPL
         <<"*"
-        << temp // temp
+        << temp // temperature
+        <<"*"
+        << hum // humidity
         <<endl;
 //        logFile.flush();
     }
