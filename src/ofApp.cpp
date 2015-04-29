@@ -11,19 +11,17 @@
 void ofApp::setup(){
     
     
-    // Define the capture size of the câmera
+    // Define the capture size of the c√¢mera (facetime hd on the mac 1280x720)
     camWidth = 1280;
     camHeight = 720;
     
-
     prtInt = 255;
     
-    
     // ********* define an initial ROI - Region Of Interest *********
-    ROI.width = 1265; // set it to camWidth to have ROI = to camera size
-    ROI.height = 390;// set it to camHeight to have ROI = to camera size
-    ROI.x = 10; // set it to zero to get ROI = camwidth
-    ROI.y = 330; // set it to zero to get ROI = camheight
+    ROI.width = camHeight; // set it to camWidth to have ROI = to camera size
+    ROI.height = camHeight;// set it to camHeight to have ROI = to camera size
+    ROI.x = (camWidth-camHeight)*0.5; // set it to zero to get ROI = camwidth
+    ROI.y = 0; // set it to zero to get ROI = camheight
     
     paralax_x = (camWidth-ROI.width)*0.5;
     paralax_y = (camHeight-ROI.height)*0.5;
@@ -65,14 +63,13 @@ void ofApp::setup(){
     //******** threshold used for image analysis ******************
     threshold = 50;
     
-    
-    
+
     ofSetFrameRate(15);
     
     
     mySound.loadSound("sound_1.wav");
 
-
+    
 }
 
 
@@ -80,7 +77,9 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){
     
-    mySound.play(); //Plays sound
+
+    
+    //mySound.play(); //Plays sound
 
     ofSetWindowTitle(ofToString(ofGetFrameRate()));
     
@@ -90,8 +89,7 @@ void ofApp::update(){
     paralax_x = (camWidth-ROI.width)*0.5;
     paralax_y = (camHeight-ROI.height)*0.5;
     
-    
-    
+
 #ifdef _USE_LIVE_VIDEO
     vidGrabber.update();
     bNewFrame = vidGrabber.isFrameNew();
@@ -177,6 +175,7 @@ void ofApp::update(){
     // cout << "velocity: " << myFish.getVelocity(fishPosBig.x,fishPosBig.y) << endl;
     
     
+
     
   }
 
@@ -249,6 +248,9 @@ void ofApp::draw(){
         ofRect(0, 0, paralax_x, camHeight);
         ofRect((paralax_x)+ROI.width, 0, camWidth, camHeight);
     }
+    
+    cout << myCell(paralax_x, paralax_y, ROI.width, ROI.height, 2, 2, mouseX, mouseY) << endl;
+
     
   }
 

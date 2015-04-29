@@ -20,8 +20,6 @@
  getPosition();
  sendOsc();
  
- 
- 
  */
 
 
@@ -63,6 +61,8 @@ public:
     
 
 };
+
+
 
 #endif /* defined(__fish_cv_1__liveFish__) */
 

@@ -2,20 +2,8 @@
 
 #include "ofMain.h"
 #include "ofxOpenCv.h"
-//#include "ofxMidi.h"
-//#include "ofxPostProcessing.h"
-//#include "ofxPostGlitch.h"
-
-
-//#include "drawLine.h"
 #include "liveFish.h"
-//#include "demoParticle.h"
-//#include "fadeScreen.h"
-//#include "flickering.h"
-//#include "bubbles.h"
-//#include "setupMidi.h"
-//#include "lines_square.h"
-//#include "rain.h"
+#include "cells.h"
 
 #define _USE_LIVE_VIDEO		// uncomment this to use a live camera
 // otherwise, we'll use a movie file
