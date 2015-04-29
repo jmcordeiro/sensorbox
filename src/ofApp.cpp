@@ -17,6 +17,8 @@ void ofApp::setup(){
     
     prtInt = 255;
     
+    showCalibrationScreen = !showCalibrationScreen;
+    
     // ********* define an initial ROI - Region Of Interest *********
     ROI.width = camHeight; // set it to camWidth to have ROI = to camera size
     ROI.height = camHeight;// set it to camHeight to have ROI = to camera size
@@ -174,7 +176,6 @@ void ofApp::update(){
     
     // cout << "velocity: " << myFish.getVelocity(fishPosBig.x,fishPosBig.y) << endl;
     
-    
 
     
   }
@@ -190,11 +191,8 @@ void ofApp::draw(){
      
     // *********** draw the video **************************
     colorImg.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
+    drawGridCell(paralax_x, paralax_y, ROI.width, ROI.height, 2, 2);
     
-    
-    //*********** CALIBRATION SYSTEM (z) *****************
-    if (showCalibrationScreen) {
-        
         // *** draw graySmall Image use (ROI scaled) ***
         ofSetHexColor(0xffffff);
         grayImage.draw(0, 0);
@@ -208,7 +206,6 @@ void ofApp::draw(){
         
         
         if (contourFinder.nBlobs > 0){
-            
             // *** draw point and contour on small image ***
             ofSetColor(0, 255, 0);
             ofFill();
@@ -218,10 +215,12 @@ void ofApp::draw(){
             // *** draw point on big image ***
             ofSetColor(255, 0, 0);
             ofCircle(fishPosBig.x, fishPosBig.y, 10);
+            
+            myCell(paralax_x, paralax_y, ROI.width, ROI.height, 2, 2, fishPosBig.x, fishPosBig.y);
         }
         
         
-        // *************** A report ('z' key) ***********
+        // writes a report on the bottom of the canvas
         ofSetHexColor(0xffffff);
         stringstream reportStr;
         reportStr << "bg subtraction and blob detection" << endl
@@ -231,16 +230,12 @@ void ofApp::draw(){
         ofDrawBitmapString(reportStr.str(), 20, 600);
         ofDrawBitmapString(ofToString(ofGetFrameRate()), 10, 10);
         
-    }else{
+  
+    //*********** CALIBRATION SYSTEM (z) *****************
+    if (showCalibrationScreen) {
+
         
-        // ********** draw point on big image *** (comment on real use)
-        if (contourFinder.nBlobs > 0){
-            ofSetColor(0, 0, 0);
-            ofFill();
-            //ofCircle(fishPosBig.x,fishPosBig.y, 2);
-        }
-        
-        // ********** draw white frame arround display window ***
+        // ********** draw black frame arround display window ***
         ofSetColor(0, 0, 0);
         ofFill();
         ofRect(0, 0, camWidth, paralax_y);
@@ -249,7 +244,8 @@ void ofApp::draw(){
         ofRect((paralax_x)+ROI.width, 0, camWidth, camHeight);
     }
     
-    cout << myCell(paralax_x, paralax_y, ROI.width, ROI.height, 2, 2, mouseX, mouseY) << endl;
+    
+
 
     
   }

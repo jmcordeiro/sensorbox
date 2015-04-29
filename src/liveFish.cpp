@@ -37,7 +37,7 @@ void LiveFish::makeFishToWork(int _cX, int _cY, int _x, int _y, int _w, int _h, 
     paralaxY = _parY;
     
     getVelocity();
-    getPosition(_scaledOutput);
+//    getPosition(_scaledOutput);
     
 }
 
@@ -65,28 +65,28 @@ int LiveFish::getVelocity(){
 }
 
 
-ofVec2f LiveFish::getPosition(int _scaledOutput){
-   
-    ofVec2f fishPosition;
-    fishPosition = ofVec2f((int) (fishPos_1.x-paralaxX)/(canvasX/_scaledOutput), (int)(fishPos_1.y-paralaxY)/(canvasY/_scaledOutput));
-    
-    //cout << fishPosition.x << " - " << fishPosition.y << endl;
-  
-    /*
-    // Sends OSC Messagens (velocity)
-    ofxOscMessage p_x, p_y;
-    p_x.setAddress("/fishX");
-    p_x.addIntArg(fishPosition.x);
-    oscSenderFish.sendMessage(p_x);
 
-    p_y.setAddress("/fishY");
-    p_y.addIntArg(fishPosition.y);
-    oscSenderFish.sendMessage(p_y);
-*/
-    
-    return fishPosition;
-    
-}
+//ofVec2f LiveFish::getPosition(int _scaledOutput){
+//   
+//    ofVec2f fishPosition;
+//    fishPosition = ofVec2f((int) (fishPos_1.x-paralaxX)/(canvasX/_scaledOutput), (int)(fishPos_1.y-paralaxY)/(canvasY/_scaledOutput));
+//    
+//    //cout << fishPosition.x << " - " << fishPosition.y << endl;
+//  
+//    /*
+//    // Sends OSC Messagens (velocity)
+//    ofxOscMessage p_x, p_y;
+//    p_x.setAddress("/fishX");
+//    p_x.addIntArg(fishPosition.x);
+//    oscSenderFish.sendMessage(p_x);
+//
+//    p_y.setAddress("/fishY");
+//    p_y.addIntArg(fishPosition.y);
+//    oscSenderFish.sendMessage(p_y);
+//*/
+//    return fishPosition;
+//    
+//}
 
 
 

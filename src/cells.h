@@ -15,4 +15,7 @@
 
 int myCell(int pX, int pY, int w, int h, int rowNum, int collNum, int x, int y);
 
+void drawGridCell(int pX, int pY, int w, int h, int rowNum, int collNum);
+
+
 #endif /* defined(__fish_cv_sensor_box__cells__) */

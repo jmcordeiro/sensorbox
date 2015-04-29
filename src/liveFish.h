@@ -57,7 +57,7 @@ public:
     ofVec2f fishPos_1;
 
     int getVelocity();
-    ofVec2f getPosition(int _scaledOutput);
+    //ofVec2f getPosition(int _scaledOutput);
     
 
 };
