@@ -19,6 +19,27 @@ Logger::Logger(){
     logFile.create(); // now file exists
     logFile.open(ofToDataPath("logs/" + tempName + ".txt"), ofFile::Append, ofFile::WriteOnly); //file doesn't exist yet
 
+    //writes a header
+    if (logFile.is_open()) {
+        logFile
+        << "timestamp"
+        <<"*"
+        << "milisenconds"
+        <<"*"
+        << "sound"
+        <<"*"
+        << "velocity"
+        <<"*"
+        << "Xposition"
+        <<"*"
+        << "Yposition"
+        <<"*"
+        << "SPL"
+        <<"*"
+        << "temperature"
+        <<endl;
+    }
+    
     // control log on the console (just to be sure the file is open
     if (logFile.is_open()){
         cout << "is open" << endl;
@@ -32,23 +53,25 @@ Logger::~Logger(){
     logFile.close();
 }
 
-//which square, velocity, position, spl;
-void Logger::listenAndSendOneReading(){
+//which square, velocity, position, spl, temp;
+void Logger::listenAndSendOneReading(int cell, int vel, int x, int y, float spl, float temp){
     if (logFile.is_open()) {
         logFile
         << ofGetTimestampString()
         <<"*"
         << ofGetElapsedTimeMillis()
         <<"*"
-        << (int)ofRandom(4) // file/quadrant
+        << cell // file/quadrant
         <<"*"
-        << (int)ofRandom(10) // velocity
+        << vel // velocity
         <<"*"
-        << (int)ofRandom(100) // YPosition
+        << x // YPosition
         <<"*"
-        << (int)ofRandom(100) // YPosition
+        << y // YPosition
         <<"*"
-        << (int)ofRandom(120) // SPL
+        << spl // SPL
+        <<"*"
+        << temp // temp
         <<endl;
 //        logFile.flush();
     }

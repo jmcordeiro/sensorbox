@@ -21,7 +21,7 @@ class Logger{
 public:
     Logger();
     ~Logger();
-    void listenAndSendOneReading();
+    void listenAndSendOneReading(int cell, int vel, int x, int y, float spl, float temp);
     bool getFileIsOpen();
 
 };
