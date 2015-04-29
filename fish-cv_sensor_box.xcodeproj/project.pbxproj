@@ -26,6 +26,15 @@
 		45078710191278650027FA62 /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450786F319126AF70027FA62 /* OscTypes.cpp */; };
 		453FAA4C19114986005F09CA /* liveFish.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453FAA4A19114986005F09CA /* liveFish.cpp */; };
 		4543040B1AF0856E00BFDFBC /* cells.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454304091AF0856E00BFDFBC /* cells.cpp */; };
+		454304241AF0EF8D00BFDFBC /* gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454304221AF0EF8D00BFDFBC /* gui.cpp */; };
+		454304391AF0F66400BFDFBC /* ofxBaseGui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454304281AF0F66400BFDFBC /* ofxBaseGui.cpp */; };
+		4543043A1AF0F66400BFDFBC /* ofxButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4543042A1AF0F66400BFDFBC /* ofxButton.cpp */; };
+		4543043B1AF0F66400BFDFBC /* ofxGuiGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4543042D1AF0F66400BFDFBC /* ofxGuiGroup.cpp */; };
+		4543043C1AF0F66400BFDFBC /* ofxLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4543042F1AF0F66400BFDFBC /* ofxLabel.cpp */; };
+		4543043D1AF0F66400BFDFBC /* ofxPanel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454304311AF0F66400BFDFBC /* ofxPanel.cpp */; };
+		4543043E1AF0F66400BFDFBC /* ofxSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454304331AF0F66400BFDFBC /* ofxSlider.cpp */; };
+		4543043F1AF0F66400BFDFBC /* ofxSliderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454304351AF0F66400BFDFBC /* ofxSliderGroup.cpp */; };
+		454304401AF0F66400BFDFBC /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454304371AF0F66400BFDFBC /* ofxToggle.cpp */; };
 		454B52571A0F8E4500AE36F3 /* BleachBypassPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454B52261A0F8E4500AE36F3 /* BleachBypassPass.cpp */; };
 		454B52581A0F8E4500AE36F3 /* BloomPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454B52281A0F8E4500AE36F3 /* BloomPass.cpp */; };
 		454B52591A0F8E4500AE36F3 /* ContrastPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454B522A1A0F8E4500AE36F3 /* ContrastPass.cpp */; };
@@ -171,6 +180,25 @@
 		45410DD818BB205166E67E89 /* any.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = any.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/any.h; sourceTree = SOURCE_ROOT; };
 		454304091AF0856E00BFDFBC /* cells.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cells.cpp; sourceTree = "<group>"; };
 		4543040A1AF0856E00BFDFBC /* cells.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cells.h; sourceTree = "<group>"; };
+		454304221AF0EF8D00BFDFBC /* gui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = gui.cpp; sourceTree = "<group>"; };
+		454304231AF0EF8D00BFDFBC /* gui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = gui.h; sourceTree = "<group>"; };
+		454304281AF0F66400BFDFBC /* ofxBaseGui.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBaseGui.cpp; sourceTree = "<group>"; };
+		454304291AF0F66400BFDFBC /* ofxBaseGui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBaseGui.h; sourceTree = "<group>"; };
+		4543042A1AF0F66400BFDFBC /* ofxButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxButton.cpp; sourceTree = "<group>"; };
+		4543042B1AF0F66400BFDFBC /* ofxButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxButton.h; sourceTree = "<group>"; };
+		4543042C1AF0F66400BFDFBC /* ofxGui.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGui.h; sourceTree = "<group>"; };
+		4543042D1AF0F66400BFDFBC /* ofxGuiGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxGuiGroup.cpp; sourceTree = "<group>"; };
+		4543042E1AF0F66400BFDFBC /* ofxGuiGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxGuiGroup.h; sourceTree = "<group>"; };
+		4543042F1AF0F66400BFDFBC /* ofxLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxLabel.cpp; sourceTree = "<group>"; };
+		454304301AF0F66400BFDFBC /* ofxLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxLabel.h; sourceTree = "<group>"; };
+		454304311AF0F66400BFDFBC /* ofxPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxPanel.cpp; sourceTree = "<group>"; };
+		454304321AF0F66400BFDFBC /* ofxPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxPanel.h; sourceTree = "<group>"; };
+		454304331AF0F66400BFDFBC /* ofxSlider.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSlider.cpp; sourceTree = "<group>"; };
+		454304341AF0F66400BFDFBC /* ofxSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSlider.h; sourceTree = "<group>"; };
+		454304351AF0F66400BFDFBC /* ofxSliderGroup.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxSliderGroup.cpp; sourceTree = "<group>"; };
+		454304361AF0F66400BFDFBC /* ofxSliderGroup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxSliderGroup.h; sourceTree = "<group>"; };
+		454304371AF0F66400BFDFBC /* ofxToggle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxToggle.cpp; sourceTree = "<group>"; };
+		454304381AF0F66400BFDFBC /* ofxToggle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxToggle.h; sourceTree = "<group>"; };
 		454B52241A0F8E4500AE36F3 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		454B52261A0F8E4500AE36F3 /* BleachBypassPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BleachBypassPass.cpp; sourceTree = "<group>"; };
 		454B52271A0F8E4500AE36F3 /* BleachBypassPass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleachBypassPass.h; sourceTree = "<group>"; };
@@ -630,6 +658,38 @@
 			path = src;
 			sourceTree = "<group>";
 		};
+		454304261AF0F66400BFDFBC /* ofxGui */ = {
+			isa = PBXGroup;
+			children = (
+				454304271AF0F66400BFDFBC /* src */,
+			);
+			path = ofxGui;
+			sourceTree = "<group>";
+		};
+		454304271AF0F66400BFDFBC /* src */ = {
+			isa = PBXGroup;
+			children = (
+				454304281AF0F66400BFDFBC /* ofxBaseGui.cpp */,
+				454304291AF0F66400BFDFBC /* ofxBaseGui.h */,
+				4543042A1AF0F66400BFDFBC /* ofxButton.cpp */,
+				4543042B1AF0F66400BFDFBC /* ofxButton.h */,
+				4543042C1AF0F66400BFDFBC /* ofxGui.h */,
+				4543042D1AF0F66400BFDFBC /* ofxGuiGroup.cpp */,
+				4543042E1AF0F66400BFDFBC /* ofxGuiGroup.h */,
+				4543042F1AF0F66400BFDFBC /* ofxLabel.cpp */,
+				454304301AF0F66400BFDFBC /* ofxLabel.h */,
+				454304311AF0F66400BFDFBC /* ofxPanel.cpp */,
+				454304321AF0F66400BFDFBC /* ofxPanel.h */,
+				454304331AF0F66400BFDFBC /* ofxSlider.cpp */,
+				454304341AF0F66400BFDFBC /* ofxSlider.h */,
+				454304351AF0F66400BFDFBC /* ofxSliderGroup.cpp */,
+				454304361AF0F66400BFDFBC /* ofxSliderGroup.h */,
+				454304371AF0F66400BFDFBC /* ofxToggle.cpp */,
+				454304381AF0F66400BFDFBC /* ofxToggle.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
 		454B52231A0F8E4500AE36F3 /* ofxPostProcessing */ = {
 			isa = PBXGroup;
 			children = (
@@ -918,6 +978,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				454304261AF0F66400BFDFBC /* ofxGui */,
 				45EE42F41A11291F00C2CECB /* ofxPostGlitch */,
 				454B52231A0F8E4500AE36F3 /* ofxPostProcessing */,
 				4561A3671A0D7BB000DA4DC5 /* ofxMidi */,
@@ -1040,6 +1101,8 @@
 		E4B69E1C0A3A1BDC003C02F2 /* src */ = {
 			isa = PBXGroup;
 			children = (
+				454304221AF0EF8D00BFDFBC /* gui.cpp */,
+				454304231AF0EF8D00BFDFBC /* gui.h */,
 				454304091AF0856E00BFDFBC /* cells.cpp */,
 				4543040A1AF0856E00BFDFBC /* cells.h */,
 				453FAA4A19114986005F09CA /* liveFish.cpp */,
@@ -1164,9 +1227,12 @@
 				4561A3E91A0D7BB000DA4DC5 /* RtMidi.cpp in Sources */,
 				45078710191278650027FA62 /* OscTypes.cpp in Sources */,
 				454B525D1A0F8E4500AE36F3 /* EdgePass.cpp in Sources */,
+				4543043D1AF0F66400BFDFBC /* ofxPanel.cpp in Sources */,
 				454B52571A0F8E4500AE36F3 /* BleachBypassPass.cpp in Sources */,
+				454304241AF0EF8D00BFDFBC /* gui.cpp in Sources */,
 				4561A3F41A0D7BB000DA4DC5 /* ofxMidiIn.cpp in Sources */,
 				4561A3F21A0D7BB000DA4DC5 /* ofxBaseMidi.cpp in Sources */,
+				454304401AF0F66400BFDFBC /* ofxToggle.cpp in Sources */,
 				454B52621A0F8E4500AE36F3 /* KaleidoscopePass.cpp in Sources */,
 				454B52651A0F8E4500AE36F3 /* NoiseWarpPass.cpp in Sources */,
 				454B52691A0F8E4500AE36F3 /* RGBShiftPass.cpp in Sources */,
@@ -1177,13 +1243,18 @@
 				45078709191270600027FA62 /* NetworkingUtils.cpp in Sources */,
 				454B52601A0F8E4500AE36F3 /* GodRaysPass.cpp in Sources */,
 				4507870A191270600027FA62 /* UdpSocket.cpp in Sources */,
+				4543043F1AF0F66400BFDFBC /* ofxSliderGroup.cpp in Sources */,
 				4507870B191270600027FA62 /* NetworkingUtilsWin.cpp in Sources */,
 				4507870C191270600027FA62 /* UdpSocketWin.cpp in Sources */,
 				45EE431C1A11291F00C2CECB /* README.md in Sources */,
 				4507870319126ED00027FA62 /* ofxOscBundle.cpp in Sources */,
 				454B52631A0F8E4500AE36F3 /* LimbDarkeningPass.cpp in Sources */,
+				4543043E1AF0F66400BFDFBC /* ofxSlider.cpp in Sources */,
+				4543043A1AF0F66400BFDFBC /* ofxButton.cpp in Sources */,
+				454304391AF0F66400BFDFBC /* ofxBaseGui.cpp in Sources */,
 				454B526A1A0F8E4500AE36F3 /* RimHighlightingPass.cpp in Sources */,
 				4507870419126ED00027FA62 /* ofxOscMessage.cpp in Sources */,
+				4543043B1AF0F66400BFDFBC /* ofxGuiGroup.cpp in Sources */,
 				4507870519126ED00027FA62 /* ofxOscParameterSync.cpp in Sources */,
 				454B526B1A0F8E4500AE36F3 /* SSAOPass.cpp in Sources */,
 				4561A3EB1A0D7BB000DA4DC5 /* ofxRtMidiIn.cpp in Sources */,
@@ -1194,6 +1265,7 @@
 				E4B69E200A3A1BDC003C02F2 /* main.cpp in Sources */,
 				4561A3F31A0D7BB000DA4DC5 /* ofxMidi.cpp in Sources */,
 				454B52661A0F8E4500AE36F3 /* PixelatePass.cpp in Sources */,
+				4543043C1AF0F66400BFDFBC /* ofxLabel.cpp in Sources */,
 				454B525C1A0F8E4500AE36F3 /* DofPass.cpp in Sources */,
 				E4B69E210A3A1BDC003C02F2 /* ofApp.cpp in Sources */,
 				454B52681A0F8E4500AE36F3 /* RenderPass.cpp in Sources */,
