@@ -13,7 +13,10 @@
 #include <iostream>
 #include "ofxOsc.h"
 
+
 int myCell(int pX, int pY, int w, int h, int rowNum, int collNum, int x, int y);
+void myCellDraw(int pX, int pY, int w, int h, int rowNum, int collNum, int x, int y);
+
 
 void drawGridCell(int pX, int pY, int w, int h, int rowNum, int collNum);
 

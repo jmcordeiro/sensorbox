@@ -6,21 +6,6 @@
 //
 //
 
-/*
-
- variables:
- x;
- y;
- velocity;
- paning;
- oscMessage;
- 
- Methods:
- getVelocity();
- getPosition();
- sendOsc();
- 
- */
 
 
 #ifndef __fish_cv_1__liveFish__
@@ -28,11 +13,6 @@
 
 #include <iostream>
 #include "ofMain.h"
-#include "ofxOsc.h"
-
-#define HOST "localhost"
-#define PORT 12345
-
 
 class LiveFish{
 
@@ -44,9 +24,7 @@ class LiveFish{
     string oscMessage;
     unsigned long long newTime;
     ofVec2f fishPos_2;
-    ofxOscSender oscSenderFish;
     
-
     
 public:
     LiveFish();
@@ -57,7 +35,6 @@ public:
     ofVec2f fishPos_1;
 
     int getVelocity();
-    //ofVec2f getPosition(int _scaledOutput);
     
 
 };

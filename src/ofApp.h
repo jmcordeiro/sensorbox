@@ -4,6 +4,9 @@
 #include "ofxOpenCv.h"
 #include "liveFish.h"
 #include "cells.h"
+#include "gui.h"
+#include "logger.h"
+#include "arduino.h"
 
 #define _USE_LIVE_VIDEO		// uncomment this to use a live camera
 // otherwise, we'll use a movie file
@@ -12,6 +15,11 @@
 
 class ofApp : public ofBaseApp{
     
+    int decreases;
+    int theCell;
+    bool isNotMute;
+    int toogleSounds;
+    bool keyDown[255];
     
 public:
     int prtInt;
@@ -32,6 +40,7 @@ public:
     ofVideoPlayer 		vidPlayer;
 #endif
     
+    ofTrueTypeFont myfont;
 	
     int camWidth;
     int camHeight;
@@ -52,18 +61,26 @@ public:
     ofxCvContourFinder 	contourFinder;
     
     ofImage loader;
+    ofImage bgImgDay;
+    ofImage bgImgNight;
     
     int threshold;
     bool bLearnBakground, bLoadPictureBakground;
-    bool showCalibrationScreen;
+    bool blackFrame;
 
-    ofImage bgImg;
+
     
     LiveFish myFish;
+
+    ofSoundPlayer sound_1;
+    ofSoundPlayer sound_2;
+    ofSoundPlayer sound_3;
+    ofSoundPlayer sound_4;
     
-    ofSoundPlayer mySound;
-
-
+    Gui myGui;
+    Logger myLogger;
+    Arduino myArduino;
+    
 };
 
 
