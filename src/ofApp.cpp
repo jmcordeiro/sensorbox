@@ -9,8 +9,8 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-    
-    
+
+
     myfont.loadFont("fonts/arial.ttf", 15);
     
     isNotMute = false;
