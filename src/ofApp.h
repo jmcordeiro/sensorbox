@@ -7,6 +7,8 @@
 #include "gui.h"
 #include "logger.h"
 #include "arduino.h"
+#include "soundInput.h"
+
 
 #define _USE_LIVE_VIDEO		// uncomment this to use a live camera
 // otherwise, we'll use a movie file
@@ -68,6 +70,7 @@ public:
     bool bLearnBakground, bLoadPictureBakground;
     bool blackFrame;
 
+    SoundInput mySoundInput;
 
     
     LiveFish myFish;

@@ -24,6 +24,7 @@
 		4507870E191278650027FA62 /* OscPrintReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450786EF19126AF70027FA62 /* OscPrintReceivedElements.cpp */; };
 		4507870F191278650027FA62 /* OscReceivedElements.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450786F119126AF70027FA62 /* OscReceivedElements.cpp */; };
 		45078710191278650027FA62 /* OscTypes.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 450786F319126AF70027FA62 /* OscTypes.cpp */; };
+		452C8A631B0115FB00FA8965 /* soundInput.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 452C8A611B0115FB00FA8965 /* soundInput.cpp */; };
 		453FAA4C19114986005F09CA /* liveFish.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 453FAA4A19114986005F09CA /* liveFish.cpp */; };
 		4543040B1AF0856E00BFDFBC /* cells.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454304091AF0856E00BFDFBC /* cells.cpp */; };
 		454304241AF0EF8D00BFDFBC /* gui.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454304221AF0EF8D00BFDFBC /* gui.cpp */; };
@@ -177,6 +178,8 @@
 		4507870019126AF70027FA62 /* ofxOscSender.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = ofxOscSender.cpp; sourceTree = "<group>"; };
 		4507870119126AF70027FA62 /* ofxOscSender.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ofxOscSender.h; sourceTree = "<group>"; };
 		452417865E4BFB10C9CBF8A2 /* internal.hpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = internal.hpp; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/core/internal.hpp; sourceTree = SOURCE_ROOT; };
+		452C8A611B0115FB00FA8965 /* soundInput.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = soundInput.cpp; sourceTree = "<group>"; };
+		452C8A621B0115FB00FA8965 /* soundInput.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = soundInput.h; sourceTree = "<group>"; };
 		453FAA4A19114986005F09CA /* liveFish.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = liveFish.cpp; sourceTree = "<group>"; };
 		453FAA4B19114986005F09CA /* liveFish.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = liveFish.h; sourceTree = "<group>"; };
 		45410DD818BB205166E67E89 /* any.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.c.h; fileEncoding = 30; name = any.h; path = ../../../addons/ofxOpenCv/libs/opencv/include/opencv2/flann/any.h; sourceTree = SOURCE_ROOT; };
@@ -1119,6 +1122,8 @@
 				453FAA4B19114986005F09CA /* liveFish.h */,
 				E4B69E1D0A3A1BDC003C02F2 /* main.cpp */,
 				E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */,
+				452C8A611B0115FB00FA8965 /* soundInput.cpp */,
+				452C8A621B0115FB00FA8965 /* soundInput.h */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
 			);
 			path = src;
@@ -1240,6 +1245,7 @@
 				4543043D1AF0F66400BFDFBC /* ofxPanel.cpp in Sources */,
 				454B52571A0F8E4500AE36F3 /* BleachBypassPass.cpp in Sources */,
 				454304241AF0EF8D00BFDFBC /* gui.cpp in Sources */,
+				452C8A631B0115FB00FA8965 /* soundInput.cpp in Sources */,
 				4561A3F41A0D7BB000DA4DC5 /* ofxMidiIn.cpp in Sources */,
 				4561A3F21A0D7BB000DA4DC5 /* ofxBaseMidi.cpp in Sources */,
 				454304401AF0F66400BFDFBC /* ofxToggle.cpp in Sources */,

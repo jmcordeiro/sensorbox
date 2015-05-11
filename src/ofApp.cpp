@@ -370,7 +370,7 @@ void ofApp::update(){
         
         // makes a full read every 333 miliseconds
         if (ofGetElapsedTimeMillis()%333 < decreases){
-            myLogger.listenAndSendOneReading(theCell, myFish.getVelocity(), fishPosBig.x, fishPosBig.y, ofRandom(120), myArduino.getTemp(), myArduino.getHum());
+            myLogger.listenAndSendOneReading(theCell, myFish.getVelocity(), fishPosBig.x, fishPosBig.y, mySoundInput.getSoundVolume(), myArduino.getTemp(), myArduino.getHum());
             decreases = 0;
         }else{
             decreases = ofGetElapsedTimeMillis()%333;
@@ -428,6 +428,21 @@ void ofApp::draw(){
     }
     
     
+    ofSetColor(255, 255, 255);
+    myfont.drawString("Temperature: " + ofToString(myArduino.getTemp()), camWidth - (myfont.getNumCharacters()*2.5),140);
+    
+    ofSetColor(255, 255, 255);
+    myfont.drawString("Humidity: " + ofToString(myArduino.getHum()), camWidth - (myfont.getNumCharacters()*2.5),165);
+    
+    ofSetColor(255, 255, 255);
+    myfont.drawString("Cell: " + ofToString(theCell), camWidth - (myfont.getNumCharacters()*2.5),190);
+    
+    ofSetColor(255, 255, 255);
+    myfont.drawString("Volume: " + ofToString(roundf(mySoundInput.getSoundVolume())), camWidth - (myfont.getNumCharacters()*2.5),215);
+    
+
+    
+    
     // *** draw red rectangle on big image (ROI) ***
     ofNoFill();
     ofSetColor(255, 0, 0);
@@ -464,6 +479,9 @@ void ofApp::draw(){
     }
     
     myGui.drawGui(camWidth - 230, camHeight-150);
+
+    
+  
     
 }
 
