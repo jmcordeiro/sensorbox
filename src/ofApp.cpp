@@ -13,7 +13,8 @@ void ofApp::setup(){
 
     whichBackgroundImg = 1;
     myfont.loadFont("fonts/arial.ttf", 15);
-    
+    numOfColls = 2;
+    numOfRows = 2;
     isNotMute = false;
     
     toogleSounds = 0;
@@ -73,10 +74,6 @@ void ofApp::setup(){
 
     
     
-//    //******** Selects the method for learning background ***********
-//    bLearnBakground = false; // learn from video ('space bar')
-//    bLoadPictureBakground = true; // load from picture file ('p' key)
-
     
     // loads a default background image;
     loader.loadImage("backgrounds/background_black.png");
@@ -236,47 +233,6 @@ void ofApp::update(){
 
         
         
-        
-        /* *********** OLD WAY OF DOING IT ************
-         
-         // ******** LEARN BACKGROUND (space bar) *******************
-         if (bLearnBakground == true){
-         grayBg.clear();
-         grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
-         grayImage.scaleIntoMe(grayBg);
-         grayBg = grayImage;
-         
-         bgImg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
-         unsigned char * pixels = grayBg.getPixels();
-         bgImg.setFromPixels(pixels, ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
-         bgImg.saveImage("background-"+ofGetTimestampString()+".png");
-         
-         bLearnBakground = false;
-         cout << "------------------" << endl;
-         cout << "------------------" << endl;
-         cout << "CAPTURE BACKGROUNG" << endl;
-         cout << "------------------" << endl;
-         cout << "------------------" << endl;
-         }
-         
-         
-         
-         // ******** LOAD BACKGROUND PICTURE ('p' key) *******************
-         if (bLoadPictureBakground == true){
-         loader.loadImage("background.png");
-         cout << "load image from file" << endl;
-         loader.setImageType(OF_IMAGE_GRAYSCALE);
-         loader.resize(ROI.width/scaleRatio, ROI.width/scaleRatio);
-         cout << "resize image" << endl;
-         grayBg.clear();
-         grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
-         grayBg.setFromPixels(loader.getPixels(),ROI.width/scaleRatio, ROI.height/scaleRatio);
-         bLoadPictureBakground = false;
-         }
-         */
-        
-        
-        
         // take the abs value of the difference between background and incoming and then threshold:
         grayDiff.clear();
         grayDiff.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
@@ -395,7 +351,7 @@ void ofApp::update(){
     
     
     // sets the variable "theCell" with the correspondent quadrant where the fish is positioned
-    theCell = myCell(paralax_x, paralax_y, ROI.width, ROI.height, 2, 2, fishPosBig.x, fishPosBig.y);
+    theCell = myCell(paralax_x, paralax_y, ROI.width, ROI.height, numOfRows, numOfColls, fishPosBig.x, fishPosBig.y);
     
     if (blackFrame){
         
@@ -425,7 +381,7 @@ void ofApp::draw(){
     
     // *********** draw the video **************************
     colorImg.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
-    drawGridCell(paralax_x, paralax_y, ROI.width, ROI.height, 2, 2);
+    drawGridCell(paralax_x, paralax_y, ROI.width, ROI.height, numOfRows, numOfColls);
     
     
     //*********** WRITING To FILE MODE (z) *****************
@@ -532,7 +488,7 @@ void ofApp::draw(){
         ofSetColor(255, 0, 0);
         ofCircle(fishPosBig.x, fishPosBig.y, 10);
         
-        myCellDraw(paralax_x, paralax_y, ROI.width, ROI.height, 2, 2, fishPosBig.x, fishPosBig.y);
+        myCellDraw(paralax_x, paralax_y, ROI.width, ROI.height, numOfRows, numOfColls, fishPosBig.x, fishPosBig.y);
         
     }
     
@@ -635,6 +591,19 @@ void ofApp::keyPressed(int key){
         case 'c':
             toogleSounds++;
             break;
+        case '0':
+            numOfRows--;
+            break;
+        case '9':
+            numOfRows++;
+            break;
+        case '7':
+            numOfColls--;
+            break;
+        case '8':
+            numOfColls++;
+            break;
+
         case 'q':
             cout <<"***************" << endl;
             cout << "GRAY BG: " << grayBg.width << " x " << grayBg.height << endl;

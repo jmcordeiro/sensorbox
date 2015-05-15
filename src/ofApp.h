@@ -23,6 +23,8 @@ class ofApp : public ofBaseApp{
     int toogleSounds;
     bool keyDown[255];
     int whichBackgroundImg;
+    int numOfRows;
+    int numOfColls;
 public:
     int prtInt;
     
