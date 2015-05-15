@@ -22,7 +22,7 @@ class ofApp : public ofBaseApp{
     bool isNotMute;
     int toogleSounds;
     bool keyDown[255];
-    
+    int whichBackgroundImg;
 public:
     int prtInt;
     
@@ -65,6 +65,9 @@ public:
     ofImage loader;
     ofImage bgImgDay;
     ofImage bgImgNight;
+    ofImage bgImgDayStatic;
+    ofImage bgImgNightStatic;
+
     
     int threshold;
     bool bLearnBakground, bLoadPictureBakground;

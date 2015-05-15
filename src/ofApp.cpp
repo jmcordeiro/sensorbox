@@ -11,6 +11,7 @@
 void ofApp::setup(){
 
 
+    whichBackgroundImg = 1;
     myfont.loadFont("fonts/arial.ttf", 15);
     
     isNotMute = false;
@@ -65,6 +66,8 @@ void ofApp::setup(){
     grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
     bgImgNight.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
     bgImgDay.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
+    bgImgNightStatic.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
+    bgImgDayStatic.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
     grayImage.allocate(ROI.width, ROI.height);
     grayDiff.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
 
@@ -86,6 +89,9 @@ void ofApp::setup(){
     
     bgImgDay.loadImage("backgrounds/background_day.png");
     bgImgNight.loadImage("backgrounds/background_night.png");
+    bgImgDayStatic.loadImage("backgrounds/background_black.png");
+    bgImgNightStatic.loadImage("backgrounds/background_white.png");
+
     
     //******** threshold used for image analysis ******************
     threshold = 50;
@@ -154,9 +160,55 @@ void ofApp::update(){
         grayImage.resize(ROI.width/scaleRatio, ROI.height/scaleRatio);
         
         
+        //******** LOAD BACKGROUND PICTURE *******************
+        //******* White Background '1' key *************
+        if (keyDown['1'] && keyDown['p']) {
+            loader.loadImage("backgrounds/background_white.png");
+            loader.setImageType(OF_IMAGE_GRAYSCALE);
+            loader.resize(ROI.width/scaleRatio, ROI.width/scaleRatio);
+            grayBg.clear();
+            grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
+            grayBg.setFromPixels(loader.getPixels(),ROI.width/scaleRatio, ROI.height/scaleRatio);
+            whichBackgroundImg = 1;
+        }
+        
+        //******* Black Background '2' key *************
+        if (keyDown['2'] && keyDown['p']) {
+            loader.loadImage("backgrounds/background_black.png");
+            loader.setImageType(OF_IMAGE_GRAYSCALE);
+            loader.resize(ROI.width/scaleRatio, ROI.width/scaleRatio);
+            grayBg.clear();
+            grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
+            grayBg.setFromPixels(loader.getPixels(),ROI.width/scaleRatio, ROI.height/scaleRatio);
+            whichBackgroundImg = 2;
+        }
+        //******* Day Background '3' key *************
+        if (keyDown['3'] && keyDown['p']) {
+            loader.loadImage("backgrounds/background_day.png");
+            loader.setImageType(OF_IMAGE_GRAYSCALE);
+            loader.resize(ROI.width/scaleRatio, ROI.width/scaleRatio);
+            grayBg.clear();
+            grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
+            grayBg.setFromPixels(loader.getPixels(),ROI.width/scaleRatio, ROI.height/scaleRatio);
+            whichBackgroundImg = 3;
+        }
+        
+        //******* Day Background '4' key *************
+        if (keyDown['4'] && keyDown['p']) {
+            loader.loadImage("backgrounds/background_night.png");
+            loader.setImageType(OF_IMAGE_GRAYSCALE);
+            loader.resize(ROI.width/scaleRatio, ROI.width/scaleRatio);
+            grayBg.clear();
+            grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
+            grayBg.setFromPixels(loader.getPixels(),ROI.width/scaleRatio, ROI.height/scaleRatio);
+            whichBackgroundImg = 4;
+        }
+        
+      
+        
         //******** LEARN BACKGROUND *******************
-        //********** DAY MODE (space bar + 1) ***************
-        if (keyDown['1'] && keyDown[' ']) {
+        //********** DAY MODE (space bar + 3) ***************
+        if (keyDown['3'] && keyDown[' ']) {
             grayBg.clear();
             grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
             grayImage.scaleIntoMe(grayBg);
@@ -165,11 +217,11 @@ void ofApp::update(){
             bgImgDay.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
             unsigned char * pixels = grayBg.getPixels();
             bgImgDay.setFromPixels(pixels, ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
-            bgImgDay.saveImage("background_day.png");
+            bgImgDay.saveImage("backgrounds/background_day.png");
         }
         
-        //********** NIGHT MODE (space bar + 2) ***************
-        if (keyDown['2'] && keyDown[' ']) {
+        //********** NIGHT MODE (space bar + 4) ***************
+        if (keyDown['4'] && keyDown[' ']) {
             grayBg.clear();
             grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
             grayImage.scaleIntoMe(grayBg);
@@ -178,31 +230,10 @@ void ofApp::update(){
             bgImgNight.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
             unsigned char * pixels = grayBg.getPixels();
             bgImgNight.setFromPixels(pixels, ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
-            bgImgNight.saveImage("background_night.png");
+            bgImgNight.saveImage("backgrounds/background_night.png");
         }
         
-        
-        //******** LOAD BACKGROUND PICTURE *******************
-        //******* Day Barcground '1' key *************
-        if (keyDown['1'] && keyDown['p']) {
-            loader.loadImage("background_day.png");
-            loader.setImageType(OF_IMAGE_GRAYSCALE);
-            loader.resize(ROI.width/scaleRatio, ROI.width/scaleRatio);
-            grayBg.clear();
-            grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
-            grayBg.setFromPixels(loader.getPixels(),ROI.width/scaleRatio, ROI.height/scaleRatio);
-        }
-        
-        //******* Day Barcground '2' key *************
-        if (keyDown['2'] && keyDown['p']) {
-            loader.loadImage("background_night.png");
-            loader.setImageType(OF_IMAGE_GRAYSCALE);
-            loader.resize(ROI.width/scaleRatio, ROI.width/scaleRatio);
-            grayBg.clear();
-            grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
-            grayBg.setFromPixels(loader.getPixels(),ROI.width/scaleRatio, ROI.height/scaleRatio);
-        }
-        
+
         
         
         
@@ -454,14 +485,41 @@ void ofApp::draw(){
     
     // *** draw difference ***
     grayDiff.draw(10, grayBg.getHeight());
+  
+    // *** draw White background image in use ***
+    bgImgNightStatic.draw(10, grayBg.getHeight()*2, bgImgNightStatic.width*0.5, bgImgNightStatic.height*0.5);
+    
+    // *** draw Black background image in use ***
+    bgImgDayStatic.draw(10+bgImgDayStatic.width*0.5, grayBg.getHeight()*2, bgImgDayStatic.width*0.5, bgImgDayStatic.height*0.5);
+
     
     // *** draw DAY background image in use ***
-    bgImgDay.draw(10, grayBg.getHeight()*2);
+    bgImgDay.draw(10, grayBg.getHeight()*2+bgImgDay.height*0.5, bgImgDay.width*0.5, bgImgDay.height*0.5);
     
     // *** draw DAY background image in use ***
-    bgImgNight.draw(10, grayBg.getHeight()*3);
+    bgImgNight.draw(10+bgImgNight.width*0.5, grayBg.getHeight()*2+bgImgNight.height*0.5, bgImgNight.width*0.5, bgImgNight.height*0.5);
     
     
+    ofSetColor(255, 0, 0);
+    ofFill();
+    switch (whichBackgroundImg) {
+        case 1:
+            ofRectangle(10, grayBg.getHeight()*2, bgImgNightStatic.width*0.5, bgImgNightStatic.height*0.5);
+            break;
+        case 2:
+            ofRectangle(10+bgImgDayStatic.width*0.5, grayBg.getHeight()*2, bgImgDayStatic.width*0.5, bgImgDayStatic.height*0.5);
+            break;
+        case 3:
+            ofRectangle(10,grayBg.getHeight()*2+bgImgDay.height*0.5, bgImgDay.width*0.5, bgImgDay.height*0.5);
+            break;
+        case 4:
+            ofRectangle(10+bgImgNight.width*0.5, grayBg.getHeight()*2+bgImgNight.height*0.5, bgImgNight.width*0.5, bgImgNight.height*0.5);
+            break;
+            
+        default:
+            break;
+    }
+
     
     if (contourFinder.nBlobs > 0){
         // *** draw point and contour on small image ***
@@ -477,6 +535,29 @@ void ofApp::draw(){
         myCellDraw(paralax_x, paralax_y, ROI.width, ROI.height, 2, 2, fishPosBig.x, fishPosBig.y);
         
     }
+    
+    ofSetColor(255, 0, 0);
+    ofNoFill();
+    ofSetLineWidth(4);
+    switch (whichBackgroundImg) {
+        case 1:
+            ofRect(10, grayBg.getHeight()*2, bgImgNightStatic.width*0.5, bgImgNightStatic.height*0.5);
+            break;
+        case 2:
+            ofRect(10+bgImgDayStatic.width*0.5, grayBg.getHeight()*2, bgImgDayStatic.width*0.5, bgImgDayStatic.height*0.5);
+            break;
+        case 3:
+            ofRect(10,grayBg.getHeight()*2+bgImgDay.height*0.5, bgImgDay.width*0.5, bgImgDay.height*0.5);
+            break;
+        case 4:
+            ofRect(10+bgImgNight.width*0.5, grayBg.getHeight()*2+bgImgNight.height*0.5, bgImgNight.width*0.5, bgImgNight.height*0.5);
+            break;
+            
+        default:
+            break;
+    }
+    
+
     
     myGui.drawGui(camWidth - 230, camHeight-150);
 
