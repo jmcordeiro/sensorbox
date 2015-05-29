@@ -75,9 +75,11 @@ public:
 
     
     int threshold;
-    bool bLearnBakground, bLoadPictureBakground;
+    bool bLearnBakground, bLoadPictureBakground, bLearnBackground;
     bool blackFrame;
 
+    
+    
     SoundInput mySoundInput;
 
     

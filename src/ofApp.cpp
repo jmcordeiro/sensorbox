@@ -19,6 +19,7 @@ void ofApp::setup(){
     
     toogleSounds = 0;
     
+    bLearnBackground = true;
 
     
     decreases = 0;
@@ -55,7 +56,7 @@ void ofApp::setup(){
             cout << " - unavailable " << endl;
         }
     }
-    vidGrabber.setDeviceID(1);  // use camera 0 for the analysis
+    vidGrabber.setDeviceID(0);  // use camera 0 for the analysis
     
     vidGrabber.initGrabber(camWidth,camHeight);
 #else
@@ -248,6 +249,15 @@ void ofApp::update(){
         contourFinder.findContours(grayDiff, 0.01, (ROI.width/scaleRatio*ROI.height/scaleRatio/4), 1, false);
         //contourFinder.findContours(grayDiff, 10, (ROI.width/scaleRatio*ROI.height/scaleRatio/4), 5, false);
     }
+    
+    
+    
+    if(bLearnBackground){
+        myBackgroundAddon.startLearning();
+        bLearnBackground = false;
+    }
+
+    
     
     
     if (contourFinder.nBlobs > 0){
@@ -540,6 +550,11 @@ void ofApp::draw(){
     //Draws the audio GUI
     myGui.drawGui(ofGetWindowWidth() - 240, ofGetWindowHeight()-150);
     
+    
+    ofSetColor(0xffffff);
+    myBackgroundAddon.draw(0, 0); //draw it to the side
+
+    
 }
 
 
@@ -622,6 +637,9 @@ void ofApp::keyPressed(int key){
             break;
         case '8':
             numOfColls++;
+            break;
+        case 'j':
+            bLearnBackground = true;
             break;
 
         case 'q':
