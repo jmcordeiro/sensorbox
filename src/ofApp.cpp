@@ -19,6 +19,8 @@ void ofApp::setup(){
     
     toogleSounds = 0;
     
+
+    
     decreases = 0;
     // Define the capture size of the câmera (facetime hd on the mac 1280x720)
     camWidth = 800;
@@ -73,7 +75,8 @@ void ofApp::setup(){
     grayImage.allocate(ROI.width, ROI.height);
     grayDiff.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
 
-    
+    myBackgroundAddon.allocate(camWidth,camHeight);
+
     
     
     // loads a default background image;
@@ -141,6 +144,8 @@ void ofApp::update(){
     if (bNewFrame){
 #ifdef _USE_LIVE_VIDEO
         colorImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight);
+        myBackgroundAddon.update(colorImg);
+
 #else
         colorImg.setFromPixels(vidPlayer.getPixels(), camWidth, camHeight);
 #endif

@@ -8,6 +8,7 @@
 #include "logger.h"
 #include "arduino.h"
 #include "soundInput.h"
+#include "ofxBackground.h"
 
 
 #define _USE_LIVE_VIDEO		// uncomment this to use a live camera
@@ -63,6 +64,8 @@ public:
     ofxCvGrayscaleImage 	grayTempImage;
 
     ofxCvContourFinder 	contourFinder;
+
+    ofxBackground myBackgroundAddon;
     
     ofImage loader;
     ofImage bgImgDay;
