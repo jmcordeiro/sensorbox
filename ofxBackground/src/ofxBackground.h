@@ -166,9 +166,9 @@ protected:
 	uchar *pColor; //YUV pointer	
 	
 		//all in the main of same
-	
-    IplImage* ImaskAVG;
-	IplImage* ImaskAVGCC;
+//	
+//    IplImage* ImaskAVG;
+//	IplImage* ImaskAVGCC;
     IplImage* ImaskCodeBook;
 	IplImage* ImaskCodeBookCC;
 	

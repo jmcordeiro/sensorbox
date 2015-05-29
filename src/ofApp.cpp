@@ -184,6 +184,7 @@ void ofApp::update(){
             grayBg.setFromPixels(loader.getPixels(),ROI.width/scaleRatio, ROI.height/scaleRatio);
             whichBackgroundImg = 2;
         }
+        
         //******* Day Background '3' key *************
         if (keyDown['3'] && keyDown['p']) {
             loader.loadImage("backgrounds/background_day.png");
@@ -205,8 +206,6 @@ void ofApp::update(){
             grayBg.setFromPixels(loader.getPixels(),ROI.width/scaleRatio, ROI.height/scaleRatio);
             whichBackgroundImg = 4;
         }
-        
-      
         
         //******** LEARN BACKGROUND *******************
         //********** DAY MODE (space bar + 3) ***************
@@ -235,15 +234,12 @@ void ofApp::update(){
             bgImgNight.saveImage("backgrounds/background_night.png");
         }
         
-
-        
         
         // take the abs value of the difference between background and incoming and then threshold:
         grayDiff.clear();
         grayDiff.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
         grayDiff.absDiff(grayBg, grayImage);
         grayDiff.threshold(threshold);
-        
         
         // **** find contours *******
         contourFinder.findContours(grayDiff, 0.01, (ROI.width/scaleRatio*ROI.height/scaleRatio/4), 1, false);
