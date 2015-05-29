@@ -2,7 +2,7 @@
  notes:
  - i'm testing doing the cv with a smaller image and drawing the image from VideGrabber
  - It works not so good and I'm not sure if it computationally less demanding (cpu 74%, memory 98%).
- */
+*/
 
 
 #include "ofApp.h"
@@ -21,8 +21,8 @@ void ofApp::setup(){
     
     decreases = 0;
     // Define the capture size of the câmera (facetime hd on the mac 1280x720)
-    camWidth = 1280;
-    camHeight = 720;
+    camWidth = 800;
+    camHeight = 600;
     
     prtInt = 255;
     
@@ -33,9 +33,10 @@ void ofApp::setup(){
     ROI.height = camHeight;// set it to camHeight to have ROI = to camera size
     ROI.x = (camWidth-camHeight)*0.5; // set it to zero to get ROI = camwidth
     ROI.y = 0; // set it to zero to get ROI = camheight
-    
-    paralax_x = (camWidth-ROI.width)*0.5;
-    paralax_y = (camHeight-ROI.height)*0.5;
+  
+        paralax_x = (camWidth-ROI.width)*0.5+200;
+//    paralax_x = (camWidth-ROI.width)*0.5;
+    paralax_y = (camHeight-ROI.height)*0.5+100;
     
     // Define a scale ratio to resize the original image for analysis
     scaleRatio = 4;
@@ -52,7 +53,7 @@ void ofApp::setup(){
             cout << " - unavailable " << endl;
         }
     }
-    vidGrabber.setDeviceID(0);  // use camera 0 for the analysis
+    vidGrabber.setDeviceID(1);  // use camera 0 for the analysis
     
     vidGrabber.initGrabber(camWidth,camHeight);
 #else
@@ -93,7 +94,6 @@ void ofApp::setup(){
     //******** threshold used for image analysis ******************
     threshold = 50;
     
-    
     ofSetFrameRate(15);
     
     sound_1.loadSound("sounds/sound_1.wav");
@@ -105,7 +105,6 @@ void ofApp::setup(){
     sound_2.setLoop(true);
     sound_3.setLoop(true);
     sound_4.setLoop(true);
-    
     
 }
 
@@ -125,8 +124,8 @@ void ofApp::update(){
     ofBackground(255,255,255);
     bool bNewFrame = false;
     
-    paralax_x = (camWidth-ROI.width)*0.5;
-    paralax_y = (camHeight-ROI.height)*0.5;
+    paralax_x = (camWidth-ROI.width)*0.5+200;
+    paralax_y = (camHeight-ROI.height)*0.5+50;
     
     
     
@@ -241,7 +240,8 @@ void ofApp::update(){
         
         
         // **** find contours *******
-        contourFinder.findContours(grayDiff, 1, (ROI.width/scaleRatio*ROI.height/scaleRatio/4), 1, false);
+        contourFinder.findContours(grayDiff, 0.01, (ROI.width/scaleRatio*ROI.height/scaleRatio/4), 1, false);
+        //contourFinder.findContours(grayDiff, 10, (ROI.width/scaleRatio*ROI.height/scaleRatio/4), 5, false);
     }
     
     
@@ -384,50 +384,60 @@ void ofApp::draw(){
     drawGridCell(paralax_x, paralax_y, ROI.width, ROI.height, numOfRows, numOfColls);
     
     
+    
     //*********** WRITING To FILE MODE (z) *****************
     //********** draw black bars arround display window ***
     
     if (blackFrame) {
         ofSetColor(0, 0, 0);
         ofFill();
-        ofRect(0, 0, camWidth, paralax_y);
-        ofRect(0, (paralax_y)+ROI.height, camWidth, camHeight);
-        ofRect(0, 0, paralax_x, camHeight);
-        ofRect((paralax_x)+ROI.width, 0, camWidth, camHeight);
+        ofRect(0, 0, ofGetWindowWidth(), paralax_y);
+        ofRect(0, (paralax_y)+ROI.height, ofGetWindowWidth(), ofGetWindowHeight());
+        ofRect(0, 0, paralax_x, ofGetWindowHeight());
+        ofRect((paralax_x)+ROI.width, 0, ofGetWindowWidth(), ofGetWindowHeight());
         ofSetColor(255, 0, 0);
-        myfont.drawString("READING TO FILE (z)", camWidth - (myfont.getNumCharacters()*2.5),40);
+        myfont.drawString("READING TO FILE (z)", ofGetWindowWidth() - (myfont.getNumCharacters()*2.5),40);
     }
     
     
-    // *********** draw sound modes tring **************************
+    // draw grey bars of the sides
+    ofSetColor(100);
+    ofFill();
+    ofRect(0,0, 210,ofGetWindowHeight());
+    ofRect(ofGetWindowWidth()-300, 0, 300, ofGetWindowHeight());
+
+    
+    // *********** draw sound modes string **************************
     if (isNotMute){
         ofSetColor(0, 255, 0);
-        myfont.drawString("PLAYING MODE (x)", camWidth - (myfont.getNumCharacters()*2.5),70);
+        myfont.drawString("PLAYING MODE (x)", ofGetWindowWidth() - (myfont.getNumCharacters()*2.5),70);
     }else{
         ofSetColor(255, 0, 0);
-        myfont.drawString("SILENT MODE (x)", camWidth - (myfont.getNumCharacters()*2.5),70);
+        myfont.drawString("SILENT MODE (x)", ofGetWindowWidth() - (myfont.getNumCharacters()*2.5),70);
         if (toogleSounds != 0) {
-            myfont.drawString("TESTING SOUND "+ofToString(toogleSounds) + " (c)", camWidth - (myfont.getNumCharacters()*2.5),100);
+            myfont.drawString("TESTING SOUND "+ofToString(toogleSounds) + " (c)", ofGetWindowWidth() - (myfont.getNumCharacters()*2.5),100);
         }else{
             ofSetColor(255, 255, 255);
-            myfont.drawString("NO TESTING SOUND (c)", camWidth - (myfont.getNumCharacters()*2.5),100);
+            myfont.drawString("NO TEST SOUND (c)", ofGetWindowWidth() - (myfont.getNumCharacters()*2.5),100);
         }
     }
     
     
     ofSetColor(255, 255, 255);
-    myfont.drawString("Temperature: " + ofToString(myArduino.getTemp()), camWidth - (myfont.getNumCharacters()*2.5),140);
+    myfont.drawString("Temperature: " + ofToString(myArduino.getTemp()), ofGetWindowWidth() - (myfont.getNumCharacters()*2.5),140);
     
     ofSetColor(255, 255, 255);
-    myfont.drawString("Humidity: " + ofToString(myArduino.getHum()), camWidth - (myfont.getNumCharacters()*2.5),165);
+    myfont.drawString("Humidity: " + ofToString(myArduino.getHum()), ofGetWindowWidth() - (myfont.getNumCharacters()*2.5),165);
     
     ofSetColor(255, 255, 255);
-    myfont.drawString("Cell: " + ofToString(theCell), camWidth - (myfont.getNumCharacters()*2.5),190);
+    myfont.drawString("Cell: " + ofToString(theCell), ofGetWindowWidth() - (myfont.getNumCharacters()*2.5),190);
     
     ofSetColor(255, 255, 255);
-    myfont.drawString("Volume: " + ofToString(roundf(mySoundInput.getSoundVolume())), camWidth - (myfont.getNumCharacters()*2.5),215);
+    myfont.drawString("Volume: " + ofToString(roundf(mySoundInput.getSoundVolume())), ofGetWindowWidth() - (myfont.getNumCharacters()*2.5),215);
     
-
+    
+ 
+    
     
     
     // *** draw red rectangle on big image (ROI) ***
@@ -512,13 +522,10 @@ void ofApp::draw(){
         default:
             break;
     }
-    
 
     
-    myGui.drawGui(camWidth - 230, camHeight-150);
-
-    
-  
+    //Draws the audio GUI
+    myGui.drawGui(ofGetWindowWidth() - 240, ofGetWindowHeight()-150);
     
 }
 
