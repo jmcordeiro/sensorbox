@@ -12,7 +12,7 @@ void ofApp::setup(){
 
 
     whichBackgroundImg = 1;
-    myfont.loadFont("fonts/arial.ttf", 15);
+    myfont.loadFont("fonts/arial.ttf", 13);
     numOfColls = 2;
     numOfRows = 2;
     isNotMute = false;
@@ -396,7 +396,6 @@ void ofApp::draw(){
         ofRect(0, 0, paralax_x, ofGetWindowHeight());
         ofRect((paralax_x)+ROI.width, 0, ofGetWindowWidth(), ofGetWindowHeight());
         ofSetColor(255, 0, 0);
-        myfont.drawString("READING TO FILE (z)", ofGetWindowWidth() - (myfont.getNumCharacters()*2.5),40);
     }
     
     
@@ -408,6 +407,15 @@ void ofApp::draw(){
 
     
     // *********** draw sound modes string **************************
+    if(blackFrame){
+        ofSetColor(255,0,0);
+        myfont.drawString("READING TO FILE (z)", ofGetWindowWidth() - (myfont.getNumCharacters()*2.5),40);
+    }else{
+        ofSetColor(255);
+        myfont.drawString("NOT READING TO FILE (z)", ofGetWindowWidth() - (myfont.getNumCharacters()*2.5),40);
+    }
+    
+    
     if (isNotMute){
         ofSetColor(0, 255, 0);
         myfont.drawString("PLAYING MODE (x)", ofGetWindowWidth() - (myfont.getNumCharacters()*2.5),70);
