@@ -48,8 +48,8 @@
 	//from ch9_AvgBackground.h
 
 #define NUM_CAMERAS   1      		//This function can handle an array of cameras
-#define HIGH_SCALE_NUM 7.0        	//How many average differences from average image on the high side == background
-#define LOW_SCALE_NUM 6.0		//How many average differences from average image on the low side == background
+#define HIGH_SCALE_NUM 7.0        	//How many average differences from average image on the high side == background (default = 7.0)
+#define LOW_SCALE_NUM 6.0		//How many average differences from average image on the low side == background (default = 6.0)
 
 #define LEARNING_TIME 10000 //ten seconds of learning time, then switch
 

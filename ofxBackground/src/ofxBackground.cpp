@@ -334,7 +334,7 @@ void ofxBackground::draw( float x, float y, float w, float h ) {
 //    }
 	
 		// ---------------------------- draw the various masks
-//	ofSetColor(0xFFFFFF);
+	ofSetColor(255);
 //    glPushMatrix();
 //    glTranslatef( x, y, 0.0 );
 //    glScalef( scalex, scaley, 0.0 );
@@ -357,7 +357,8 @@ void ofxBackground::draw( float x, float y, float w, float h ) {
 //		ofDrawBitmapString("Average Connected Components", 0, _height+20+_height+10);
 //		backgroundCodebook.draw(_width+20, 0);
 //		ofDrawBitmapString("Codebook", _width+20, _height+10);
-//		backgroundCodeBookConnectedComponents.draw(_width+20, 20+_height);
+		backgroundCodeBookConnectedComponents.draw(10, 10, 195, 195);
+        //		backgroundCodeBookConnectedComponents.draw(_width+20, 20+_height);
 //		ofDrawBitmapString("Codebook Connected Components", _width+20, _height+20+_height+10);
 		
 			//old stuff from ofxCvCountourFinder

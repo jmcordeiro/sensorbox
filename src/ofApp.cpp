@@ -279,8 +279,6 @@ void ofApp::draw(){
     
     
     // *********** draw the video **************************
-  //  colorImg.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
-    
     colorImg.draw(200,50);
     drawGridCell(ROI.x+200, ROI.y+50, ROI.width, ROI.height, numOfRows, numOfColls);
     
@@ -381,10 +379,12 @@ void ofApp::draw(){
     ofNoFill();
     ofSetLineWidth(4);
 
-    ofSetColor(0xffffff);
     
     //Draws the audio GUI
     myGui.drawGui(ofGetWindowWidth() - 240, ofGetWindowHeight()-150);
+    
+    myBackgroundAddon.draw(0,0, 10, 10);
+    
     
 }
 
