@@ -24,8 +24,8 @@ void ofApp::setup(){
     
     decreases = 0;
     // Define the capture size of the câmera (facetime hd on the mac 1280x720)
-    camWidth = 800;
-    camHeight = 600;
+    camWidth = 400;
+    camHeight = 300;
     
     prtInt = 255;
     
