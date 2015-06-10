@@ -48,8 +48,8 @@
 	//from ch9_AvgBackground.h
 
 #define NUM_CAMERAS   1      		//This function can handle an array of cameras
-#define HIGH_SCALE_NUM 7.0        	//How many average differences from average image on the high side == background (default = 7.0)
-#define LOW_SCALE_NUM 6.0		//How many average differences from average image on the low side == background (default = 6.0)
+#define HIGH_SCALE_NUM 7.0        	//How many average differences from average image on the high side == background
+#define LOW_SCALE_NUM 6.0		//How many average differences from average image on the low side == background
 
 #define LEARNING_TIME 10000 //ten seconds of learning time, then switch
 
@@ -57,27 +57,20 @@
 	// Accumulate average and ~std (really absolute difference) image and use this to detect background and foreground
 	//
 	// Typical way of using this is to:
-
-    // 	AllocateImages();
+	// 	AllocateImages();
 	//	//loop for N images to accumulate background differences
-
-    //	accumulateBackground();
+	//	accumulateBackground();
 	//	//When done, turn this into our avg and std model with high and low bounds
-
-    //	createModelsfromStats();
+	//	createModelsfromStats();
 	//	//Then use the function to return background in a mask (255 == foreground, 0 == background)
-
-    //	backgroundDiff(IplImage *I,IplImage *Imask, int num);
+	//	backgroundDiff(IplImage *I,IplImage *Imask, int num);
 	//	//Then tune the high and low difference from average image background acceptance thresholds
-
-    //	float scalehigh,scalelow; //Set these, defaults are 7 and 6. Note: scalelow is how many average differences below average
-
-    //	scaleHigh(scalehigh);
-    //	scaleLow(scalelow);
+	//	float scalehigh,scalelow; //Set these, defaults are 7 and 6. Note: scalelow is how many average differences below average
+	//	scaleHigh(scalehigh);
+	//	scaleLow(scalelow);
 	//	//That is, change the scale high and low bounds for what should be background to make it work.
 	//	//Then continue detecting foreground in the mask image
-
-    //	backgroundDiff(IplImage *I,IplImage *Imask, int num);
+	//	backgroundDiff(IplImage *I,IplImage *Imask, int num);
 	//
 	//NOTES: num is camera number which varies from 0 ... NUM_CAMERAS - 1.  Typically you only have one camera, but this routine allows
 	//     	 you to index many.
@@ -173,9 +166,9 @@ protected:
 	uchar *pColor; //YUV pointer	
 	
 		//all in the main of same
-//	
-//    IplImage* ImaskAVG;
-//	IplImage* ImaskAVGCC;
+	
+    IplImage* ImaskAVG;
+	IplImage* ImaskAVGCC;
     IplImage* ImaskCodeBook;
 	IplImage* ImaskCodeBookCC;
 	

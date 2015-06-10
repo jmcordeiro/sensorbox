@@ -16,7 +16,7 @@
 
 class LiveFish{
 
-    int paning; //
+    int paning;
     int paralaxX;
     int paralaxY;
     int canvasX;
