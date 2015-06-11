@@ -51,6 +51,7 @@ public:
     int scaleRatio;
     int paralax_x;
     int paralax_y;
+    float brightness, contrast;
     
     ofVec2f fishPosBig, fishPosSmall;
      

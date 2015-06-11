@@ -10,6 +10,8 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 
+    brightness = 0;
+    contrast = 0;
 
     whichBackgroundImg = 1;
     myfont.loadFont("fonts/arial.ttf", 15);
@@ -73,7 +75,6 @@ void ofApp::setup(){
     grayImage.allocate(ROI.width, ROI.height);
     grayDiff.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
 
-    
     
     
     // loads a default background image;
@@ -155,6 +156,11 @@ void ofApp::update(){
         grayImage.setFromPixels(grayTempImage.getRoiPixels(), ROI.width, ROI.height);
         grayImage.resize(ROI.width/scaleRatio, ROI.height/scaleRatio);
         
+        grayImage.brightnessContrast(brightness, contrast);
+        //grayImage.brightnessContrast(0, 0);
+        
+        brightness = mouseX*0.005-5;
+        contrast = mouseY*0.005;
         
         //******** LOAD BACKGROUND PICTURE *******************
         //******* White Background '1' key *************
@@ -434,7 +440,16 @@ void ofApp::draw(){
     
     ofSetColor(255, 255, 255);
     myfont.drawString("Volume: " + ofToString(roundf(mySoundInput.getSoundVolume())), ofGetWindowWidth() - (myfont.getNumCharacters()*2.5),215);
-    
+ 
+    ofSetColor(255, 255, 255);
+    myfont.drawString("Treshold: " + ofToString(threshold), ofGetWindowWidth() - (myfont.getNumCharacters()*2.5),250);
+
+    ofSetColor(255, 255, 255);
+    myfont.drawString("Brightness: " + ofToString(brightness), ofGetWindowWidth() - (myfont.getNumCharacters()*2.5),275);
+
+    ofSetColor(255, 255, 255);
+    myfont.drawString("Contrast: " + ofToString(contrast), ofGetWindowWidth() - (myfont.getNumCharacters()*2.5),300);
+
     
  
     
