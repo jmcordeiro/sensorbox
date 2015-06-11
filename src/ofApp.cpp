@@ -19,12 +19,13 @@ void ofApp::setup(){
     
     toogleSounds = 0;
     
-    bLearnBackground = true; //ofxBckgrd
+    bLearnBackground = true;
+
     
     decreases = 0;
     // Define the capture size of the câmera (facetime hd on the mac 1280x720)
-    camWidth = 800;
-    camHeight = 600;
+    camWidth = 400;
+    camHeight = 300;
     
     prtInt = 255;
     
@@ -36,12 +37,12 @@ void ofApp::setup(){
     ROI.x = (camWidth-camHeight)*0.5; // set it to zero to get ROI = camwidth
     ROI.y = 0; // set it to zero to get ROI = camheight
   
-    
-    paralax_x = 200;
-    paralax_y = 50;
+        paralax_x = (camWidth-ROI.width)*0.5+200;
+//    paralax_x = (camWidth-ROI.width)*0.5;
+    paralax_y = (camHeight-ROI.height)*0.5+100;
     
     // Define a scale ratio to resize the original image for analysis
-    //scaleRatio = 4;
+    scaleRatio = 4;
     
 #ifdef _USE_LIVE_VIDEO
     // Get back a list of devices (cameras).
@@ -56,22 +57,46 @@ void ofApp::setup(){
         }
     }
     vidGrabber.setDeviceID(0);  // use camera 0 for the analysis
-    vidGrabber.initGrabber(camWidth,camHeight);
     
+    vidGrabber.initGrabber(camWidth,camHeight);
 #else
     vidPlayer.loadMovie("fish_movie.mov");
     vidPlayer.play();
     vidPlayer.setLoopState(OF_LOOP_NORMAL);
 #endif
     
-    
     // **** allocate memory for different images used along the way
-    myBackgroundAddon.allocate(camWidth,camHeight); //ofxBckgrd
+    colorImg.allocate(camWidth, camHeight);
+    grayTempImage.allocate(camWidth, camHeight);
+    grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
+    bgImgNight.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
+    bgImgDay.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
+    bgImgNightStatic.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
+    bgImgDayStatic.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
+    grayImage.allocate(ROI.width, ROI.height);
+    grayDiff.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
 
+    myBackgroundAddon.allocate(camWidth,camHeight);
+
+    
+    
+    // loads a default background image;
+    loader.loadImage("backgrounds/background_black.png");
+    loader.setImageType(OF_IMAGE_GRAYSCALE);
+    loader.resize(ROI.width/scaleRatio, ROI.width/scaleRatio);
+    grayBg.clear();
+    grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
+    grayBg.setFromPixels(loader.getPixels(),ROI.width/scaleRatio, ROI.height/scaleRatio);
+    
+    
+    bgImgDay.loadImage("backgrounds/background_day.png");
+    bgImgNight.loadImage("backgrounds/background_night.png");
+    bgImgDayStatic.loadImage("backgrounds/background_black.png");
+    bgImgNightStatic.loadImage("backgrounds/background_white.png");
 
     
     //******** threshold used for image analysis ******************
-//    threshold = 50;
+    threshold = 50;
     
     ofSetFrameRate(15);
     
@@ -103,7 +128,10 @@ void ofApp::update(){
     ofBackground(255,255,255);
     bool bNewFrame = false;
     
-
+    paralax_x = (camWidth-ROI.width)*0.5+200;
+    paralax_y = (camHeight-ROI.height)*0.5+50;
+    
+    
     
 #ifdef _USE_LIVE_VIDEO
     vidGrabber.update();
@@ -117,20 +145,109 @@ void ofApp::update(){
     if (bNewFrame){
 #ifdef _USE_LIVE_VIDEO
         colorImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight);
-        colorImg.setROI(ROI);
         myBackgroundAddon.update(colorImg);
 
 #else
         colorImg.setFromPixels(vidPlayer.getPixels(), camWidth, camHeight);
 #endif
         
+        grayTempImage.clear();
+        grayTempImage.allocate(camWidth, camHeight);
+        grayTempImage = colorImg;
+        grayTempImage.setROI(ROI);
+        
+        grayImage.clear();
+        grayImage.allocate(ROI.width, ROI.height);
+        grayImage.setFromPixels(grayTempImage.getRoiPixels(), ROI.width, ROI.height);
+        grayImage.resize(ROI.width/scaleRatio, ROI.height/scaleRatio);
+        
+        
+        //******** LOAD BACKGROUND PICTURE *******************
+        //******* White Background '1' key *************
+        if (keyDown['1'] && keyDown['p']) {
+            loader.loadImage("backgrounds/background_white.png");
+            loader.setImageType(OF_IMAGE_GRAYSCALE);
+            loader.resize(ROI.width/scaleRatio, ROI.width/scaleRatio);
+            grayBg.clear();
+            grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
+            grayBg.setFromPixels(loader.getPixels(),ROI.width/scaleRatio, ROI.height/scaleRatio);
+            whichBackgroundImg = 1;
+        }
+        
+        //******* Black Background '2' key *************
+        if (keyDown['2'] && keyDown['p']) {
+            loader.loadImage("backgrounds/background_black.png");
+            loader.setImageType(OF_IMAGE_GRAYSCALE);
+            loader.resize(ROI.width/scaleRatio, ROI.width/scaleRatio);
+            grayBg.clear();
+            grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
+            grayBg.setFromPixels(loader.getPixels(),ROI.width/scaleRatio, ROI.height/scaleRatio);
+            whichBackgroundImg = 2;
+        }
+        //******* Day Background '3' key *************
+        if (keyDown['3'] && keyDown['p']) {
+            loader.loadImage("backgrounds/background_day.png");
+            loader.setImageType(OF_IMAGE_GRAYSCALE);
+            loader.resize(ROI.width/scaleRatio, ROI.width/scaleRatio);
+            grayBg.clear();
+            grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
+            grayBg.setFromPixels(loader.getPixels(),ROI.width/scaleRatio, ROI.height/scaleRatio);
+            whichBackgroundImg = 3;
+        }
+        
+        //******* Day Background '4' key *************
+        if (keyDown['4'] && keyDown['p']) {
+            loader.loadImage("backgrounds/background_night.png");
+            loader.setImageType(OF_IMAGE_GRAYSCALE);
+            loader.resize(ROI.width/scaleRatio, ROI.width/scaleRatio);
+            grayBg.clear();
+            grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
+            grayBg.setFromPixels(loader.getPixels(),ROI.width/scaleRatio, ROI.height/scaleRatio);
+            whichBackgroundImg = 4;
+        }
+        
+      
+        
+        //******** LEARN BACKGROUND *******************
+        //********** DAY MODE (space bar + 3) ***************
+        if (keyDown['3'] && keyDown[' ']) {
+            grayBg.clear();
+            grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
+            grayImage.scaleIntoMe(grayBg);
+            grayBg = grayImage;
+            
+            bgImgDay.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
+            unsigned char * pixels = grayBg.getPixels();
+            bgImgDay.setFromPixels(pixels, ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
+            bgImgDay.saveImage("backgrounds/background_day.png");
+        }
+        
+        //********** NIGHT MODE (space bar + 4) ***************
+        if (keyDown['4'] && keyDown[' ']) {
+            grayBg.clear();
+            grayBg.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
+            grayImage.scaleIntoMe(grayBg);
+            grayBg = grayImage;
+            
+            bgImgNight.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
+            unsigned char * pixels = grayBg.getPixels();
+            bgImgNight.setFromPixels(pixels, ROI.width/scaleRatio, ROI.height/scaleRatio, OF_IMAGE_GRAYSCALE);
+            bgImgNight.saveImage("backgrounds/background_night.png");
+        }
+        
 
+        
+        
+        // take the abs value of the difference between background and incoming and then threshold:
+        grayDiff.clear();
+        grayDiff.allocate(ROI.width/scaleRatio, ROI.height/scaleRatio);
+        grayDiff.absDiff(grayBg, grayImage);
+        grayDiff.threshold(threshold);
+        
         
         // **** find contours *******
-        
-        contourFinder.findContours(myBackgroundAddon.backgroundCodeBookConnectedComponents, 0.01, (ROI.width*ROI.height/8), 1, false);
-        //contourFinder.findContours(grayDiff, 0.01, (ROI.width/scaleRatio*ROI.height/scaleRatio/4), 1, false);
-
+        contourFinder.findContours(grayDiff, 0.01, (ROI.width/scaleRatio*ROI.height/scaleRatio/4), 1, false);
+        //contourFinder.findContours(grayDiff, 10, (ROI.width/scaleRatio*ROI.height/scaleRatio/4), 5, false);
     }
     
     
@@ -144,9 +261,8 @@ void ofApp::update(){
     
     
     if (contourFinder.nBlobs > 0){
-
-        fishPosBig = ofVec2f(contourFinder.blobs[0].centroid.x, contourFinder.blobs[0].centroid.y);
-
+        fishPosSmall = ofVec2f(contourFinder.blobs[0].centroid.x, contourFinder.blobs[0].centroid.y);
+        fishPosBig = ofVec2f(fishPosSmall.x*scaleRatio+(paralax_x), fishPosSmall.y*scaleRatio+(paralax_y));
     }
     
     // ******* plays the sounds in "playmode" *********
@@ -238,7 +354,7 @@ void ofApp::update(){
     
     
     // this method sends information for fish class variables
-    myFish.makeFishToWork(camWidth, camHeight, fishPosBig.x, fishPosBig.y, ROI.width, ROI.height, ROI.x, ROI.y, 100);
+    myFish.makeFishToWork(camWidth, camHeight, fishPosBig.x, fishPosBig.y, ROI.width, ROI.height, paralax_x, paralax_y, 100);
     
     // cout << "velocity: " << myFish.getVelocity(fishPosBig.x,fishPosBig.y) << endl;
     
@@ -250,7 +366,7 @@ void ofApp::update(){
     
     
     // sets the variable "theCell" with the correspondent quadrant where the fish is positioned
-    theCell = myCell(ROI.x, ROI.y, ROI.width, ROI.height, numOfRows, numOfColls, fishPosBig.x, fishPosBig.y);
+    theCell = myCell(paralax_x, paralax_y, ROI.width, ROI.height, numOfRows, numOfColls, fishPosBig.x, fishPosBig.y);
     
     if (blackFrame){
         
@@ -279,8 +395,8 @@ void ofApp::draw(){
     
     
     // *********** draw the video **************************
-    colorImg.draw(200,50);
-    drawGridCell(ROI.x+200, ROI.y+50, ROI.width, ROI.height, numOfRows, numOfColls);
+    colorImg.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
+    drawGridCell(paralax_x, paralax_y, ROI.width, ROI.height, numOfRows, numOfColls);
     
     
     
@@ -290,10 +406,10 @@ void ofApp::draw(){
     if (blackFrame) {
         ofSetColor(0, 0, 0);
         ofFill();
-        ofRect(0, 0, ofGetWindowWidth(), paralax_y+ROI.y); // barra superior
-        ofRect(0, (paralax_y)+ROI.height+ROI.y, ofGetWindowWidth(), ofGetWindowHeight()-((paralax_y)+ROI.height+ROI.y)); // barra inferior
-        ofRect(0, 0, paralax_x+ROI.x, ofGetWindowHeight()); // barra esquerda
-        ofRect((paralax_x)+ROI.width+ROI.x, 0, ofGetWindowWidth()-((paralax_x)+ROI.width+ROI.x), ofGetWindowHeight()); // barra direita
+        ofRect(0, 0, ofGetWindowWidth(), paralax_y);
+        ofRect(0, (paralax_y)+ROI.height, ofGetWindowWidth(), ofGetWindowHeight());
+        ofRect(0, 0, paralax_x, ofGetWindowHeight());
+        ofRect((paralax_x)+ROI.width, 0, ofGetWindowWidth(), ofGetWindowHeight());
         ofSetColor(255, 0, 0);
     }
     
@@ -343,6 +459,36 @@ void ofApp::draw(){
     myfont.drawString("Volume: " + ofToString(roundf(mySoundInput.getSoundVolume())), ofGetWindowWidth() - (myfont.getNumCharacters()*2.5),215);
     
     
+ 
+    
+    
+    
+    // *** draw red rectangle on big image (ROI) ***
+    ofNoFill();
+    ofSetColor(255, 0, 0);
+    ofRect(paralax_x, paralax_y, ROI.width, ROI.height);
+    
+    // *** draw graySmall Image use (ROI scaled) ***
+    ofSetHexColor(0xffffff);
+    grayImage.draw(10,0);
+    
+    // *** draw difference ***
+    grayDiff.draw(10, grayBg.getHeight());
+  
+    // *** draw White background image in use ***
+    bgImgNightStatic.draw(10, grayBg.getHeight()*2, bgImgNightStatic.width*0.5, bgImgNightStatic.height*0.5);
+    
+    // *** draw Black background image in use ***
+    bgImgDayStatic.draw(10+bgImgDayStatic.width*0.5, grayBg.getHeight()*2, bgImgDayStatic.width*0.5, bgImgDayStatic.height*0.5);
+
+    
+    // *** draw DAY background image in use ***
+    bgImgDay.draw(10, grayBg.getHeight()*2+bgImgDay.height*0.5, bgImgDay.width*0.5, bgImgDay.height*0.5);
+    
+    // *** draw DAY background image in use ***
+    bgImgNight.draw(10+bgImgNight.width*0.5, grayBg.getHeight()*2+bgImgNight.height*0.5, bgImgNight.width*0.5, bgImgNight.height*0.5);
+    
+    
     ofSetColor(255, 0, 0);
     ofFill();
     switch (whichBackgroundImg) {
@@ -365,26 +511,49 @@ void ofApp::draw(){
 
     
     if (contourFinder.nBlobs > 0){
-        // *** draw green point and contour on big image ***
+        // *** draw point and contour on small image ***
         ofSetColor(0, 255, 0);
         ofFill();
-        ofCircle(contourFinder.blobs[0].centroid.x+(paralax_x), contourFinder.blobs[0].centroid.y+paralax_y, 10);
-        contourFinder.blobs[0].draw(paralax_x, paralax_y);
+        ofCircle(10+contourFinder.blobs[0].centroid.x, contourFinder.blobs[0].centroid.y, 10);
+        contourFinder.blobs[0].draw(10, 0);
         
-        myCellDraw(theCell,ROI.width, ROI.height, numOfRows, numOfColls, paralax_x, paralax_y, ROI.x, ROI.y);
+        // *** draw point on big image ***
+        ofSetColor(255, 0, 0);
+        ofCircle(fishPosBig.x, fishPosBig.y, 10);
+        
+        myCellDraw(paralax_x, paralax_y, ROI.width, ROI.height, numOfRows, numOfColls, fishPosBig.x, fishPosBig.y);
         
     }
     
     ofSetColor(255, 0, 0);
     ofNoFill();
     ofSetLineWidth(4);
+    switch (whichBackgroundImg) {
+        case 1:
+            ofRect(10, grayBg.getHeight()*2, bgImgNightStatic.width*0.5, bgImgNightStatic.height*0.5);
+            break;
+        case 2:
+            ofRect(10+bgImgDayStatic.width*0.5, grayBg.getHeight()*2, bgImgDayStatic.width*0.5, bgImgDayStatic.height*0.5);
+            break;
+        case 3:
+            ofRect(10,grayBg.getHeight()*2+bgImgDay.height*0.5, bgImgDay.width*0.5, bgImgDay.height*0.5);
+            break;
+        case 4:
+            ofRect(10+bgImgNight.width*0.5, grayBg.getHeight()*2+bgImgNight.height*0.5, bgImgNight.width*0.5, bgImgNight.height*0.5);
+            break;
+            
+        default:
+            break;
+    }
 
     
     //Draws the audio GUI
     myGui.drawGui(ofGetWindowWidth() - 240, ofGetWindowHeight()-150);
     
-    myBackgroundAddon.draw(0,0, 10, 10);
     
+    ofSetColor(0xffffff);
+    myBackgroundAddon.draw(0, 0); //draw it to the side
+
     
 }
 
@@ -491,12 +660,16 @@ void ofApp::keyPressed(int key){
 
 //--------------------------------------------------------------
 void ofApp::mouseMoved(int x, int y ){
+    
+    
 }
 
 
 
 //--------------------------------------------------------------
 void ofApp::exit() {
+    
+    // clean up
 }
 
 

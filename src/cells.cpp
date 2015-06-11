@@ -46,16 +46,6 @@ void myCellDraw(int pX, int pY, int w, int h, int rowNum, int collNum, int x, in
 }
 
 
-// draw the red cell where the fish is
-void myCellDraw(int cellNumber, int w, int h, int rowNum, int collNum, int paralax_X, int paralax_Y, int ROIx, int ROIy){
-    int cellNum = cellNumber-1;
-    int rowWhereTheFishIs =(abs(cellNum/collNum));
-    int collWhereTheFishIs = cellNum-rowWhereTheFishIs*collNum;
-    ofSetColor(255, 0, 0, 50);
-    ofFill();
-    ofRect((paralax_X+ROIx)+collWhereTheFishIs*h/rowNum,(paralax_Y+ROIy)+rowWhereTheFishIs*h/rowNum, w/collNum, h/rowNum);
-}
-
 
 // draws a white grid
 void drawGridCell(int pX, int pY, int w, int h, int rowNum, int collNum){

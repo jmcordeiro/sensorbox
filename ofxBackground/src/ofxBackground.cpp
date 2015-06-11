@@ -15,7 +15,7 @@ ofxBackground::ofxBackground() {
 	nChannels = CHANNELS;
 	imageLen = 0;
 	
-//    ImaskAVG = 0, ImaskAVGCC = 0;
+    ImaskAVG = 0, ImaskAVGCC = 0;
     ImaskCodeBook = 0, ImaskCodeBookCC = 0;
 	
 	maxMod[0] = 3;  //Set color thresholds to default values
@@ -50,18 +50,18 @@ void ofxBackground::allocate( int w, int h ) {
 	inputCopy.allocate(w, h);
 	yuvImage.allocate(w, h);
 	
-//	backgroundAverage.allocate(w, h);
-//	backgroundAverageConnectedComponents.allocate(w, h);
+	backgroundAverage.allocate(w, h);
+	backgroundAverageConnectedComponents.allocate(w, h);
     backgroundCodebook.allocate(w, h);
 	backgroundCodeBookConnectedComponents.allocate(w, h);
 	
 		//AVG METHOD ALLOCATION
 	allocateImages(w,h); //redo everything if you change the size! and this will be triggered first time round
-//	scaleHigh(scalehigh);
-//	scaleLow(scalelow);
-//	ImaskAVG = cvCreateImage( cvGetSize(inputCopy.getCvImage()), IPL_DEPTH_8U, 1 );
-//	ImaskAVGCC = cvCreateImage( cvGetSize(inputCopy.getCvImage()), IPL_DEPTH_8U, 1 );
-//	cvSet(ImaskAVG,cvScalar(255));
+	scaleHigh(scalehigh);
+	scaleLow(scalelow);
+	ImaskAVG = cvCreateImage( cvGetSize(inputCopy.getCvImage()), IPL_DEPTH_8U, 1 );
+	ImaskAVGCC = cvCreateImage( cvGetSize(inputCopy.getCvImage()), IPL_DEPTH_8U, 1 );
+	cvSet(ImaskAVG,cvScalar(255));
 		//CODEBOOK METHOD ALLOCATION:
 	yuvImage = cvCloneImage(inputCopy.getCvImage());
 	ImaskCodeBook = cvCreateImage( cvGetSize(inputCopy.getCvImage()), IPL_DEPTH_8U, 1 );
@@ -96,8 +96,8 @@ void ofxBackground::clear() {
 		inputCopy.clear();
 		yuvImage.clear(); //yuvImage is for codebook method
 		
-//		backgroundAverage.clear();
-//		backgroundAverageConnectedComponents.clear();
+		backgroundAverage.clear();
+		backgroundAverageConnectedComponents.clear();
 		backgroundCodebook.clear();
 		backgroundCodeBookConnectedComponents.clear();	
 		
@@ -168,7 +168,7 @@ void ofxBackground::update(ofxCvColorImage& input){
 		if((now-timeStartedLearning) < LEARNING_TIME){
 				//then we should be learning
 				//LEARNING THE AVERAGE AND AVG DIFF BACKGROUND
-			//accumulateBackground(inputCopy.getCvImage());
+			accumulateBackground(inputCopy.getCvImage());
 				//LEARNING THE CODEBOOK BACKGROUND
 			pColor = (uchar *)((yuvImage.getCvImage())->imageData);
 			for(int c=0; c<imageLen; c++)
@@ -191,9 +191,9 @@ void ofxBackground::update(ofxCvColorImage& input){
 			}else {
 					//learn as normal, find the foreground if any
 						//FIND FOREGROUND BY AVG METHOD:
-//					backgroundDiff(inputCopy.getCvImage(),ImaskAVG);
-//					cvCopy(ImaskAVG,ImaskAVGCC);
-//					cvconnectedComponents(ImaskAVGCC);
+					backgroundDiff(inputCopy.getCvImage(),ImaskAVG);
+					cvCopy(ImaskAVG,ImaskAVGCC);
+					cvconnectedComponents(ImaskAVGCC);
 						//FIND FOREGROUND BY CODEBOOK METHOD
 					uchar maskPixelCodeBook;
 					pColor = (uchar *)((yuvImage.getCvImage())->imageData); //3 channel yuv image
@@ -213,9 +213,9 @@ void ofxBackground::update(ofxCvColorImage& input){
 			}
 
 		}
-//		
-//		backgroundAverage = ImaskAVG;
-//		backgroundAverageConnectedComponents = ImaskAVGCC;
+		
+		backgroundAverage = ImaskAVG;
+		backgroundAverageConnectedComponents = ImaskAVGCC;
 		backgroundCodebook = ImaskCodeBook;
 		backgroundCodeBookConnectedComponents = ImaskCodeBookCC;	
 	}
@@ -243,8 +243,8 @@ void ofxBackground::deallocateImages()
 	
 	cvReleaseImage(&Imaskt);
 	
-//	cvReleaseImage(&ImaskAVG);
-//	cvReleaseImage(&ImaskAVGCC);
+	cvReleaseImage(&ImaskAVG);
+	cvReleaseImage(&ImaskAVGCC);
 	cvReleaseImage(&ImaskCodeBook);
 	cvReleaseImage(&ImaskCodeBookCC);
 }
@@ -319,47 +319,46 @@ void ofxBackground::backgroundDiff(IplImage *I,IplImage *Imask)  //Mask should b
 void ofxBackground::draw( float x, float y, float w, float h ) {
 	
 	float now = ofGetElapsedTimeMillis();
-//	
-//    float scalex = 0.0f;
-//    float scaley = 0.0f;
-//    if( _width != 0 ) { scalex = w/_width; } else { scalex = 1.0f; }
-//    if( _height != 0 ) { scaley = h/_height; } else { scaley = 1.0f; }
-//	
-//    if(bAnchorIsPct){
-//        x -= anchor.x * w;
-//        y -= anchor.y * h;
-//    }else{
-//        x -= anchor.x;
-//        y -= anchor.y;
-//    }
+	
+    float scalex = 0.0f;
+    float scaley = 0.0f;
+    if( _width != 0 ) { scalex = w/_width; } else { scalex = 1.0f; }
+    if( _height != 0 ) { scaley = h/_height; } else { scaley = 1.0f; }
+	
+    if(bAnchorIsPct){
+        x -= anchor.x * w;
+        y -= anchor.y * h;
+    }else{
+        x -= anchor.x;
+        y -= anchor.y;
+    }
 	
 		// ---------------------------- draw the various masks
-	ofSetColor(255);
-//    glPushMatrix();
-//    glTranslatef( x, y, 0.0 );
-//    glScalef( scalex, scaley, 0.0 );
+	ofSetColor(0xFFFFFF);
+    glPushMatrix();
+    glTranslatef( x, y, 0.0 );
+    glScalef( scalex, scaley, 0.0 );
 	
 	if (bLearning) {
-//		backgroundAverage.draw(0,0);
-//		ofDrawBitmapString("Average background: LEARNING", 0, _height+10);
-//		backgroundAverageConnectedComponents.draw(0, 20+_height);
-//		ofDrawBitmapString("Average Connected Components: LEARNING", 0, _height+20+_height+10);
-//		backgroundCodebook.draw(_width+20, 0);
-//		ofDrawBitmapString("Codebook: LEARNING", _width+20, _height+10);
-//		backgroundCodeBookConnectedComponents.draw(_width+20, 20+_height);
-//		ofDrawBitmapString("Codebook Connected Components: LEARNING", _width+20, _height+20+_height+10);
+		backgroundAverage.draw(0,0);
+		ofDrawBitmapString("Average background: LEARNING", 0, _height+10);
+		backgroundAverageConnectedComponents.draw(0, 20+_height);
+		ofDrawBitmapString("Average Connected Components: LEARNING", 0, _height+20+_height+10);
+		backgroundCodebook.draw(_width+20, 0);
+		ofDrawBitmapString("Codebook: LEARNING", _width+20, _height+10);
+		backgroundCodeBookConnectedComponents.draw(_width+20, 20+_height);
+		ofDrawBitmapString("Codebook Connected Components: LEARNING", _width+20, _height+20+_height+10);
 		string timeLeft = ofToString(LEARNING_TIME-(now-timeStartedLearning));
-		ofDrawBitmapString("Learning Time Left: "+timeLeft, 0, 10);
+		ofDrawBitmapString("Learning Time Left: "+timeLeft, 0, _height+20+_height+10+10);
 	}else{
-//		backgroundAverage.draw(0,0);
-//		ofDrawBitmapString("Average background", 0, _height+10);
-//		backgroundAverageConnectedComponents.draw(0, 20+_height);
-//		ofDrawBitmapString("Average Connected Components", 0, _height+20+_height+10);
-//		backgroundCodebook.draw(_width+20, 0);
-//		ofDrawBitmapString("Codebook", _width+20, _height+10);
-		backgroundCodeBookConnectedComponents.draw(10, 10, 195, 195);
-        //		backgroundCodeBookConnectedComponents.draw(_width+20, 20+_height);
-//		ofDrawBitmapString("Codebook Connected Components", _width+20, _height+20+_height+10);
+		backgroundAverage.draw(0,0);
+		ofDrawBitmapString("Average background", 0, _height+10);
+		backgroundAverageConnectedComponents.draw(0, 20+_height);
+		ofDrawBitmapString("Average Connected Components", 0, _height+20+_height+10);
+		backgroundCodebook.draw(_width+20, 0);
+		ofDrawBitmapString("Codebook", _width+20, _height+10);
+		backgroundCodeBookConnectedComponents.draw(_width+20, 20+_height);
+		ofDrawBitmapString("Codebook Connected Components", _width+20, _height+20+_height+10);
 		
 			//old stuff from ofxCvCountourFinder
 			//	ofNoFill();
@@ -380,7 +379,7 @@ void ofxBackground::draw( float x, float y, float w, float h ) {
 			//		ofEndShape();
 			//		
 	}	
-	//glPopMatrix();
+	glPopMatrix();
 }
 
 	//--------------------------------------------------------------------------------

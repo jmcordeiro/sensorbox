@@ -56,7 +56,6 @@ public:
     ofVec2f fishPosBig, fishPosSmall;
      
     ofRectangle ROI;
-    int test;
     
     ofxCvColorImage			colorImg, colorImgSmall;
     ofxCvGrayscaleImage 	grayImage;
