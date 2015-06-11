@@ -71,6 +71,9 @@
 		4561A3F51A0D7BB000DA4DC5 /* ofxMidiMessage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4561A3D81A0D7BB000DA4DC5 /* ofxMidiMessage.cpp */; };
 		4561A3F61A0D7BB000DA4DC5 /* ofxMidiOut.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4561A3DA1A0D7BB000DA4DC5 /* ofxMidiOut.cpp */; };
 		4561A4011A0D7BEE00DA4DC5 /* CoreMIDI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4561A4001A0D7BEE00DA4DC5 /* CoreMIDI.framework */; };
+		456C89811B18A06B004FB7D6 /* cv_yuv_codebook.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 456C89781B18A06B004FB7D6 /* cv_yuv_codebook.cpp */; };
+		456C89821B18A06B004FB7D6 /* ofxBackground.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 456C897A1B18A06B004FB7D6 /* ofxBackground.cpp */; };
+		456C89831B18A06B004FB7D6 /* ofxBackgroundCvColorImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 456C897C1B18A06B004FB7D6 /* ofxBackgroundCvColorImage.cpp */; };
 		45EE431C1A11291F00C2CECB /* README.md in Sources */ = {isa = PBXBuildFile; fileRef = 45EE42F51A11291F00C2CECB /* README.md */; };
 		45EE431D1A11291F00C2CECB /* ofxPostGlitch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 45EE431A1A11291F00C2CECB /* ofxPostGlitch.cpp */; };
 		63020F16C7E8DED980111241 /* ofxCvImage.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C6151136D101F857DAE12722 /* ofxCvImage.cpp */; };
@@ -282,6 +285,13 @@
 		4561A3DB1A0D7BB000DA4DC5 /* ofxMidiOut.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMidiOut.h; sourceTree = "<group>"; };
 		4561A3DC1A0D7BB000DA4DC5 /* ofxMidiTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxMidiTypes.h; sourceTree = "<group>"; };
 		4561A4001A0D7BEE00DA4DC5 /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
+		456C89721B18A06A004FB7D6 /* install.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = install.xml; sourceTree = "<group>"; };
+		456C89781B18A06B004FB7D6 /* cv_yuv_codebook.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = cv_yuv_codebook.cpp; sourceTree = "<group>"; };
+		456C89791B18A06B004FB7D6 /* cv_yuv_codebook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = cv_yuv_codebook.h; sourceTree = "<group>"; };
+		456C897A1B18A06B004FB7D6 /* ofxBackground.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBackground.cpp; sourceTree = "<group>"; };
+		456C897B1B18A06B004FB7D6 /* ofxBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBackground.h; sourceTree = "<group>"; };
+		456C897C1B18A06B004FB7D6 /* ofxBackgroundCvColorImage.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ofxBackgroundCvColorImage.cpp; sourceTree = "<group>"; };
+		456C897D1B18A06B004FB7D6 /* ofxBackgroundCvColorImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxBackgroundCvColorImage.h; sourceTree = "<group>"; };
 		45EE42F51A11291F00C2CECB /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		45EE42F71A11291F00C2CECB /* convergence.frag */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = convergence.frag; sourceTree = "<group>"; };
 		45EE42F81A11291F00C2CECB /* convergence.vert */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = convergence.vert; sourceTree = "<group>"; };
@@ -833,6 +843,36 @@
 			path = desktop;
 			sourceTree = "<group>";
 		};
+		456C89621B18A06A004FB7D6 /* ofxBackground */ = {
+			isa = PBXGroup;
+			children = (
+				456C89721B18A06A004FB7D6 /* install.xml */,
+				456C89761B18A06B004FB7D6 /* src */,
+			);
+			path = ofxBackground;
+			sourceTree = "<group>";
+		};
+		456C89761B18A06B004FB7D6 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				456C89771B18A06B004FB7D6 /* fromLearningOpenCV */,
+				456C897A1B18A06B004FB7D6 /* ofxBackground.cpp */,
+				456C897B1B18A06B004FB7D6 /* ofxBackground.h */,
+				456C897C1B18A06B004FB7D6 /* ofxBackgroundCvColorImage.cpp */,
+				456C897D1B18A06B004FB7D6 /* ofxBackgroundCvColorImage.h */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		456C89771B18A06B004FB7D6 /* fromLearningOpenCV */ = {
+			isa = PBXGroup;
+			children = (
+				456C89781B18A06B004FB7D6 /* cv_yuv_codebook.cpp */,
+				456C89791B18A06B004FB7D6 /* cv_yuv_codebook.h */,
+			);
+			path = fromLearningOpenCV;
+			sourceTree = "<group>";
+		};
 		45EE42F41A11291F00C2CECB /* ofxPostGlitch */ = {
 			isa = PBXGroup;
 			children = (
@@ -987,6 +1027,7 @@
 		BB4B014C10F69532006C3DED /* addons */ = {
 			isa = PBXGroup;
 			children = (
+				456C89621B18A06A004FB7D6 /* ofxBackground */,
 				454304261AF0F66400BFDFBC /* ofxGui */,
 				45EE42F41A11291F00C2CECB /* ofxPostGlitch */,
 				454B52231A0F8E4500AE36F3 /* ofxPostProcessing */,
@@ -1257,8 +1298,10 @@
 				454B526D1A0F8E4500AE36F3 /* VerticalTiltShifPass.cpp in Sources */,
 				454B525E1A0F8E4500AE36F3 /* FakeSSSPass.cpp in Sources */,
 				45078709191270600027FA62 /* NetworkingUtils.cpp in Sources */,
+				456C89811B18A06B004FB7D6 /* cv_yuv_codebook.cpp in Sources */,
 				454B52601A0F8E4500AE36F3 /* GodRaysPass.cpp in Sources */,
 				4507870A191270600027FA62 /* UdpSocket.cpp in Sources */,
+				456C89821B18A06B004FB7D6 /* ofxBackground.cpp in Sources */,
 				4543043F1AF0F66400BFDFBC /* ofxSliderGroup.cpp in Sources */,
 				4507870B191270600027FA62 /* NetworkingUtilsWin.cpp in Sources */,
 				4507870C191270600027FA62 /* UdpSocketWin.cpp in Sources */,
@@ -1267,6 +1310,7 @@
 				454B52631A0F8E4500AE36F3 /* LimbDarkeningPass.cpp in Sources */,
 				454304431AF1031100BFDFBC /* logger.cpp in Sources */,
 				4543043E1AF0F66400BFDFBC /* ofxSlider.cpp in Sources */,
+				456C89831B18A06B004FB7D6 /* ofxBackgroundCvColorImage.cpp in Sources */,
 				4543043A1AF0F66400BFDFBC /* ofxButton.cpp in Sources */,
 				454304391AF0F66400BFDFBC /* ofxBaseGui.cpp in Sources */,
 				454B526A1A0F8E4500AE36F3 /* RimHighlightingPass.cpp in Sources */,
