@@ -13,6 +13,7 @@ void ofApp::setup(){
     brightness = 0;
     contrast = 0;
 
+    firstRun = true;
     whichBackgroundImg = 1;
     myfont.loadFont("fonts/arial.ttf", 15);
     numOfColls = 2;
@@ -55,7 +56,8 @@ void ofApp::setup(){
             cout << " - unavailable " << endl;
         }
     }
-    vidGrabber.setDeviceID(1);  // use camera 0 for the analysis
+    
+    vidGrabber.setDeviceID(0);  // use camera 0 for the analysis
     
     vidGrabber.initGrabber(camWidth,camHeight);
 #else
@@ -159,8 +161,12 @@ void ofApp::update(){
         grayImage.brightnessContrast(brightness, contrast);
         //grayImage.brightnessContrast(0, 0);
         
-        brightness = mouseX*0.005-5;
-        contrast = mouseY*0.005;
+//        brightness = mouseX*0.005-5;
+//        contrast = mouseY*0.005;
+
+          brightness = 0;
+          contrast = 0.5;
+
         
         //******** LOAD BACKGROUND PICTURE *******************
         //******* White Background '1' key *************
@@ -357,7 +363,8 @@ void ofApp::update(){
     
     
     // sets the variable "theCell" with the correspondent quadrant where the fish is positioned
-    theCell = myCell(paralax_x, paralax_y, ROI.width, ROI.height, numOfRows, numOfColls, fishPosBig.x, fishPosBig.y);
+    theCell = myCell(paralax_x, paralax_y, ROI.width, ROI.height, numOfRows, numOfColls, fishPosBig.x, fishPosBig.y, firstRun);
+    firstRun = false;
     
     if (blackFrame){
         
@@ -450,6 +457,7 @@ void ofApp::draw(){
     ofSetColor(255, 255, 255);
     myfont.drawString("Contrast: " + ofToString(contrast), ofGetWindowWidth() - (myfont.getNumCharacters()*2.5),300);
 
+ 
     
  
     

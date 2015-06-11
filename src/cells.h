@@ -12,9 +12,9 @@
 #include <stdio.h>
 #include <iostream>
 #include "ofxOsc.h"
+#include "ofApp.h"
 
-
-int myCell(int pX, int pY, int w, int h, int rowNum, int collNum, int x, int y);
+int myCell(int pX, int pY, int w, int h, int rowNum, int collNum, int x, int y, bool fr);
 void myCellDraw(int pX, int pY, int w, int h, int rowNum, int collNum, int x, int y);
 
 

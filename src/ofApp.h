@@ -36,6 +36,7 @@ public:
     void keyPressed(int key);
     void mouseMoved(int x, int y );
     void exit();
+    bool firstRun;
 
     
 #ifdef _USE_LIVE_VIDEO
