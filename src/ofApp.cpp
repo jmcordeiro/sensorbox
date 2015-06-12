@@ -164,8 +164,8 @@ void ofApp::update(){
 //        brightness = mouseX*0.005-5;
 //        contrast = mouseY*0.005;
 
-          brightness = 0;
-          contrast = 0.5;
+       //   brightness = 0;
+       //   contrast = 0.5;
 
         
         //******** LOAD BACKGROUND PICTURE *******************
@@ -252,7 +252,7 @@ void ofApp::update(){
         
         
         // **** find contours *******
-        contourFinder.findContours(grayDiff, 0.01, (ROI.width/scaleRatio*ROI.height/scaleRatio/4), 1, false);
+        contourFinder.findContours(grayDiff, 0.01, (ROI.width/scaleRatio*ROI.height/scaleRatio/4), 1, true);
         //contourFinder.findContours(grayDiff, 10, (ROI.width/scaleRatio*ROI.height/scaleRatio/4), 5, false);
     }
     
@@ -633,7 +633,20 @@ void ofApp::keyPressed(int key){
         case '8':
             numOfColls++;
             break;
-
+        case OF_KEY_UP:
+            contrast = contrast+0.1;
+            break;
+        case OF_KEY_DOWN:
+            contrast = contrast-0.1;
+            break;
+        case OF_KEY_LEFT:
+            brightness = brightness-0.1;
+            break;
+        case OF_KEY_RIGHT:
+            brightness = brightness+0.1;
+            cout << "yhe";
+            break;
+            
         case 'q':
             cout <<"***************" << endl;
             cout << "GRAY BG: " << grayBg.width << " x " << grayBg.height << endl;

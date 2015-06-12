@@ -8,6 +8,7 @@
 #include "logger.h"
 #include "arduino.h"
 #include "soundInput.h"
+#include "background.h"
 
 
 #define _USE_LIVE_VIDEO		// uncomment this to use a live camera
@@ -79,6 +80,7 @@ public:
 
     SoundInput mySoundInput;
 
+    background myBackground;
     
     LiveFish myFish;
 

@@ -38,6 +38,7 @@
 		454304401AF0F66400BFDFBC /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454304371AF0F66400BFDFBC /* ofxToggle.cpp */; };
 		454304431AF1031100BFDFBC /* logger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454304411AF1031100BFDFBC /* logger.cpp */; };
 		4543044B1AF15BBE00BFDFBC /* arduino.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454304491AF15BBE00BFDFBC /* arduino.cpp */; };
+		454633FB1B2AE6D80071C968 /* background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454633F91B2AE6D80071C968 /* background.cpp */; };
 		454B52571A0F8E4500AE36F3 /* BleachBypassPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454B52261A0F8E4500AE36F3 /* BleachBypassPass.cpp */; };
 		454B52581A0F8E4500AE36F3 /* BloomPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454B52281A0F8E4500AE36F3 /* BloomPass.cpp */; };
 		454B52591A0F8E4500AE36F3 /* ContrastPass.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 454B522A1A0F8E4500AE36F3 /* ContrastPass.cpp */; };
@@ -209,6 +210,8 @@
 		454304421AF1031100BFDFBC /* logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logger.h; sourceTree = "<group>"; };
 		454304491AF15BBE00BFDFBC /* arduino.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = arduino.cpp; sourceTree = "<group>"; };
 		4543044A1AF15BBE00BFDFBC /* arduino.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = arduino.h; sourceTree = "<group>"; };
+		454633F91B2AE6D80071C968 /* background.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = background.cpp; sourceTree = "<group>"; };
+		454633FA1B2AE6D80071C968 /* background.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = background.h; sourceTree = "<group>"; };
 		454B52241A0F8E4500AE36F3 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		454B52261A0F8E4500AE36F3 /* BleachBypassPass.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = BleachBypassPass.cpp; sourceTree = "<group>"; };
 		454B52271A0F8E4500AE36F3 /* BleachBypassPass.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BleachBypassPass.h; sourceTree = "<group>"; };
@@ -1125,6 +1128,8 @@
 				452C8A611B0115FB00FA8965 /* soundInput.cpp */,
 				452C8A621B0115FB00FA8965 /* soundInput.h */,
 				E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */,
+				454633F91B2AE6D80071C968 /* background.cpp */,
+				454633FA1B2AE6D80071C968 /* background.h */,
 			);
 			path = src;
 			sourceTree = SOURCE_ROOT;
@@ -1241,6 +1246,7 @@
 				4561A3EC1A0D7BB000DA4DC5 /* ofxRtMidiOut.cpp in Sources */,
 				4561A3E91A0D7BB000DA4DC5 /* RtMidi.cpp in Sources */,
 				45078710191278650027FA62 /* OscTypes.cpp in Sources */,
+				454633FB1B2AE6D80071C968 /* background.cpp in Sources */,
 				454B525D1A0F8E4500AE36F3 /* EdgePass.cpp in Sources */,
 				4543043D1AF0F66400BFDFBC /* ofxPanel.cpp in Sources */,
 				454B52571A0F8E4500AE36F3 /* BleachBypassPass.cpp in Sources */,
