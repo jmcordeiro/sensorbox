@@ -32,6 +32,7 @@ SoundInput::~SoundInput(){
     soundStream.close();
 }
 
+
 float SoundInput::getSoundVolume(){
     return  smoothedVol*1000;
 }

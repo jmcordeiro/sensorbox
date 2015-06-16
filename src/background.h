@@ -11,6 +11,7 @@
 
 #include <stdio.h>
 #include "ofMain.h"
+#include "ofxOpenCv.h"
 
 
 class background: public ofBaseApp{
@@ -20,8 +21,17 @@ class background: public ofBaseApp{
 public:
     background();
     ~background();
-    formBackground();
-};
+    void formBackground();
+    void drawBackground();
+    void updateBackground();
+
+    
+    ofxCvGrayscaleImage imgTotal, imgRepeat;
+    ofxCvColorImage imgTotalColor;
+    ofVideoGrabber backgroundImg;
+    
+    bool bNewFrame;
+}; 
 
 
 

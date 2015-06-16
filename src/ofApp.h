@@ -91,7 +91,7 @@ public:
     
     Gui myGui;
     Logger myLogger;
-    Arduino myArduino;
+    Arduino myArduino;    
     
 };
 

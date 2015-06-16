@@ -57,7 +57,7 @@ void ofApp::setup(){
         }
     }
     
-    vidGrabber.setDeviceID(0);  // use camera 0 for the analysis
+    vidGrabber.setDeviceID(1);  // use camera 0 for the analysis
     
     vidGrabber.initGrabber(camWidth,camHeight);
 #else
@@ -108,7 +108,10 @@ void ofApp::setup(){
     sound_2.setLoop(true);
     sound_3.setLoop(true);
     sound_4.setLoop(true);
+ 
+    myBackground;
     
+    myBackground.formBackground();
 }
 
 
@@ -379,7 +382,8 @@ void ofApp::update(){
     }
     
     myArduino.readFromArduino();
-    
+ 
+    myBackground.updateBackground();
 }
 
 
@@ -396,7 +400,7 @@ void ofApp::draw(){
     colorImg.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
     drawGridCell(paralax_x, paralax_y, ROI.width, ROI.height, numOfRows, numOfColls);
     
-    
+
     
     //*********** WRITING To FILE MODE (z) *****************
     //********** draw black bars arround display window ***
@@ -459,14 +463,14 @@ void ofApp::draw(){
 
  
     
- 
-    
-    
+
     
     // *** draw red rectangle on big image (ROI) ***
     ofNoFill();
     ofSetColor(255, 0, 0);
     ofRect(paralax_x, paralax_y, ROI.width, ROI.height);
+    
+
     
     // *** draw graySmall Image use (ROI scaled) ***
     ofSetHexColor(0xffffff);
@@ -546,9 +550,12 @@ void ofApp::draw(){
             break;
     }
 
-    
+
     //Draws the audio GUI
     myGui.drawGui(ofGetWindowWidth() - 240, ofGetWindowHeight()-150);
+    
+    
+
     
 }
 
