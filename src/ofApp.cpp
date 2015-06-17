@@ -46,20 +46,23 @@ void ofApp::setup(){
     
 #ifdef _USE_LIVE_VIDEO
     // Get back a list of devices (cameras).
-    vector<ofVideoDevice> devices = vidGrabber.listDevices();
+//    vector<ofVideoDevice> devices = vidGrabber.listDevices();
+//    
+//    for(int i = 0; i < devices.size(); i++){
+//        cout << devices[i].id << ": " << devices[i].deviceName;
+//        if( devices[i].bAvailable ){
+//            cout << endl;
+//        }else{
+//            cout << " - unavailable " << endl;
+//        }
+//    }
+//    
+//    vidGrabber.setDeviceID(0);  // use camera 0 for the analysis
+//    
+//    vidGrabber.initGrabber(camWidth,camHeight);
     
-    for(int i = 0; i < devices.size(); i++){
-        cout << devices[i].id << ": " << devices[i].deviceName;
-        if( devices[i].bAvailable ){
-            cout << endl;
-        }else{
-            cout << " - unavailable " << endl;
-        }
-    }
+    myBackground.formBackground();
     
-    vidGrabber.setDeviceID(1);  // use camera 0 for the analysis
-    
-    vidGrabber.initGrabber(camWidth,camHeight);
 #else
     vidPlayer.loadMovie("fish_movie.mov");
     vidPlayer.play();
@@ -109,9 +112,8 @@ void ofApp::setup(){
     sound_3.setLoop(true);
     sound_4.setLoop(true);
  
-    myBackground;
     
-    myBackground.formBackground();
+    //myBackground.formBackground();
 }
 
 
@@ -136,8 +138,9 @@ void ofApp::update(){
     
     
 #ifdef _USE_LIVE_VIDEO
-    vidGrabber.update();
-    bNewFrame = vidGrabber.isFrameNew();
+    myBackground.updateBackground();
+    //    vidGrabber.update();
+//    bNewFrame = vidGrabber.isFrameNew();
 #else
     vidPlayer.update();
     bNewFrame = vidPlayer.isFrameNew();
@@ -146,14 +149,15 @@ void ofApp::update(){
     // Assigns a frame from the video/camera to a color image
     if (bNewFrame){
 #ifdef _USE_LIVE_VIDEO
-        colorImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight);
+        //colorImg.setFromPixels(vidGrabber.getPixels(), camWidth, camHeight);
 #else
         colorImg.setFromPixels(vidPlayer.getPixels(), camWidth, camHeight);
 #endif
         
         grayTempImage.clear();
         grayTempImage.allocate(camWidth, camHeight);
-        grayTempImage = colorImg;
+        //grayTempImage = colorImg;
+        grayTempImage = myBackground.imgTotalColor;
         grayTempImage.setROI(ROI);
         
         grayImage.clear();
@@ -378,7 +382,6 @@ void ofApp::update(){
         }else{
             decreases = ofGetElapsedTimeMillis()%333;
         }
-        
     }
     
     myArduino.readFromArduino();
@@ -397,10 +400,10 @@ void ofApp::draw(){
     
     
     // *********** draw the video **************************
-    colorImg.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
+  //  colorImg.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
+    myBackground.imgTotalColor.draw((paralax_x)-ROI.x, (paralax_y)-ROI.y);
     drawGridCell(paralax_x, paralax_y, ROI.width, ROI.height, numOfRows, numOfColls);
     
-
     
     //*********** WRITING To FILE MODE (z) *****************
     //********** draw black bars arround display window ***
@@ -474,7 +477,7 @@ void ofApp::draw(){
     
     // *** draw graySmall Image use (ROI scaled) ***
     ofSetHexColor(0xffffff);
-    grayImage.draw(10,0);
+    grayImage.draw(10,0);  // this one is drawing the black big square on the left-up corner
     
     // *** draw difference ***
     grayDiff.draw(10, grayBg.getHeight());
