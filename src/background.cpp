@@ -12,7 +12,7 @@
 background::background(){
 
     backgroundImg.initGrabber(800, 600);
-    backgroundImg.setDeviceID(1);
+    backgroundImg.setDeviceID(0);
     imgTotalColor.allocate(800, 600);
     imgTotal.allocate(backgroundImg.width, backgroundImg.height);
     imgRepeat.allocate(backgroundImg.width, backgroundImg.height);
@@ -28,12 +28,8 @@ background::~background(){
 
 void background::formBackground(){
 
-    //imgTotal.setROI(0, 0, 5, 5);
+    imgTotal.setROI(0, 0, 150, 150);
     
- //   imgRepeat.allocate(imgTotal.getROI().width, imgTotal.getROI().height);
- //   imgRepeat.setFromPixels(imgTotal.getRoiPixels(), imgTotal.getROI().width, imgTotal.getROI().height);
-//    imgRepeat.setFromPixels(imgTotal.getRoiPixels(), imgTotal.getROI().width*2, imgTotal.getROI().height*2);
-//    imgRepeat.setFromPixels(imgTotal.getRoiPixels(), imgTotal.getROI().width*4, imgTotal.getROI().height*3);
     
 }
 
@@ -46,10 +42,18 @@ bNewFrame = backgroundImg.isFrameNew();
 
     if (bNewFrame){
         imgTotalColor.setFromPixels(backgroundImg.getPixels(), backgroundImg.width, backgroundImg.height);
-        imgTotal.setFromColorImage(imgTotalColor);
+        //imgTotal.setFromColorImage(imgTotalColor);
+        imgTotal = imgTotalColor;
         cout << backgroundImg.width << " -- " << backgroundImg.height << endl;
 
+        imgRepeat.allocate(imgTotal.getROI().width, imgTotal.getROI().height);
+        imgRepeat.setFromPixels(imgTotal.getRoiPixels(), imgTotal.getROI().width, imgTotal.getROI().height);
+        imgRepeat.setFromPixels(imgTotal.getRoiPixels(), imgTotal.getROI().width*2, imgTotal.getROI().height*2);
+        imgRepeat.setFromPixels(imgTotal.getRoiPixels(), imgTotal.getROI().width*4, imgTotal.getROI().height*3);
+
+        
     }
+
     
 
 }
@@ -57,11 +61,10 @@ bNewFrame = backgroundImg.isFrameNew();
 
 void background::drawBackground(){
 
- //   imgTotal.drawROI(0, 0);
+    ofSetHexColor(0xffffff);
+  //  imgTotal.drawROI(mouseX, mouseY);
+    imgRepeat.draw(0, 0, 800, 600);
 
-  //  ofSetHexColor(0xffffff);
-  //  imgTotal.draw(0, 0, 800, 600);
-
-    imgTotalColor.draw(0, 0, 800, 600);
+  //  imgTotalColor.draw(0, 0, 800, 600);
     
 }

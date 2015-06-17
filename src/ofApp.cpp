@@ -57,7 +57,7 @@ void ofApp::setup(){
         }
     }
     
-    vidGrabber.setDeviceID(1);  // use camera 0 for the analysis
+    vidGrabber.setDeviceID(0);  // use camera 0 for the analysis
     
     vidGrabber.initGrabber(camWidth,camHeight);
 #else
@@ -109,7 +109,7 @@ void ofApp::setup(){
     sound_3.setLoop(true);
     sound_4.setLoop(true);
  
-    myBackground;
+   // myBackground;
     
     myBackground.formBackground();
 }
@@ -474,7 +474,7 @@ void ofApp::draw(){
     
     // *** draw graySmall Image use (ROI scaled) ***
     ofSetHexColor(0xffffff);
-    grayImage.draw(10,0);
+   // grayImage.draw(10,0);
     
     // *** draw difference ***
     grayDiff.draw(10, grayBg.getHeight());
@@ -554,7 +554,7 @@ void ofApp::draw(){
     //Draws the audio GUI
     myGui.drawGui(ofGetWindowWidth() - 240, ofGetWindowHeight()-150);
     
-    
+    myBackground.drawBackground();
 
     
 }
