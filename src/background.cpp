@@ -4,6 +4,7 @@
 //
 //  Created by Joao Cordeiro on 12/06/15.
 //
+//
 
 #include "background.h"
 
@@ -11,7 +12,7 @@
 background::background(){
 
     backgroundImg.initGrabber(800, 600);
-    backgroundImg.setDeviceID(0);
+    backgroundImg.setDeviceID(1);
     imgTotalColor.allocate(800, 600);
     imgTotal.allocate(backgroundImg.width, backgroundImg.height);
     imgRepeat.allocate(backgroundImg.width, backgroundImg.height);
@@ -34,14 +35,6 @@ void background::formBackground(){
 //    imgRepeat.setFromPixels(imgTotal.getRoiPixels(), imgTotal.getROI().width*2, imgTotal.getROI().height*2);
 //    imgRepeat.setFromPixels(imgTotal.getRoiPixels(), imgTotal.getROI().width*4, imgTotal.getROI().height*3);
     
-    backgroundImg.initGrabber(800, 600);
-    backgroundImg.setDeviceID(0);
-    imgTotalColor.allocate(800, 600);
-    imgTotal.allocate(backgroundImg.width, backgroundImg.height);
-    imgRepeat.allocate(backgroundImg.width, backgroundImg.height);
-    
-    bNewFrame = true;
-    
 }
 
 
@@ -50,14 +43,16 @@ void background::updateBackground(){
 backgroundImg.update();
 bNewFrame = backgroundImg.isFrameNew();
 
+
     if (bNewFrame){
         imgTotalColor.setFromPixels(backgroundImg.getPixels(), backgroundImg.width, backgroundImg.height);
         imgTotal.setFromColorImage(imgTotalColor);
         cout << backgroundImg.width << " -- " << backgroundImg.height << endl;
+
     }
+    
+
 }
-
-
 
 
 void background::drawBackground(){
@@ -67,6 +62,6 @@ void background::drawBackground(){
   //  ofSetHexColor(0xffffff);
   //  imgTotal.draw(0, 0, 800, 600);
 
-    //imgTotalColor.draw(0, 0, 800, 600);
+    imgTotalColor.draw(0, 0, 800, 600);
     
 }
